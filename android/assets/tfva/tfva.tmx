@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="80" height="32" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="bck" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="bck.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="10" name="flrone" tilewidth="32" tileheight="32" tilecount="57">
+  <image source="flrone.png" trans="ff00ff" width="608" height="96"/>
+ </tileset>
+ <tileset firstgid="67" name="cldfor" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="cldfor.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <layer name="bg" width="80" height="32">
+  <data encoding="base64" compression="zlib">
+   eJztwwEJAAAMBKH7/qWXY6DgqqmqqqqqqqqqqqqvHke4CgE=
+  </data>
+ </layer>
+ <layer name="floor" width="80" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt1UsOgjAARdEuCQRU3P/CfAyYMDQmbek5yZ3331IAAAAAAADg/qY0p0ftgTTiWIclrWlLz/RK77SnT72h/d11fq0YaQ9Gcr4z597+yvm4h17+nlbfyVG47/2bpIp9AR8dKT0=
+  </data>
+ </layer>
+ <layer name="fx" width="80" height="32">
+  <data encoding="base64" compression="zlib">
+   eJzt1tsNgDAMQ9Huxhv234cwQuWojcU9kn9RpbgNrQFAvyWyRrbZBzG1R47IOfsgA2V25orckSfhWy6cOlPxfXDqjNOsK8qadcUeO6HHmt4e01cNfdU47dgP90XDfdG43RcAY7CbNJm76Y+zyNxNzEJTdRZ/xD8bAAAAHL3ZhBZ4
+  </data>
+ </layer>
+</map>

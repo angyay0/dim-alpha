@@ -1,0 +1,188 @@
+
+player.png
+size: 1024,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+breath
+  rotate: false
+  xy: 0, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 0
+breath
+  rotate: false
+  xy: 0, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 1
+breath
+  rotate: false
+  xy: 66, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 2
+comeon
+  rotate: false
+  xy: 66, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: -1
+crouch
+  rotate: false
+  xy: 132, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 0
+crouch
+  rotate: false
+  xy: 132, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 1
+crouch
+  rotate: false
+  xy: 198, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 2
+crouch
+  rotate: false
+  xy: 198, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 3
+crouch
+  rotate: false
+  xy: 264, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 4
+damage
+  rotate: false
+  xy: 264, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 0
+damage
+  rotate: false
+  xy: 330, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 1
+damage
+  rotate: false
+  xy: 330, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 2
+fall
+  rotate: false
+  xy: 396, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 0
+fall
+  rotate: false
+  xy: 396, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 1
+fall
+  rotate: false
+  xy: 462, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 2
+jump
+  rotate: false
+  xy: 462, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 0
+normal
+  rotate: false
+  xy: 462, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: -1
+jump
+  rotate: false
+  xy: 528, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 1
+jump
+  rotate: false
+  xy: 528, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 2
+jump
+  rotate: false
+  xy: 594, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 3
+powerup
+  rotate: false
+  xy: 594, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: -1
+walk
+  rotate: false
+  xy: 660, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 0
+walk
+  rotate: false
+  xy: 660, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 1
+walk
+  rotate: false
+  xy: 726, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 2
+walk
+  rotate: false
+  xy: 726, 0
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 3
+walk
+  rotate: false
+  xy: 792, 96
+  size: 66, 96
+  orig: 66, 96
+  offset: 0, 0
+  index: 4

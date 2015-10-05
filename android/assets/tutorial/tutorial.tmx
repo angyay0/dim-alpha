@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="80" height="24" tilewidth="32" tileheight="32" nextobjectid="1">
+ <tileset firstgid="1" name="fondo" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="bck.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="10" name="pltone" tilewidth="32" tileheight="32" tilecount="40">
+  <image source="pltone.png" trans="ff00ff" width="160" height="256"/>
+ </tileset>
+ <tileset firstgid="50" name="plttwo" tilewidth="32" tileheight="32" tilecount="28">
+  <image source="plttwo.png" trans="ff00ff" width="224" height="128"/>
+ </tileset>
+ <tileset firstgid="78" name="borde2" tilewidth="32" tileheight="32" tilecount="56">
+  <image source="borde2.png" trans="ff00ff" width="448" height="128"/>
+ </tileset>
+ <tileset firstgid="134" name="cldfor" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="cldfor.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="143" name="clthr" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="clthr.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="152" name="hno" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="hno.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="161" name="hgo" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="hgo.png" trans="ff00ff" width="96" height="96"/>
+ </tileset>
+ <layer name="bg" width="80" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt0DENADAMwLCWP+kx2BPtmRwpBLwzs4//udd2/Pjd4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LXOk6cAlk=
+  </data>
+ </layer>
+ <layer name="fx" width="80" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt10kOwCAMQ1FO35FyZnwFpJSY9j/Jaywli1DKt23KrhzZRQY4dT6VS7mziwxw6lyVR2kvvhG9LzM6O3HalxX9bV8AAIC3iNvY6T82W8Rt7HBfZ80w4jZ2uK8dZrgyhxkCAAAAHVg2HR0=
+  </data>
+ </layer>
+ <layer name="floor" width="80" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt1jsKwCAQBUAvmjpN2tw/VSDNShDWD87Aq58Ku1gKAAAAALs4KoGdjZyLqG+FubQ/1jH7zv97vl53uD6BFrU/V2siZ+e+zM7MRO4B75fV+eYBmWA9HQ==
+  </data>
+ </layer>
+ <layer name="xfx" width="80" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt1ckNgEAMQ9Hp/8IO7eISRmKJDf9JPmNpQtIaeg3KqEzVRULNyqKs1UUuqpqDTdmV4+Xv3i1xDpz+/cQ5SHxzJ4lvDuD7nG5jL6fOibfRqXPibUzsjOc47aNETvsoEfsIAADgH05zeB8D
+  </data>
+ </layer>
+ <layer name="more" width="80" height="24">
+  <data encoding="base64" compression="zlib">
+   eJzt0bsOAUEUgOHtkSBBggQJ4vYEbg3vQUNHw8O4Fu68pb9YyRSKtdizk5w/+YpJNntOZhxH0zRN0zRN+7YIoohJL2JpcSSQlF7E0lJIIyO9iKVlkUNeehFLK6CIkvAetlZGBVXpRSyr5qqjgSZaLk3TNE2mNjrooufqi25kZwMMDWHogCNO0ot4zLzDMHTGBdcf/nOFNTYevvXzfq87DEM33PH44T+32GHv4Vu/7zf4dCmPjTA2zhNM/zTr3bwgZv6zGebGeYFlgPOCmPnqCaWNGsY=
+  </data>
+ </layer>
+</map>
