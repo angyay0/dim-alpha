@@ -10,7 +10,7 @@ import android.view.View;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
-import abstractg.core.Launcher;
+import org.aimos.abstractg.core.Launcher;
 
 import java.io.File;
 import java.io.FileFilter;
