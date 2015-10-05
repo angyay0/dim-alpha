@@ -1,5 +1,7 @@
 package org.aimos.abstractg.control.script.lua;
 
+import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Resources;
 import org.luaj.vm2.Globals;
 import org.luaj.vm2.lib.ResourceFinder;
 import org.luaj.vm2.lib.jse.JsePlatform;
@@ -70,7 +72,6 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
         //Try Script
         //basic.lua
         LuaChunk chunk = new LuaChunk("TestScript","LUA",getId());
-       // chunk.setFile( Gdx.files.internal(URL+"script.lua") );
         chunk.setBehavior( GLOBALS.get("behavior") );
         chunk.inflate();
         return chunk;
@@ -83,7 +84,7 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
 
     @Override
     public void destroyChildren() {
-
+        ;
     }
 
     @Override
@@ -97,7 +98,9 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
     @Override
     public InputStream findResource(String filename) {
         try{
-            return Gdx.files.internal(URL+filename).read();
+            Launcher.res.loadLua(URL+filename);
+            return Launcher.res.getLua(Resources.nameFromPath(URL+filename)).read();
+            //return Gdx.files.internal(URL+filename).read();
         }catch(Exception e){
             return null;
         }

@@ -15,7 +15,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
  */
 public class Launcher extends Game {
 
-    public static final String TITLE = "Pixel Dimensions";
+    public static final String TITLE = "Coin Dimensions";
     public static final float WIDTH = 800f;
     public static final float HEIGHT = 512f;
     public static final float STEP = 1 / 60f;

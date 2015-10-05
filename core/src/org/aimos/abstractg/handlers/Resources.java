@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
@@ -17,12 +18,14 @@ public class Resources {
     private HashMap<String, Music> music;
     private HashMap<String, Sound> sounds;
     private HashMap<String, Texture> textures;
+    private HashMap<String, FileHandle> luas;
 
     public Resources() {
         atlas = new HashMap<String, TextureAtlas>();
         textures = new HashMap<String, Texture>();
         music = new HashMap<String, Music>();
         sounds = new HashMap<String, Sound>();
+        luas = new HashMap<String, FileHandle>();
     }
 
 
@@ -31,15 +34,7 @@ public class Resources {
     /***********/
 
     public void loadTexture(String path) {
-        int slashIndex = path.lastIndexOf('/');
-        String key;
-        if(slashIndex == -1) {
-            key = path.substring(0, path.lastIndexOf('.'));
-        }
-        else {
-            key = path.substring(slashIndex + 1, path.lastIndexOf('.'));
-        }
-        loadTexture(path, key);
+        loadTexture(path, nameFromPath(path));
     }
     public void loadTexture(String path, String key) {
         Texture tex = new Texture(Gdx.files.internal(path));
@@ -61,15 +56,7 @@ public class Resources {
     /***********/
 
     public void loadAtlas(String path) {
-        int slashIndex = path.lastIndexOf('/');
-        String key;
-        if(slashIndex == -1) {
-            key = path.substring(0, path.lastIndexOf('.'));
-        }
-        else {
-            key = path.substring(slashIndex + 1, path.lastIndexOf('.'));
-        }
-        loadAtlas(path, key);
+        loadAtlas(path, nameFromPath(path));
     }
     public void loadAtlas(String path, String key) {
         TextureAtlas atl = new TextureAtlas(Gdx.files.internal(path));
@@ -91,15 +78,7 @@ public class Resources {
     /*********/
 
     public void loadMusic(String path) {
-        int slashIndex = path.lastIndexOf('/');
-        String key;
-        if(slashIndex == -1) {
-            key = path.substring(0, path.lastIndexOf('.'));
-        }
-        else {
-            key = path.substring(slashIndex + 1, path.lastIndexOf('.'));
-        }
-        loadMusic(path, key);
+        loadMusic(path, nameFromPath(path));
     }
     public void loadMusic(String path, String key) {
         Music m = Gdx.audio.newMusic(Gdx.files.internal(path));
@@ -121,15 +100,7 @@ public class Resources {
     /*******/
 
     public void loadSound(String path) {
-        int slashIndex = path.lastIndexOf('/');
-        String key;
-        if(slashIndex == -1) {
-            key = path.substring(0, path.lastIndexOf('.'));
-        }
-        else {
-            key = path.substring(slashIndex + 1, path.lastIndexOf('.'));
-        }
-        loadSound(path, key);
+        loadSound(path, nameFromPath(path));
     }
     public void loadSound(String path, String key) {
         Sound sound = Gdx.audio.newSound(Gdx.files.internal(path));
@@ -143,6 +114,27 @@ public class Resources {
         if(sound != null) {
             sounds.remove(key);
             sound.dispose();
+        }
+    }
+
+    /******************/
+	/* Lua FileHandle */
+    /******************/
+
+    public void loadLua(String path) {
+        loadLua(path,nameFromPath(path));
+    }
+    public void loadLua(String path, String key) {
+        FileHandle lua = new FileHandle(path);
+        luas.put(key, lua);
+    }
+    public FileHandle getLua(String key) {
+        return luas.get(key);
+    }
+    public void removeLua(String key) {
+        FileHandle lua = luas.get(key);
+        if(lua != null) {
+            luas.remove(key);
         }
     }
 
@@ -188,4 +180,15 @@ public class Resources {
         sounds.clear();
     }*/
 
+    public static String nameFromPath(String path){
+        int slashIndex = path.lastIndexOf('/');
+        String key;
+        if(slashIndex == -1) {
+            key = path.substring(0, path.lastIndexOf('.'));
+        }
+        else {
+            key = path.substring(slashIndex + 1, path.lastIndexOf('.'));
+        }
+        return key;
+    }
 }

@@ -5,57 +5,50 @@ import org.aimos.abstractg.character.Enemy;
 import org.aimos.abstractg.character.Player;
 
 /**
- *	Clase generadora de las armas de las cuales puede ser utilizada por los jugadores y enemigos
+ * Clase generadora de las armas de las cuales puede ser utilizada por los jugadores y enemigos
  *
- *	@version 1.0.0
- *	@date 07/09/2015
- *	@author Anonymous
- *	@company Aimos Studio
- *
-*/
+ * @author Anonymous
+ * @version 1.0.0
+ * @date 07/09/2015
+ * @company Aimos Studio
+ */
 
-public class Weapon extends Item {
+public abstract class Weapon extends Item {
 
-	//Lista para describir el tipo de arma
-	public enum WEAPON_TYPE {
-				FIREGUN,
-				MEELEE,
-				OBJECT,
-				FUTURE,
-				TRADITIONAL,
-				NONE
-	};
+    //El dano extra que hace
+    private long bonusDamage;
+    //El multiplicador de dano
+    private float multiplier;
+    //El valor del arma (Precio)
+    private long value;
+    //Dueño
+    private Character owner;
 
-	//El dano extra que hace
-	private long bonusDamage;
-	//El multiplicador de dano
-	private float multiplier;
-	//Define el tipo del arma
-	private WEAPON_TYPE type;
-	//El valor del arma (Precio)
-	private long value;
+    public Weapon(Character o) {
+        owner = o;
+    }
 
-	public Weapon(WEAPON_TYPE type,float posX,float posY){
-		super(posX,posY);
-		this.type = type;
-	}
+    /**
+     * obtener el daño del arma sumado con el daño del personaje
+     *
+     * @return long
+     * @params type player
+     */
+    public long getWeaponDamage() {
 
-	/**
-	*	obtener el daño del arma sumado con el daño del jugador
-	*	@params type player
-	*	@return long
-	*/
-	public long getWeaponDamage(Player player){
+        return 0;
+    }
 
-		return 0;
-	}
-	/**
-	*	@params type enemy
-	*	@return long
-	*/
-	public long getWeaponDamage(Enemy enemy){
+    /**
+     * Attack method for weapon
+     * @return
+     */
+    public boolean attack() {
+        if (owner == null) return false;
+        return subAttack();
+    }
 
-		return 0;
-	}
+    //Specialized Attack Method
+    protected abstract boolean subAttack();
 
 }

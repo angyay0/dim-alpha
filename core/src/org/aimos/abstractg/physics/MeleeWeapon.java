@@ -5,7 +5,5 @@ package org.aimos.abstractg.physics;
  */
 public class MeleeWeapon extends Weapon {
 
-    public MeleeWeapon(WEAPON_TYPE type, float posX, float posY) {
-        super(type, posX, posY);
-    }
+
 }

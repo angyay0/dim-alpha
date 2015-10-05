@@ -12,17 +12,17 @@ package org.aimos.abstractg.physics;
  *
  **/
 
-public class Pixel extends Item {
+public class Coin extends Item {
 
 	//Lista para especificar el tipo de pixel y valor
-	public enum PIXEL_TYPE {
+	public enum COIN_TYPE {
 		BLUE(1),
 		RED(50),
 		GOLD(100);
 
 		private int value;
 
-		PIXEL_TYPE(int val){
+		COIN_TYPE(int val){
 			value = val;
 		}
 		public int getValue(){ return value; }
@@ -30,10 +30,9 @@ public class Pixel extends Item {
 	};
 
 	//Tipo del pixel
-	public PIXEL_TYPE type = PIXEL_TYPE.BLUE;
+	public COIN_TYPE type = COIN_TYPE.BLUE;
 
-	public Pixel(PIXEL_TYPE type,float px,float py){
-		super(px,py);
+	public Coin(COIN_TYPE type, float px, float py){
 		this.type = type;
 
 	}

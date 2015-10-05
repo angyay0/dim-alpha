@@ -1,6 +1,8 @@
 //abstractg->item->Item
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.physics.box2d.Body;
+
 /**
  * Clase abstracta para manejar los items en el juego
  *
@@ -13,21 +15,6 @@ package org.aimos.abstractg.physics;
 
 public abstract class Item {
 
-    //Posicion X en el mapa
-    protected float TILE_X;
-    //Posicion Y en el mapa
-    protected float TILE_Y;
-
-    /**
-     *  Crear un nuevo objeto colocando las posiciones del objeto
-     *  en el escenario
-     *
-     * @param posX
-     * @param posY
-     */
-    protected Item(float posX, float posY){
-        TILE_X = posX;
-        TILE_Y = posY;
-    }
+    protected Body body;
 
 }
