@@ -41,6 +41,9 @@ public class Hud{
     //coordenadas para eventos del control
     private int posX1, posX2, posY1, posY2;
 
+    //Tamaño de las imagenes
+    private float cuadrado = 50f;
+
 
     public Hud(final Play play) {
         super();
@@ -95,8 +98,8 @@ public class Hud{
             public void dragStart(InputEvent event, float x, float y, int pointer) {
                 posX1 = (int) x;
                 posY1 = (int) y;
-                bgPad.setPosition(posX1 - (bgPad.getWidth()/2), posY1 - (bgPad.getHeight()/2));
-                pad.setPosition(posX1 - (pad.getWidth()/2), posY1 - (pad.getHeight()/2));
+                bgPad.setPosition(posX1 - (bgPad.getWidth() / 2), posY1 - (bgPad.getHeight() / 2));
+                pad.setPosition(posX1 - (pad.getWidth() / 2), posY1 - (pad.getHeight() / 2));
                 bgPad.setVisible(true);
                 pad.setVisible(true);
                 play.getPlayer().setWalking(true);
@@ -128,7 +131,7 @@ public class Hud{
                 }
 
 
-                pad.setPosition(x - (pad.getWidth()/2), y - (pad.getHeight()/2));
+                pad.setPosition(x - (pad.getWidth() / 2), y - (pad.getHeight() / 2));
             }
 
             @Override
@@ -156,20 +159,29 @@ public class Hud{
         });
 
         Button pause = new Button(new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("pause"))));//pause
-        pause.setSize(50, 50);
-        pause.setPosition(10f, 410f);
+        pause.setSize(cuadrado, cuadrado);
+        pause.setPosition(375f, 410f);
         pause.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-               play.getManager().setTempState();
+                play.getManager().setTempState();
             }
         });
+        Image cir = new Image(Launcher.res.getTexture("circle"));
+        cir.setSize(cuadrado,cuadrado);
+        cir.setPosition(10f, 410f);
+        Image bar = new Image(Launcher.res.getTexture("bar"));
+        bar.setSize(250, cuadrado);
+        bar.setPosition(35f, 410f);
+
 
         play.addActor(bgPad);
         play.addActor(pad);
         play.addActor(jumpButton);
         play.addActor(movementCross);
         play.addActor(pause);
+        play.addActor(bar);
+        play.addActor(cir);
     }
 
 }

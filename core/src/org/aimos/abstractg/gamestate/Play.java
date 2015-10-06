@@ -47,7 +47,7 @@ public class Play extends GameState{
 
     private boolean debug = true;
 
-    private static Music bgMusic;
+    private boolean flag = false;
 
     public static int level;
 
@@ -117,7 +117,7 @@ public class Play extends GameState{
         floorLayer.setVisible(false);
         moreLayer.setVisible(false);
         xFxLayer.setVisible(false);
-        buildingLayer.setVisible(false);
+        if(flag) buildingLayer.setVisible(false);
 
         //Draw the effect Fx
         tmRenderer.getBatch().begin();
@@ -140,7 +140,7 @@ public class Play extends GameState{
         tmRenderer.setView(xFx);
         tmRenderer.renderTileLayer(xFxLayer);
         tmRenderer.setView(floor);
-        tmRenderer.renderTileLayer(buildingLayer);
+        if(flag)tmRenderer.renderTileLayer(buildingLayer);
         tmRenderer.renderTileLayer(floorLayer);
         tmRenderer.renderTileLayer(moreLayer);
         tmRenderer.getBatch().end();
@@ -193,7 +193,11 @@ public class Play extends GameState{
         //Get floor layer
         floorLayer = (TiledMapTileLayer) tileMap.getLayers().get("floor");
         //Get building layer
+
         buildingLayer = (TiledMapTileLayer) tileMap.getLayers().get("building");
+        if(buildingLayer != null){
+            flag = true;
+        }
         createBlocks(floorLayer, Constants.BIT_FLOOR);
         /*
 
@@ -317,7 +321,4 @@ public class Play extends GameState{
         return player;
     }
 
-    public static Music getMusic(){
-        return bgMusic;
-    }
 }

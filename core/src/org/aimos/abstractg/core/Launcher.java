@@ -57,6 +57,9 @@ public class Launcher extends Game {
         res.loadTexture("ui/bgcpad.png");
         res.loadTexture("menu/back.png");
         res.loadTexture("menu/pause.png");
+
+        res.loadTexture("menu/circle.png");
+        res.loadTexture("menu/bar.png");
         //-------------------------
         res.loadMusic("music/arcade.mp3");
         res.loadMusic("music/field.mp3");
