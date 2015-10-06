@@ -10,7 +10,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,12 +18,10 @@ import com.badlogic.gdx.utils.Array;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.handlers.AimosContactListener;
-import org.aimos.abstractg.handlers.AimosVars;
+import org.aimos.abstractg.handlers.GameContactListener;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.BoundedCamera;
-
-import java.awt.Polygon;
 
 /**
  * Created by EinarGretch on 17/09/2015.
@@ -33,7 +30,7 @@ public class Play extends GameState{
 
     private World world;
     private Box2DDebugRenderer b2dRenderer;
-    private AimosContactListener contact;
+    private GameContactListener contact;
     private BoundedCamera b2dCam;
 
     private Player player;
@@ -67,7 +64,7 @@ public class Play extends GameState{
 
         //set up the world
         world = new World(new Vector2(0, -9.81f), true);
-        contact = new AimosContactListener();
+        contact = new GameContactListener();
         world.setContactListener(contact);
         b2dRenderer = new Box2DDebugRenderer();
 
@@ -90,8 +87,8 @@ public class Play extends GameState{
 
         // set up box2d cam
         b2dCam = new BoundedCamera();
-        b2dCam.setToOrtho(false, Launcher.WIDTH / AimosVars.PTM, Launcher.HEIGHT / AimosVars.PTM);
-        b2dCam.setBounds(0, (tileMapWidth * tileSize) / AimosVars.PTM, 0, (tileMapHeight * tileSize) / AimosVars.PTM);
+        b2dCam.setToOrtho(false, Launcher.WIDTH / Constants.PTM, Launcher.HEIGHT / Constants.PTM);
+        b2dCam.setBounds(0, (tileMapWidth * tileSize) / Constants.PTM, 0, (tileMapHeight * tileSize) / Constants.PTM);
 
         //initialize HUD
         hud = new Hud(this);
@@ -133,8 +130,8 @@ public class Play extends GameState{
         }
         fx.translate(1, 0, 0);
         xFx.translate(.25f, 0, 0);
-        //floor.position.x = ((player.getX()) * AimosVars.PTM + Launcher.WIDTH / 4) ;
-        floor.setPosition(player.getX() * AimosVars.PTM + Launcher.WIDTH / 4, player.getY() * AimosVars.PTM + Launcher.HEIGHT / 4);
+        //floor.position.x = ((player.getX()) * Constants.PTM + Launcher.WIDTH / 4) ;
+        floor.setPosition(player.getX() * Constants.PTM + Launcher.WIDTH / 4, player.getY() * Constants.PTM + Launcher.HEIGHT / 4);
         fx.update();
         xFx.update();
         floor.update();
@@ -153,7 +150,7 @@ public class Play extends GameState{
         player.render(sb);
         draw();
         if(debug) {
-            b2dCam.setPosition(player.getX() + Launcher.WIDTH / 4 / AimosVars.PTM, player.getY() + Launcher.HEIGHT / 4 / AimosVars.PTM);
+            b2dCam.setPosition(player.getX() + Launcher.WIDTH / 4 / Constants.PTM, player.getY() + Launcher.HEIGHT / 4 / Constants.PTM);
             b2dCam.update();
             b2dRenderer.render(world, b2dCam.combined);
         }
@@ -197,7 +194,7 @@ public class Play extends GameState{
         floorLayer = (TiledMapTileLayer) tileMap.getLayers().get("floor");
         //Get building layer
         buildingLayer = (TiledMapTileLayer) tileMap.getLayers().get("building");
-        createBlocks(floorLayer, AimosVars.BIT_FLOOR);
+        createBlocks(floorLayer, Constants.BIT_FLOOR);
         /*
 
         // create walls
@@ -208,15 +205,15 @@ public class Play extends GameState{
         bdef.position.set(150, 150);
         EdgeShape shape = new EdgeShape();
         FixtureDef fd = new FixtureDef();
-        //shape.set(-Gdx.graphics.getWidth() / AimosVars.PTM, -Gdx.graphics.getHeight() / AimosVars.PTM, +Gdx.graphics.getWidth() / AimosVars.PTM, -Gdx.graphics.getHeight() / AimosVars.PTM);
+        //shape.set(-Gdx.graphics.getWidth() / Constants.PTM, -Gdx.graphics.getHeight() / Constants.PTM, +Gdx.graphics.getWidth() / Constants.PTM, -Gdx.graphics.getHeight() / Constants.PTM);
         shape.set(0,0,50,50);
         fd.shape = shape;
-        fd.filter.categoryBits = AimosVars.BIT_WALL;
-        fd.filter.maskBits = AimosVars.BIT_CHARACTER;
+        fd.filter.categoryBits = Constants.BIT_WALL;
+        fd.filter.maskBits = Constants.BIT_CHARACTER;
         world.createBody(bdef).createFixture(fd);
 
         //create right wall
-        bdef.position.set(Gdx.graphics.getWidth() / AimosVars.PTM, 0);
+        bdef.position.set(Gdx.graphics.getWidth() / Constants.PTM, 0);
         fd.shape = shape;
         world.createBody(bdef).createFixture(fd);
         shape.dispose();*/
@@ -294,15 +291,15 @@ public class Play extends GameState{
         for (int i = 0; i < coords.size ; i++) {
             BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((coords.get(i).x * ts / AimosVars.PTM) + (((size.get(i).x * ts) / 2)/AimosVars.PTM),
-                    (coords.get(i).y * ts / AimosVars.PTM) + (((size.get(i).y * ts) / 2)/AimosVars.PTM));
+            bdef.position.set((coords.get(i).x * ts / Constants.PTM) + (((size.get(i).x * ts) / 2)/ Constants.PTM),
+                    (coords.get(i).y * ts / Constants.PTM) + (((size.get(i).y * ts) / 2)/ Constants.PTM));
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox(((size.get(i).x * ts) / 2)/AimosVars.PTM, ((size.get(i).y * ts) / 2)/AimosVars.PTM);
+            shape.setAsBox(((size.get(i).x * ts) / 2)/ Constants.PTM, ((size.get(i).y * ts) / 2)/ Constants.PTM);
             FixtureDef fd = new FixtureDef();
             fd.friction = 1;
             fd.shape = shape;
             fd.filter.categoryBits = bits;
-            fd.filter.maskBits = AimosVars.BIT_CHARACTER;
+            fd.filter.maskBits = Constants.BIT_CHARACTER;
             Body b = world.createBody(bdef);
             b.createFixture(fd).setUserData("cell");
             b.setUserData(size.get(i));

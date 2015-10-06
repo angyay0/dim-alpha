@@ -3,7 +3,7 @@ package org.aimos.abstractg.handlers;
 /**
  * Created by EinarGretch on 17/09/2015.
  */
-public class AimosVars {
+public class Constants {
 
     //Coin to Meter ratio
     public static final float PTM = 100f;

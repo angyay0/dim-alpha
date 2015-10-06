@@ -5,8 +5,15 @@ package org.aimos.abstractg.physics;
  */
 public class ShootWeapon extends Weapon {
 
-    public ShootWeapon(Character o) {
-        super(o);
+    /**
+     * Default Constructor for Weapon
+     *
+     * @param bd bonus damage
+     * @param m  multiplier
+     * @param v  value
+     */
+    public ShootWeapon(long bd, float m, long v) {
+        super(bd, m, v);
     }
 
     @Override

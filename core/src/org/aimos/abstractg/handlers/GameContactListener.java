@@ -13,11 +13,11 @@ import org.aimos.abstractg.character.Player;
 /**
  * Created by EinarGretch on 25/09/2015.
  */
-public class AimosContactListener implements ContactListener {
+public class GameContactListener implements ContactListener {
 
     private Array<Body> bodiesToRemove;
 
-    public AimosContactListener() {
+    public GameContactListener() {
         super();
         bodiesToRemove = new Array<Body>();
     }

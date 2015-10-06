@@ -7,7 +7,7 @@ package org.aimos.abstractg.physics;
  *
  * @version 1.0.0
  * @date 07/09/2015
- * @author Angyay0
+ * @author EinarGretch, Angyay0
  * @company AIMOS STUDIO
  *
  **/

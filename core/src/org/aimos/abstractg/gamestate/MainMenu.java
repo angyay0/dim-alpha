@@ -96,7 +96,7 @@ public class MainMenu extends GameState{
     }
 
     @Override
-    public void disposeState() {
+    protected final void disposeState() {
         if(AudioManager.getInstance().isPlaying()){
             AudioManager.getInstance().stopAudio();
         }

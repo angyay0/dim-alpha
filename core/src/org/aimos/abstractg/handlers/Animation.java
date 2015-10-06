@@ -10,60 +10,45 @@ public class Animation {
 
     private AtlasRegion[] frames;
     private float time;
-    private float delay;
+    private float delta;
     private int currentFrame;
 
     private int timesPlayed;
 
-    public Animation() {}
-
-    public Animation(AtlasRegion[] frames) {
-
-        this(frames, 1 / 12f);
-    }
-
-    public Animation(AtlasRegion[] frames, float delay) {
-        this.frames = frames;
-        this.delay = delay;
-        time = 0;
-        currentFrame = 0;
-    }
-
-    public Animation(Array<AtlasRegion> frames) {
-        this(frames, 1 / 12f);
-    }
-
-    public Animation(Array<AtlasRegion> frames, float delay) {
+    public Animation(Array<AtlasRegion> frames, float delta) {
         this.frames = frames.toArray(AtlasRegion.class);
-        this.delay = delay;
+        this.delta = delta;
         time = 0;
         currentFrame = 0;
     }
 
 
-    public void setDelay(float f) { delay = f; }
-    public void setCurrentFrame(int i) { if(i < frames.length) currentFrame = i; }
-    public void setFrames(AtlasRegion[] frames) {
-        setFrames(frames, 1 / 12f);
+    public void setDelta(float f) {
+        delta = f;
     }
+
+    public void setFrame(int i) {
+        if(i < frames.length) currentFrame = i;
+    }
+
     public void setFrames(AtlasRegion[] frames, float delay) {
         this.frames = frames;
         time = 0;
         currentFrame = 0;
         timesPlayed = 0;
-        this.delay = delay;
+        this.delta = delay;
     }
 
     public void update(float dt) {
-        if(delay <= 0) return;
+        if(delta <= 0) return;
         time += dt;
-        while(time >= delay) {
+        while(time >= delta) {
             step();
         }
     }
 
     private void step() {
-        time -= delay;
+        time -= delta;
         currentFrame++;
         if(currentFrame == frames.length) {
             currentFrame = 0;

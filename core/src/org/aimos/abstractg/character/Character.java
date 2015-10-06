@@ -1,10 +1,8 @@
 //abstractg->character->Character
 package org.aimos.abstractg.character;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -17,8 +15,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.handlers.AimosVars;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.Animation;
+import org.aimos.abstractg.physics.PhysicalBody;
+import org.aimos.abstractg.physics.Weapon;
 
 /**
  * Clase que representa el modelo abstracto
@@ -32,21 +32,21 @@ import org.aimos.abstractg.handlers.Animation;
  *
  **/
 
- public abstract class Character{
+ public abstract class Character extends PhysicalBody{
 
     protected String name;
-    protected Body body;
     protected int animationIndex = 0;
     protected Array<Animation> animations;
-    protected World world;
     protected boolean crouch = false;
     protected boolean keepCrouched = false;
-    protected boolean visible = true;
     protected boolean walking = false;
     protected TextureAtlas atlas;
     protected int jumps = 1;
     protected int maxJumps = 1;
     protected boolean direction = true;
+    protected Weapon weapon;
+    protected float ANIMATION_DELTA = 1/5f;
+    protected float BODY_SCALE = 2.1f;
 
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0
@@ -55,35 +55,26 @@ import org.aimos.abstractg.handlers.Animation;
     private static final String CROUCH_SEQ = "crouch"; // 3
     private static final String CROUCH_MOVE_SEQ = "crouch"; // 4
 
-
     /**
-     * Creates a new character
      *
-     * @param spriteSrc Archivo Atlas
+     * @param spriteSrc
      * @param name
+     * @param world
+     * @param x
+     * @param y
      */
      protected Character(String spriteSrc, String name, World world, float x, float y) {
          this.name = name;
-
-         try{
-            atlas = Launcher.res.getAtlas(spriteSrc);
-         }catch(Exception e){
-             Gdx.app.log("Error Cargando Atlas de Personaje", e.getMessage());
-             Gdx.app.exit();
-         }
-
+         atlas = Launcher.res.getAtlas(spriteSrc);
          this.world = world;
-         body = null;
          animations = new Array<Animation>();
-         animations.add(new Animation(atlas.findRegions(STAND_SEQ),1/5f));
-         animations.add(new Animation(atlas.findRegions(WALK_SEQ),1/5f));
-         animations.add(new Animation(atlas.findRegions(JUMP_SEQ),1/5f));
-         animations.add(new Animation(atlas.findRegions(CROUCH_SEQ),1/5f));
-         animations.add(new Animation(atlas.findRegions(CROUCH_MOVE_SEQ),1/5f));
-
-         setAnimations();
+         animations.add(new Animation(atlas.findRegions(STAND_SEQ), ANIMATION_DELTA));
+         animations.add(new Animation(atlas.findRegions(WALK_SEQ), ANIMATION_DELTA));
+         animations.add(new Animation(atlas.findRegions(JUMP_SEQ), ANIMATION_DELTA));
+         animations.add(new Animation(atlas.findRegions(CROUCH_SEQ), ANIMATION_DELTA));
+         animations.add(new Animation(atlas.findRegions(CROUCH_MOVE_SEQ), ANIMATION_DELTA));
+         setExtraAnimations();
          createBody(x, y);
-
      }
 
     public Animation getAnimation(){
@@ -92,14 +83,6 @@ import org.aimos.abstractg.handlers.Animation;
 
     public Body getBody(){
         return body;
-    }
-
-    public boolean setSprite(int i){
-        if(i >= 0 && i < animations.size){
-            animationIndex = i;
-            return true;
-        }
-        return false;
     }
 
     public  void forceCrouch(boolean keepCrouched){
@@ -172,55 +155,18 @@ import org.aimos.abstractg.handlers.Animation;
         }
     }
 
-    public void dispose(){
-        atlas.dispose();
-        world.destroyBody(body);
-    }
-
-    public void setVisibility(boolean visible){
-        this.visible = visible;
-    }
-
-    public boolean getVisibility(){
-        return visible;
-    }
-
-    public boolean flipVisibility(){
-        visible = !visible;
-        return visible;
-    }
-
-    protected Animation makeAnimation(String name, int count){
-        TextureAtlas.AtlasRegion[] regions = new AtlasRegion[count];
-        for (int i = 0; i < count; i++) {
-            regions[i] = (atlas.findRegion(name+"_"+count));
-        }
-        return new Animation(regions, 0.1f);
-    }
-
+    @Override
     public int getWidth(){
         return animations.get(animationIndex).getFrame().getRegionWidth();
     }
 
+    @Override
     public int getHeight(){
         return animations.get(animationIndex).getFrame().getRegionHeight();
     }
 
-    public void setPosition(float x, float y){
-        body.getPosition().x = x;
-        body.getPosition().y = y;
-    }
-
-    public float getX(){
-        return body.getPosition().x;
-    }
-
-    public float getY(){
-        return body.getPosition().y;
-    }
-
     public void setAnimation(int i) {
-        if(animationIndex == i) return;
+        if(animationIndex == i || animationIndex < 0 || animationIndex > animations.size) return;
         animationIndex = i;
         updateBody(i);
     }
@@ -229,9 +175,10 @@ import org.aimos.abstractg.handlers.Animation;
         animations.get(animationIndex).update(dt);
     }
 
+    @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(animations.get(animationIndex).getFrame(), getX() * AimosVars.PTM - (getWidth() / 2), getY() * AimosVars.PTM - (getHeight() / 2));
+        sb.draw(animations.get(animationIndex).getFrame(), getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
         sb.end();
     }
 
@@ -316,27 +263,61 @@ import org.aimos.abstractg.handlers.Animation;
         // create bodydef
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x / AimosVars.PTM, y / AimosVars.PTM);
+        bodyDef.position.set(x / Constants.PTM, y / Constants.PTM);
 
         // create body from bodydef
         body = world.createBody(bodyDef);
 
         // create box shape for character collision box
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox((to2DBoxSize(getWidth())) / AimosVars.PTM, (to2DBoxSize(getHeight())) / AimosVars.PTM);
+        shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
 
         // create fixturedef for character collision box
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.density = 1;
         fdef.friction = 1f;
-        fdef.filter.categoryBits = AimosVars.BIT_CHARACTER;
-        fdef.filter.maskBits = AimosVars.BIT_FLOOR | AimosVars.BIT_WALL | //AimosVars.BIT_GRANADE |
-                AimosVars.BIT_BULLET;
+        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
+        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | //Constants.BIT_GRANADE |
+                Constants.BIT_BULLET;
         fdef.restitution = 0f;
 
         // create character collision box fixture
         body.createFixture(fdef).setUserData("body");
+
+        // create fixturedef for player foot
+        shape.setAsBox(((getWidth() / BODY_SCALE)/ 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM , new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+        fdef.shape = shape;
+        fdef.isSensor = true;
+        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
+        fdef.filter.maskBits = Constants.BIT_FLOOR;
+        body.createFixture(fdef).setUserData("foot");
+
+        //create fixturedef for player head
+        shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM , new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
+        fdef.shape = shape;
+        fdef.isSensor = true;
+        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
+        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_FLOOR;
+        body.createFixture(fdef).setUserData("head");
+
+        //create fixturedef for player shoulders
+        shape.setAsBox(((getWidth() / BODY_SCALE)* 1.1f) / Constants.PTM, ((getHeight() / BODY_SCALE ) / 4) / Constants.PTM );
+        fdef.shape = shape;
+        fdef.isSensor = true;
+        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
+        fdef.filter.maskBits = Constants.BIT_WALL;
+        body.createFixture(fdef).setUserData("shoulders");
+
+        //create fixturedef for player attack zone
+        shape.setAsBox(((getWidth() / BODY_SCALE) * 1.4f) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM );
+        fdef.shape = shape;
+        fdef.isSensor = true;
+        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
+        fdef.filter.maskBits = Constants.BIT_CHARACTER;
+        body.createFixture(fdef).setUserData("attack");
+
+        //dispose shape
         shape.dispose();
 
         //set character extra fixtures
@@ -357,26 +338,26 @@ import org.aimos.abstractg.handlers.Animation;
         PolygonShape shape = (PolygonShape) fix.getShape();
 
         switch (pose){
-            case 0:
-            case 1:
-            case 2:
-                shape.setAsBox(to2DBoxSize(getWidth()) / AimosVars.PTM, to2DBoxSize(getHeight()) / AimosVars.PTM);
+            case 0://stand
+            case 1://walk
+            case 2://jump
+                shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
                 fix = getBody().getFixtureList().get(1);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox((to2DBoxSize(getWidth() / 2)) / AimosVars.PTM, (to2DBoxSize(getHeight() / 4)) / AimosVars.PTM, new Vector2(0, (-to2DBoxSize(getHeight())) / AimosVars.PTM), 0);
+                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
                 fix = getBody().getFixtureList().get(2);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox((to2DBoxSize(getWidth() / 2)) / AimosVars.PTM, (to2DBoxSize(getHeight() / 4)) / AimosVars.PTM, new Vector2(0, (to2DBoxSize(getHeight())) / AimosVars.PTM), 0);
+                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE)) / Constants.PTM), 0);
                 break;
-            case 3:
-            case 4:
-                shape.setAsBox(to2DBoxSize(getWidth()) * 1.25f / AimosVars.PTM, to2DBoxSize(getHeight()) * 0.62f / AimosVars.PTM);
+            case 3://crouch
+            case 4://crouch walk
+                shape.setAsBox((getWidth() / BODY_SCALE) * 1.25f / Constants.PTM, (getHeight() / BODY_SCALE) * 0.62f / Constants.PTM);
                 fix = getBody().getFixtureList().get(1);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox((to2DBoxSize(getWidth() / 2)) / AimosVars.PTM, (to2DBoxSize(getHeight() / 4)) / AimosVars.PTM, new Vector2(0, (-to2DBoxSize(getHeight()) / 2) / AimosVars.PTM), 0);
+                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
                 fix = getBody().getFixtureList().get(2);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox((to2DBoxSize(getWidth() / 2)) / AimosVars.PTM, (to2DBoxSize(getHeight() / 4)) / AimosVars.PTM, new Vector2(0, (to2DBoxSize(getHeight()) / 2) / AimosVars.PTM), 0);
+                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
                 break;
         }
         getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
@@ -392,13 +373,13 @@ import org.aimos.abstractg.handlers.Animation;
         FixtureDef fdef = new FixtureDef();
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(5f / AimosVars.PTM);
+        shape.setRadius(5f / Constants.PTM);
         fdef.shape = shape;
         fdef.friction = 0;
         fdef.density = 1;
-        fdef.filter.categoryBits = AimosVars.BIT_BULLET;
-        fdef.filter.maskBits = AimosVars.BIT_FLOOR | AimosVars.BIT_WALL | AimosVars.BIT_GRANADE |
-                AimosVars.BIT_CHARACTER | AimosVars.BIT_BULLET;
+        fdef.filter.categoryBits = Constants.BIT_BULLET;
+        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | Constants.BIT_GRANADE |
+                Constants.BIT_CHARACTER | Constants.BIT_BULLET;
         fdef.restitution = 0.1f;
 
         bullet.createFixture(fdef).setUserData("bullet");
@@ -420,19 +401,19 @@ import org.aimos.abstractg.handlers.Animation;
         FixtureDef fdef = new FixtureDef();
 
         CircleShape shape = new CircleShape();
-        shape.setRadius(10f / AimosVars.PTM);
+        shape.setRadius(10f / Constants.PTM);
         fdef.shape = shape;
         fdef.friction = 1;
         fdef.density = 1;
-        fdef.filter.categoryBits = AimosVars.BIT_GRANADE;
-        fdef.filter.maskBits = AimosVars.BIT_FLOOR | AimosVars.BIT_WALL | AimosVars.BIT_CHARACTER |
-                AimosVars.BIT_BULLET;
+        fdef.filter.categoryBits = Constants.BIT_GRANADE;
+        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | Constants.BIT_CHARACTER |
+                Constants.BIT_BULLET;
         fdef.restitution = 0.5f;
         granade.createFixture(fdef).setUserData("granade");
 
-        shape.setRadius(100f / AimosVars.PTM);
-        fdef.filter.maskBits = AimosVars.BIT_FLOOR | AimosVars.BIT_WALL | AimosVars.BIT_GRANADE |
-                AimosVars.BIT_CHARACTER | AimosVars.BIT_BULLET;
+        shape.setRadius(100f / Constants.PTM);
+        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | Constants.BIT_GRANADE |
+                Constants.BIT_CHARACTER | Constants.BIT_BULLET;
         fdef.isSensor = true;
         granade.createFixture(fdef).setUserData("granade_exp");
 
@@ -450,20 +431,31 @@ import org.aimos.abstractg.handlers.Animation;
 
     }
 
-    public  boolean isForceCrouched(){
+    public boolean isForceCrouched(){
         return keepCrouched;
     }
 
-    public float to2DBoxSize(float f){
-        return f / 2.1f;
+    /**
+     * En este metodo se define la logica
+     * del ataque del jugador hacia el enemigo
+     *
+     * @params enemy Type Enemy
+     **/
+    public void attack(Enemy enemy) {
+
     }
 
-    public Vector2 getPosition() {
-        return body.getPosition();
+    /**
+     * En este metodo se define la interaccion
+     * que el usuario tiene con los objectos y otros personajes
+     * del escenario
+     **/
+    public void interact() {
+
     }
 
 
-    public abstract void createBodyExtra(float x, float y);
+    protected abstract void createBodyExtra(float x, float y);
 
-    public abstract void setAnimations();
+    protected abstract void setExtraAnimations();
 }

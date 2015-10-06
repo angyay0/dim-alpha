@@ -187,7 +187,7 @@ public class Pause extends GameState {
     }
 
     @Override
-    public void disposeState() {
+    protected final void disposeState() {
         Gdx.input.setInputProcessor(actual);
     }
 

@@ -7,7 +7,7 @@ import org.aimos.abstractg.character.Player;
 /**
  * Clase generadora de las armas de las cuales puede ser utilizada por los jugadores y enemigos
  *
- * @author Anonymous
+ * @author EinarGretch
  * @version 1.0.0
  * @date 07/09/2015
  * @company Aimos Studio
@@ -21,11 +21,36 @@ public abstract class Weapon extends Item {
     private float multiplier;
     //El valor del arma (Precio)
     private long value;
-    //Dueño
+    //Dueño del arma
     private Character owner;
 
-    public Weapon(Character o) {
-        owner = o;
+    /**
+     * Default Constructor for Weapon
+     * @param bd bonus damage
+     * @param m multiplier
+     * @param v value
+     */
+    public Weapon(long bd, float m, long v){
+        bonusDamage = bd;
+        multiplier = m;
+        value = v;
+        owner = null;
+    }
+
+    /**
+     * Sets owner of the weapon
+     * @param chara
+     */
+    public void setOwner(Character chara){
+        owner = chara;
+    }
+
+    /**
+     * Gets Owner of the weapon
+     * @return Character
+     */
+    public Character getOwner(){
+        return owner;
     }
 
     /**

@@ -38,12 +38,12 @@ import com.badlogic.gdx.physics.box2d.World;
  	 }
 
 	@Override
-	public void createBodyExtra(float x, float y) {
+	protected final void createBodyExtra(float x, float y) {
 
 	}
 
 	@Override
-	public void setAnimations() {
+	protected final void setExtraAnimations() {
 
 	}
 }
