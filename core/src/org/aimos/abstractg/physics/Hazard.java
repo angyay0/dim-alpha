@@ -32,7 +32,7 @@ import org.aimos.abstractg.character.Player;
 	public long score;
 
 	public Hazard(float posx,float posy){
-		super(posx,posy);
+
 	}
 
 	/**

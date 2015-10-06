@@ -2,6 +2,9 @@ package org.aimos.abstractg.handlers;
 
 import com.badlogic.gdx.audio.Music;
 
+
+import org.aimos.abstractg.handlers.GameConfiguration;
+
 /**
  * Created by DiegoArmando on 02/10/2015.
  * @version 1.0
@@ -31,16 +34,11 @@ public class AudioManager {
     }
 
     public void play(float vol,boolean loop){
-
         audio.setVolume(vol);
         audio.setLooping(loop);
-        audio.play();
-        /*
-        bgMusic = Launcher.res.getMusic("field");
-        bgMusic.setVolume(0.5f);
-        bgMusic.setLooping(true);
-        //bgMusic.play();*/
-
+        if(GameConfiguration.getInstance().getMusic()){
+           audio.play();
+        }
     }
 
     public void stopAudio(){
@@ -54,6 +52,8 @@ public class AudioManager {
     public void play(){
         audio.play();
     }
+
+
     //metodo para leer los ajustes previos y checar
     public boolean setting(){
         return false;

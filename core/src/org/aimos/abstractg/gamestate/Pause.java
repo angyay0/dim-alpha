@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import org.aimos.abstractg.handlers.AudioManager;
+import org.aimos.abstractg.handlers.GameConfiguration;
 
 /**
  * Created by EinarGretch,DiegoBanderas on 30/09/2015.
@@ -70,12 +71,6 @@ public class Pause extends GameState {
             }
         });
 
-        /*
-        btnResume = new TextButton("X",skin);
-        btnResume.addListener(new ClickListener(){@Override public void clicked(InputEvent evt, float x, float y) {
-            gsm.disposeTemp();
-         }});*/
-
         //Btones para Opciones o Regresar a menu principal, depende de la pantalla
         if(opt){
             btnPause[0] = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("menu/creditos.png")))); //options
@@ -103,7 +98,8 @@ public class Pause extends GameState {
         //boton Violencia y check
         final CheckBox Violencia = new CheckBox("Violencia",skin);
         Violencia.setChecked(true);
-        Violencia.setDisabled(true);
+        if(GameConfiguration.getInstance().getFx()) Violencia.setDisabled(true);
+        else Violencia.setDisabled(false);
         btnPause[1] = new Button(new TextureRegionDrawable( new TextureRegion( new Texture( "menu/violenceOff.png"))));//Violence
         btnPause[1].setSize(imgCuad, imgCuad);
         btnPause[1].addListener(new ClickListener() {
@@ -134,11 +130,13 @@ public class Pause extends GameState {
                     if (AudioManager.getInstance().isPlaying()) {
                         Musica.setChecked(false);
                         AudioManager.getInstance().stopAudio();
+                        GameConfiguration.getInstance().saveMusic(false);
                     }
                 } else {
                     if (!AudioManager.getInstance().isPlaying()) {
                         AudioManager.getInstance().play();
                         Musica.setChecked(true);
+                        GameConfiguration.getInstance().saveMusic(true);
                     }
                 }
             }

@@ -5,4 +5,12 @@ package org.aimos.abstractg.physics;
  */
 public class ThrowWeapon extends Weapon {
 
+    public ThrowWeapon(Character o) {
+        super(o);
+    }
+
+    @Override
+    protected boolean subAttack() {
+        return false;
+    }
 }
