@@ -97,9 +97,11 @@ public class Pause extends GameState {
 
         //boton Violencia y check
         final CheckBox Violencia = new CheckBox("Violencia",skin);
-        Violencia.setChecked(true);
-        if(GameConfiguration.getInstance().getFx()) Violencia.setDisabled(true);
-        else Violencia.setDisabled(false);
+        Violencia.setDisabled(true);
+        if(GameConfiguration.getInstance().getFx())
+            Violencia.setChecked(true);
+        else
+            Violencia.setChecked(false);
         btnPause[1] = new Button(new TextureRegionDrawable( new TextureRegion( new Texture( "menu/violenceOff.png"))));//Violence
         btnPause[1].setSize(imgCuad, imgCuad);
         btnPause[1].addListener(new ClickListener() {
@@ -144,8 +146,11 @@ public class Pause extends GameState {
 
         // boton y check Efecto
         final CheckBox Efecto = new CheckBox("Efectos", skin);
-        Efecto.setChecked(true);
         Efecto.setDisabled(true);
+        if(GameConfiguration.getInstance().getFx())
+            Efecto.setChecked(true);
+        else
+            Efecto.setChecked(false);
         btnPause[3] = new Button(new TextureRegionDrawable( new TextureRegion( new Texture( "menu/fxOff.png"))));//Fx
         btnPause[3].setSize(imgCuad, imgCuad);
         btnPause[3].addListener(new ClickListener() {

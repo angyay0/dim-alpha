@@ -7,7 +7,16 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
-import com.sun.org.apache.xml.internal.utils.Constants;
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.OrderedMap;
+
+
 
 
 public class GameConfiguration {
@@ -17,27 +26,29 @@ public class GameConfiguration {
     ///
 
     private Preferences preferences;
-    public static GameConfiguration confg ;
+    public static GameConfiguration config;
+    private boolean flag = false;
 
     public GameConfiguration(){
         super();
+
         preferences = Gdx.app.getPreferences("configurations");
-        if(preferences == null){
+        if(!preferences.contains("soundOn")) {
             setData();
         }
     }
 
     public static GameConfiguration getInstance() {
-        if(confg == null){
-            confg = new GameConfiguration();
+        if(config == null){
+            config = new GameConfiguration();
         }
-        return confg;
+        return config;
     }
 
     private void setData() {
-        preferences.putBoolean("soundOn", false);
-        preferences.putBoolean("musicOn",false);
-        preferences.putBoolean("fxOn",false);
+        preferences.putBoolean("soundOn", true);
+        preferences.putBoolean("musicOn",true);
+        preferences.putBoolean("fxOn",true);
         preferences.flush();
     }
 
@@ -72,6 +83,9 @@ public class GameConfiguration {
     ///Para probar con JSON
     public void loadSettings(){
         jsonPref = new Json();
-        jsonPref.fromJson(GameConfiguration.class,file);
+        jsonPref.fromJson(GameConfiguration.class, file);
+    }
+
+    public void readValues(){
     }
 }
