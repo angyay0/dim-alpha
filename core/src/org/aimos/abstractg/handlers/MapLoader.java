@@ -23,6 +23,8 @@ import org.aimos.abstractg.core.Launcher;
  */
         public class MapLoader {
 
+
+
     World world;
     String level;
     TiledMap tileMap;

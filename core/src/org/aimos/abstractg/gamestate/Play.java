@@ -110,6 +110,8 @@ public class Play extends GameState{
 
     @Override
     public void render() {
+
+
         // clear the screen
         Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
