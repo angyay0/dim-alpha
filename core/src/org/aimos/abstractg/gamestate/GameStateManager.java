@@ -19,8 +19,9 @@ public class GameStateManager {
 
     public static final int SPLASH = 0;
     public static final int MENU = 1;
-    public static final int LEVEL_SELECT = 2;
+    public static final int WORLD_SELECT = 2;
     public static final int SOLO_PLAY = 3;
+    public static final int LEVEL_SELECT =4;
 
 
     public GameStateManager(Launcher game) {
@@ -51,10 +52,12 @@ public class GameStateManager {
                 return new Splash(this);
             case MENU:
                 return new MainMenu(this);
-            case LEVEL_SELECT:
+            case WORLD_SELECT:
                 return new WorldSelectScreen(this);
             case SOLO_PLAY:
                 return new Play(this);
+            case LEVEL_SELECT:
+                return new LevelSelectScreen(this);
             default:
                 return null;
         }

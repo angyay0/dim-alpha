@@ -14,4 +14,6 @@ public class Constants {
     public static final short BIT_DECO = 16;
     public static final short BIT_GRANADE = 32;
     public static final short BIT_BULLET = 64;
+    public static String mapa;
+    public static int botones;
 }

@@ -70,7 +70,7 @@ public class Play extends GameState{
 
         //create player
         player = new Player("player","Hero", world, 120, 120);
-        map = new MapLoader("tutorial",world,player);
+        map = new MapLoader(Constants.mapa,world,player);
         // create walls
         /*createWalls();
 
