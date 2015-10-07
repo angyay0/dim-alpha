@@ -17,6 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.Animation;
+import org.aimos.abstractg.physics.Interactive;
 import org.aimos.abstractg.physics.PhysicalBody;
 import org.aimos.abstractg.physics.Weapon;
 
@@ -45,6 +46,9 @@ import org.aimos.abstractg.physics.Weapon;
     protected int maxJumps = 1;
     protected boolean direction = true;
     protected Weapon weapon;
+    protected Interactive interactive;
+
+    //Constants
     protected float ANIMATION_DELTA = 1/5f;
     protected float BODY_SCALE = 2.1f;
 
@@ -317,6 +321,14 @@ import org.aimos.abstractg.physics.Weapon;
         fdef.filter.maskBits = Constants.BIT_CHARACTER;
         body.createFixture(fdef).setUserData("attack");
 
+        //create fixturedef for player interact
+        shape.setAsBox(((getWidth() / BODY_SCALE)/ 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM , new Vector2(0, (-(getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
+        fdef.shape = shape;
+        fdef.isSensor = true;
+        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
+        fdef.filter.maskBits = Constants.BIT_CHARACTER;
+        body.createFixture(fdef).setUserData("interact");
+
         //dispose shape
         shape.dispose();
 
@@ -451,9 +463,17 @@ import org.aimos.abstractg.physics.Weapon;
      * del escenario
      **/
     public void interact() {
-
+        if(interactive == null) return;
+        interactive.interact();
     }
 
+    public void setInteractive(Interactive i){
+        interactive = i;
+    }
+
+    public void removeInteractive(){
+        interactive = null;
+    }
 
     protected abstract void createBodyExtra(float x, float y);
 

@@ -49,8 +49,6 @@ public class Play extends GameState{
 
     private boolean debug = true;
 
-    private static Music bgMusic;
-
     public static int level;
 
     private Array<Vector2> coords = new Array<Vector2>();
@@ -101,8 +99,6 @@ public class Play extends GameState{
 
     @Override
     public void update(float dt) {
-        //check input
-
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
@@ -315,16 +311,7 @@ public class Play extends GameState{
 
     }
 
-    public void attack(){
-        //depende del weapon
-    }
-
-
     public Player getPlayer() {
         return player;
-    }
-
-    public static Music getMusic(){
-        return bgMusic;
     }
 }

@@ -4,6 +4,8 @@ package org.aimos.abstractg.character;
 import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.handlers.Animation;
+import org.aimos.abstractg.physics.Coin;
+import org.aimos.abstractg.physics.DroppedWeapon;
 
 /**
  * Clase que define al jugador
@@ -55,4 +57,11 @@ public class Player extends Character {
         animations.add(new Animation(atlas.findRegions(RUN_SEQ), ANIMATION_DELTA));
     }
 
+    public void addMoney(Coin c) {
+
+    }
+
+    public void addWeapon(DroppedWeapon w) {
+
+    }
 }

@@ -3,6 +3,8 @@ package org.aimos.abstractg.character;
 
 import com.badlogic.gdx.physics.box2d.World;
 
+import org.aimos.abstractg.physics.Interactive;
+
 /**
  * Representa el personaje no jugable
  * puede relizar acciones mediante un script en LUA
@@ -10,12 +12,12 @@ import com.badlogic.gdx.physics.box2d.World;
  * @version 1.0.3
  * @date 07/09/2015
  * @updated 14/09/2015
- * @author Anngyay0,Gretch
+ * @author EinarGretch,Angyay0
  * @company AIMOS Studio
  *
  **/
 
- public class NPC extends Character {
+ public class NPC extends Character implements Interactive{
 
  	/**
  	 * @param name del personaje Type String
@@ -26,17 +28,6 @@ import com.badlogic.gdx.physics.box2d.World;
 		 super(spriteSrc, name, world, x, y);
 	 }
 
- 	 /**
- 	  * Metodo para cargar el behavior del NPC
- 	  * desde un script en LUA
- 	  *
- 	  * @param file del archivo Type String
- 	  **/
- 	 public	boolean loadScript(String file){
-
-		return false;
- 	 }
-
 	@Override
 	protected final void createBodyExtra(float x, float y) {
 
@@ -44,6 +35,11 @@ import com.badlogic.gdx.physics.box2d.World;
 
 	@Override
 	protected final void setExtraAnimations() {
+
+	}
+
+	@Override
+	public void interact() {
 
 	}
 }

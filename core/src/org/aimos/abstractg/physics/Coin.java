@@ -1,6 +1,8 @@
 //abstractg->item->Pixel
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.physics.box2d.World;
+
 /**
  * Clase que representa el objeto pixel
  * que representa la moneda del juego
@@ -29,15 +31,20 @@ public class Coin extends Item {
 
 	};
 
-	//Tipo del pixel
-	public COIN_TYPE type = COIN_TYPE.BLUE;
+	//Tipo de moneda
+	public COIN_TYPE type;
 
-	public Coin(COIN_TYPE type, float px, float py){
+	private Coin(COIN_TYPE type, float px, float py){
 		this.type = type;
 
 	}
 
-	public int getPixelValue(){
+	public int getValue(){
 		return type.getValue();
 	}
+
+    public static Coin generateCoins(World w, float x, float y){
+
+        return null;
+    }
 }

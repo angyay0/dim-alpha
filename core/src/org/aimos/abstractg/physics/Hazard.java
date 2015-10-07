@@ -14,7 +14,7 @@ import org.aimos.abstractg.character.Player;
  *
  **/
 
- public class Hazard extends Item {
+ public class Hazard extends Item implements Interactive{
 
 	//Lista para especificar el tipo de efectos
 	public enum EFFECT_TYPE {
@@ -43,5 +43,9 @@ import org.aimos.abstractg.character.Player;
 	public void inflictHazard(Player player){
 
 		//TO IMPLEMENT
+	}
+	@Override
+	public void interact() {
+
 	}
  }
