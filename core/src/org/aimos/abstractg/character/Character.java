@@ -76,9 +76,9 @@ public abstract class Character extends PhysicalBody {
      * @param pos
      */
     protected Character(String spriteSrc, String name, World world, Vector2 pos) {
+        super(world);
         this.name = name;
         atlas = Launcher.res.getAtlas(spriteSrc);
-        this.world = world;
         animations = new Array<Animation>();
         animations.add(new Animation(atlas.findRegions(STAND_SEQ), ANIMATION_DELTA));
         animations.add(new Animation(atlas.findRegions(WALK_SEQ), ANIMATION_DELTA));
@@ -322,7 +322,7 @@ public abstract class Character extends PhysicalBody {
         fdef.shape = shape;
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
-        fdef.filter.maskBits = (short) (Constants.BIT.WALL.BIT() | Constants.BIT.FLOOR.BIT());
+        fdef.filter.maskBits = (short) (Constants.BIT.WALL.BIT() | Constants.BIT.FLOOR.BIT() | Constants.BIT.ITEM.BIT());
         body.createFixture(fdef).setUserData(Constants.DATA.HEAD);
 
         //create fixturedef for player shoulders

@@ -14,6 +14,10 @@ public abstract class PhysicalBody {
     protected Body body = null;
     protected boolean visible = true;
 
+    public PhysicalBody(World w){
+        world = w;
+    }
+
     public Body getBody(){
         return body;
     }

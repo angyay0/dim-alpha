@@ -31,7 +31,7 @@ public class Constants {
     }
 
     public static enum DATA {
-        BODY, FOOT, HEAD, SHOULDER, ATTACK, CELL, INTERACTIVE, PICKUP, WEAPON;
+        BODY, FOOT, HEAD, SHOULDER, ATTACK, CELL, INTERACTIVE, PICKUP, WEAPON, GRANADE, EXPLOSION, BULLET;
     };
 
 

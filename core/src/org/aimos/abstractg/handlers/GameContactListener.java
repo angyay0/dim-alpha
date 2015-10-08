@@ -75,6 +75,7 @@ public class GameContactListener implements ContactListener {
             PickUp pi = (PickUp) fa.getBody().getUserData();
             if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fb.getBody().getUserData();
+                System.out.println("Recoger");
                 if(pi instanceof Coin) {
                     p.addMoney((Coin) pi);
                 }else if(pi instanceof DroppedWeapon) {
@@ -86,6 +87,7 @@ public class GameContactListener implements ContactListener {
             PickUp pi = (PickUp) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fa.getBody().getUserData();
+                System.out.println("Recoger");
                 if(pi instanceof Coin) {
                     p.addMoney((Coin) pi);
                 }else if(pi instanceof DroppedWeapon) {
@@ -121,14 +123,14 @@ public class GameContactListener implements ContactListener {
         //Fall
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Player p = (Player) fa.getBody().getUserData();
-            if(!p.isJumping()&& !p.isInTransition()){
+            if(!(p.isJumping() || p.isInTransition())){
                 //p.fall(); //needs fixing
             }
         }
         if(fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
             Player p = (Player) fb.getBody().getUserData();
-            if(!p.isJumping() && !p.isInTransition()){
-                //p.fall(); //needs fixing
+            if(!(p.isJumping() || p.isInTransition())){
+                //op.fall(); //needs fixing
             }
         }
         //Crouch
@@ -137,7 +139,6 @@ public class GameContactListener implements ContactListener {
             if(fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.CELL)) {
                 if (p.isCrouching() && p.isForceCrouched()){
                     p.forceCrouch(false);
-                    System.out.println("unforce");
                 }
             }
         }
@@ -146,7 +147,6 @@ public class GameContactListener implements ContactListener {
             if(fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.CELL)){
                 if (p.isCrouching() && p.isForceCrouched()){
                     p.forceCrouch(false);
-                    System.out.println("unforce");
                 }
             }
         }

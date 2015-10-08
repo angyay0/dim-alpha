@@ -3,6 +3,7 @@ package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
+import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.character.Character;
 
@@ -34,7 +35,8 @@ public abstract class Weapon extends Item {
      * @param m multiplier
      * @param v value
      */
-    public Weapon(long bd, float m, long v){
+    public Weapon(long bd, float m, long v, World w){
+        super(w);
         bonusDamage = bd;
         multiplier = m;
         value = v;

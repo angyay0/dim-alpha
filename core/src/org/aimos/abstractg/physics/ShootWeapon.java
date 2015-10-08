@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
+import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.handlers.Constants;
 
@@ -23,8 +24,8 @@ public class ShootWeapon extends Weapon {
      * @param m  multiplier
      * @param v  value
      */
-    public ShootWeapon(long bd, float m, long v) {
-        super(bd, m, v);
+    public ShootWeapon(long bd, float m, long v, World w) {
+        super(bd, m, v, w);
     }
 
     @Override
@@ -32,7 +33,7 @@ public class ShootWeapon extends Weapon {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.bullet = true;
-        bdef.position.set(new Vector2(getX(), getY()));
+        bdef.position.set(getPosition().cpy());
 
         Body bullet = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
@@ -47,7 +48,7 @@ public class ShootWeapon extends Weapon {
                         Constants.BIT.CHARACTER.BIT() | Constants.BIT.BULLET.BIT());
         fdef.restitution = 0.1f;
 
-        bullet.createFixture(fdef).setUserData("bullet");
+        bullet.createFixture(fdef).setUserData(Constants.DATA.BULLET);
         shape.dispose();
 
         MassData mass = bullet.getMassData();
@@ -61,7 +62,7 @@ public class ShootWeapon extends Weapon {
     protected final void createBody(Vector2 pos) {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.position.set(new Vector2(getX(), getY()));
+        bdef.position.set(pos.cpy());
         body = world.createBody(bdef);
 
         //Crear Joint

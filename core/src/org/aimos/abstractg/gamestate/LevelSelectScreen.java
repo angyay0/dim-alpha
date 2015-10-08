@@ -51,6 +51,9 @@ public class LevelSelectScreen extends GameState {
         sb.begin();
         sb.draw(background, 120f, 0f, 600f, 480f);
         font.draw(sb, "Selecciona El Nivel", 200, 450);
+        font.draw(sb, "Tutorial", 60f, 110f);
+        font.draw(sb, "Ciudad 1",320,110f);
+        font.draw(sb, "Ciudad 2",520,110f);
         sb.end();
         super.act(delta);
         super.draw();
@@ -64,21 +67,19 @@ public class LevelSelectScreen extends GameState {
 
 
     public void initButtons(){
-        buttonsLevel = new Button[3];//Arreglar
-        //for(int i=0; i < buttonsLevel.length ; i++){
+        buttonsLevel = new Button[3];
         buttonsLevel[0]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Level
         buttonsLevel[1]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Level
         buttonsLevel[2]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Level
         Button btn  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("back")))); //back
-
-        //}
 
         buttonsLevel[0].setSize(dCircular, dCircular);
         buttonsLevel[0].setPosition(50f, 100f);
         buttonsLevel[0].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("cityla");
+                setLevel("tutorial");
+
             }
         });
 
@@ -87,7 +88,7 @@ public class LevelSelectScreen extends GameState {
         buttonsLevel[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("tutorial");
+                setLevel("cityla");
             }
         });
 
@@ -97,10 +98,9 @@ public class LevelSelectScreen extends GameState {
         buttonsLevel[2].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("citylc");
+                setLevel("citylb");
             }
         });
-
 
         btn.setSize(140f, 95f);
         btn.setPosition(10f, 380f);
@@ -115,7 +115,7 @@ public class LevelSelectScreen extends GameState {
 
 
     public void setLevel(String mapLevel){
-        //Constants.mapa = mapLevel;
+        Play.levelSelect(mapLevel);
         gsm.setState(GameStateManager.SOLO_PLAY);
     }
 }

@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.gamestate.Play;
 
 /**
  * Created by Herialvaro on 06/10/2015.
@@ -27,7 +28,6 @@ public class MapLoader {
 
 
     World world;
-    String level;
     TiledMap tileMap;
     OrthogonalTiledMapRenderer tmRenderer;
     int tileMapWidth, tileMapHeight, tileSize;
@@ -39,13 +39,13 @@ public class MapLoader {
     Texture bg;
     private Player player;
 
-    public MapLoader(String level, World world, Player player) {
+    public MapLoader(World world, Player player){
+        super();
         this.world = world;
-        this.level = level;
         this.player = player;
         b2dRenderer = new Box2DDebugRenderer();
         batch = new SpriteBatch();
-        bg = new Texture(level + "/bck.png");
+        bg = new Texture(Play.getMap() + "/bck.png");
         createMap();
         //Camera to Fx
         fx = new BoundedCamera();
@@ -119,9 +119,9 @@ public class MapLoader {
 
         // load tile map and map renderer
         try {
-            tileMap = new TmxMapLoader().load(level + "/" + level + ".tmx");
+            tileMap = new TmxMapLoader().load(Play.getMap() + "/" + Play.getMap() + ".tmx");
         } catch (Exception e) {
-            Gdx.app.error("ERROR ", "Cannot find file: " + level + ".tmx");
+            Gdx.app.error("ERROR ", "Cannot find file: " + Play.getMap() + ".tmx");
             Gdx.app.exit();
         }
         tileMapWidth = Integer.parseInt(tileMap.getProperties().get("width").toString());
@@ -214,7 +214,7 @@ public class MapLoader {
                 width++;
 
             }
-            if (width > 0) {
+            if (width > 0){
                 size.add(new Vector2());
                 size.get(size.size - 1).x = width;
                 coords.get(coords.size - 1).y = row;
@@ -227,7 +227,7 @@ public class MapLoader {
                             check = true;
                         }
                     }
-                    if (check) {
+                    if (check){
                         coords.pop();
                         size.pop();
                     }

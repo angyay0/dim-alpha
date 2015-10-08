@@ -40,6 +40,7 @@ public class Launcher extends Game {
         res = new org.aimos.abstractg.handlers.Resources();
         res.loadAtlas("hero/player.atlas");
         res.loadAtlas("control/control.atlas");
+        res.loadAtlas("coins/coins.atlas");
         //------------------------
         res.loadTexture("menu/fondo.png");
         res.loadTexture("menu/mask.png");

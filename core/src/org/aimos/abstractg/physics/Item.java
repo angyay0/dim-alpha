@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.handlers.Constants;
 
@@ -22,6 +23,10 @@ import org.aimos.abstractg.handlers.Constants;
 public abstract class Item extends PhysicalBody{
 
     protected AtlasRegion sprite;
+
+    public Item(World w) {
+        super(w);
+    }
 
     @Override
     public void render(SpriteBatch sb) {

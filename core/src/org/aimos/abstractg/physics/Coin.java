@@ -27,40 +27,35 @@ public class Coin extends Item implements PickUp{
 
     //Lista para especificar el tipo de pixel y valor
 	public enum COIN_TYPE {
-		BLUE(1),
-		RED(50),
-		GOLD(100);
+		BLUE(1, "coina"),
+		RED(50, "coinb"),
+		GOLD(100, "coinc");
 
 		private int value;
+        private String spriteSrc;
 
-		COIN_TYPE(int val){
+		COIN_TYPE(int val, String src){
 			value = val;
+            spriteSrc = src;
 		}
-		public int getValue(){ return value; }
+		public int getValue(){
+            return value;
+        }
+        public String getSrc(){
+            return spriteSrc;
+        }
+
 
 	};
 
 	//Tipo de moneda
 	public COIN_TYPE type;
 
-	private Coin(COIN_TYPE type, Vector2 pos){
+	private Coin(COIN_TYPE type, World world, Vector2 pos){
+        super(world);
 		this.type = type;
-        TextureAtlas atlas = Launcher.res.getAtlas("");
-        String spriteSrc;
-        switch (type) {
-            case BLUE:
-                spriteSrc = "coina";
-                break;
-            case RED:
-                spriteSrc = "coinb";
-                break;
-            case GOLD:
-                spriteSrc = "coinc";
-                break;
-            default:
-                spriteSrc = null;
-        }
-        sprite = atlas.findRegion(spriteSrc);
+        TextureAtlas atlas = Launcher.res.getAtlas("coins");
+        sprite = atlas.findRegion(type.getSrc());
         createBody(pos);
 	}
 
@@ -69,12 +64,20 @@ public class Coin extends Item implements PickUp{
 	}
 
     public static Array<Coin> generateCoins(World w, Vector2 pos, long val){
-
-        return null;
+        Array<Coin> coins = new Array<Coin>();
+        long res;
+        for(COIN_TYPE c : COIN_TYPE.values()){
+            res = val % c.getValue();
+            for(int i = 0; i < val / c.getValue(); i++){
+                coins.add(new Coin(c, w, pos));
+            }
+            val = res;
+        }
+        return coins;
     }
 
     public static Array<Coin> generateCoins(World w, Array<Vector2> points, long val){
-
+        //sprint 3
         return null;
     }
 

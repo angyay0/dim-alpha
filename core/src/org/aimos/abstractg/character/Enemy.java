@@ -40,15 +40,6 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 		super(spriteSrc, name, world, pos);
 	}
 
-	/**
-	 * Metodo para cargar la IA del personaje
-	 *
-	 * @param file nombre del archivo Type String
-	 **/
-	public void loadAIScript(String file){
-
-	}
-
 	@Override
 	protected void createBodyExtra(Vector2 pos) {
 
@@ -60,6 +51,6 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 	}
 
 	public DroppedWeapon dropWeapon(){
-		return new DroppedWeapon(weapon, getPosition().cpy());
+		return new DroppedWeapon(weapon, world, getPosition().cpy());
 	}
 }

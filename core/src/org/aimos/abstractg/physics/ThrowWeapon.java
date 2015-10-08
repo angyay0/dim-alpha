@@ -5,6 +5,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
+import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.handlers.Constants;
 
@@ -20,8 +21,8 @@ public class ThrowWeapon extends Weapon {
      * @param m  multiplier
      * @param v  value
      */
-    public ThrowWeapon(long bd, float m, long v) {
-        super(bd, m, v);
+    public ThrowWeapon(long bd, float m, long v, World w) {
+        super(bd, m, v, w);
     }
 
     @Override
@@ -49,13 +50,13 @@ public class ThrowWeapon extends Weapon {
         fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.CHARACTER.BIT() |
                         Constants.BIT.BULLET.BIT());
         fdef.restitution = 0.5f;
-        body.createFixture(fdef).setUserData("bullet");
+        body.createFixture(fdef).setUserData(Constants.DATA.GRANADE);
 
         shape.setRadius(100f / Constants.PTM);
         fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.GRANADE.BIT() |
                         Constants.BIT.CHARACTER.BIT() | Constants.BIT.BULLET.BIT());
         fdef.isSensor = true;
-        body.createFixture(fdef).setUserData("body_exp");
+        body.createFixture(fdef).setUserData(Constants.DATA.EXPLOSION);
 
         shape.dispose();
 

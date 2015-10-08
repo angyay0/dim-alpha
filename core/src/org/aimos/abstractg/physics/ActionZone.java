@@ -2,11 +2,17 @@ package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.World;
 
 /**
  * Created by EinarGretch on 06/10/2015.
  */
 public class ActionZone extends PhysicalBody implements Interactive{
+
+    public ActionZone(World w) {
+        super(w);
+    }
+
     @Override
     public void render(SpriteBatch sb) {
 
