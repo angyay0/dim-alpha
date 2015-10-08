@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -15,8 +14,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.Animation;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.physics.Interactive;
 import org.aimos.abstractg.physics.PhysicalBody;
 import org.aimos.abstractg.physics.Weapon;
@@ -25,15 +24,14 @@ import org.aimos.abstractg.physics.Weapon;
  * Clase que representa el modelo abstracto
  * del personaje para los escenarios
  *
+ * @author Angyay0, EinarGretch
  * @version 1.0.3
  * @date 07/09/2015
  * @updated 14/09/2015
- * @author Angyay0,EinarGretch
  * @company AIMOS Studio
- *
  **/
 
- public abstract class Character extends PhysicalBody{
+public abstract class Character extends PhysicalBody {
 
     protected String name;
     protected int animationIndex = 0;
@@ -47,102 +45,114 @@ import org.aimos.abstractg.physics.Weapon;
     protected boolean direction = true;
     protected Weapon weapon;
     protected Interactive interactive;
+    // Hp value of the character
+    protected long hp;
+    // Base Attack value of the character
+    protected long atk;
+    // Score the character has or gives when killed
+    protected long score;
+    // Current money the character has or gives when killed
+    protected long money;
 
     //Constants
-    protected float ANIMATION_DELTA = 1/5f;
+    protected float ANIMATION_DELTA = 1 / 5f;
     protected float BODY_SCALE = 2.1f;
 
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0
     protected static final String WALK_SEQ = "walk"; // 1
     protected static final String JUMP_SEQ = "jump"; // 2
-    private static final String CROUCH_SEQ = "crouch"; // 3
-    private static final String CROUCH_MOVE_SEQ = "crouch"; // 4
+    protected static final String CROUCH_SEQ = "crouch"; // 3
+    protected static final String CROUCH_MOVE_SEQ = "crouch"; // 4
+    protected boolean jumping;
+    private boolean invencible = false;
+    private long attack;
+    private boolean transition;
 
     /**
-     *
      * @param spriteSrc
      * @param name
      * @param world
-     * @param x
-     * @param y
+     * @param pos
      */
-     protected Character(String spriteSrc, String name, World world, float x, float y) {
-         this.name = name;
-         atlas = Launcher.res.getAtlas(spriteSrc);
-         this.world = world;
-         animations = new Array<Animation>();
-         animations.add(new Animation(atlas.findRegions(STAND_SEQ), ANIMATION_DELTA));
-         animations.add(new Animation(atlas.findRegions(WALK_SEQ), ANIMATION_DELTA));
-         animations.add(new Animation(atlas.findRegions(JUMP_SEQ), ANIMATION_DELTA));
-         animations.add(new Animation(atlas.findRegions(CROUCH_SEQ), ANIMATION_DELTA));
-         animations.add(new Animation(atlas.findRegions(CROUCH_MOVE_SEQ), ANIMATION_DELTA));
-         setExtraAnimations();
-         createBody(x, y);
-     }
+    protected Character(String spriteSrc, String name, World world, Vector2 pos) {
+        this.name = name;
+        atlas = Launcher.res.getAtlas(spriteSrc);
+        this.world = world;
+        animations = new Array<Animation>();
+        animations.add(new Animation(atlas.findRegions(STAND_SEQ), ANIMATION_DELTA));
+        animations.add(new Animation(atlas.findRegions(WALK_SEQ), ANIMATION_DELTA));
+        animations.add(new Animation(atlas.findRegions(JUMP_SEQ), ANIMATION_DELTA));
+        animations.add(new Animation(atlas.findRegions(CROUCH_SEQ), ANIMATION_DELTA));
+        animations.add(new Animation(atlas.findRegions(CROUCH_MOVE_SEQ), ANIMATION_DELTA));
+        setExtraAnimations();
+        createBody(pos);
+    }
 
-    public Animation getAnimation(){
+    public Animation getAnimation() {
         return animations.get(animationIndex);
     }
 
-    public Body getBody(){
+    public Body getBody() {
         return body;
     }
 
-    public  void forceCrouch(boolean keepCrouched){
+    public void forceCrouch(boolean keepCrouched) {
         this.keepCrouched = keepCrouched;
     }
 
 
-    public boolean setBody(Body body){
-        if(body != null) {
+    public boolean setBody(Body body) {
+        if (body != null) {
             this.body = body;
             return true;
         }
         return false;
     }
 
-    public void setDirection(boolean dir){
-        if(direction == dir) return;
+    public void setDirection(boolean dir) {
+        if (direction == dir) return;
         direction = dir;
         if (direction) flip(false, false);
         else flip(true, false);
     }
 
-    public boolean getDirection(){
+    public boolean getDirection() {
         return direction;
     }
 
-    public void setWalking(boolean w){
-        if(walking == w) return;
+    public void setWalking(boolean w) {
+        if (walking == w) return;
         walking = w;
-        if(walking){
-            if(isCrouching()){
+        if (walking) {
+            if (isCrouching()) {
                 setAnimation(4);
-            }else{
+            } else {
                 setAnimation(1);
             }
-        }else{
-            if(isCrouching()){
+        } else {
+            if (isCrouching()) {
                 setAnimation(3);
-            }else{
+            } else {
                 setAnimation(0);
             }
         }
     }
 
-    public boolean isWalking(){
+    public boolean isWalking() {
         return walking;
     }
 
-    public boolean canJump(){
-        return jumps >= maxJumps;
-    };
+    public boolean canJump() {
+        return (jumps > 0);
+    }
 
-    public void setCrouching(boolean crouch){
-        if(this.crouch == crouch) return;
+    ;
+
+    public void setCrouching(boolean crouch) {
+        if (this.crouch == crouch) return;
         this.crouch = crouch;
-        if(isOnGround()) {
+        if (isOnGround()) {
             if (isCrouching()) {
                 if (isWalking()) {
                     setAnimation(3);
@@ -160,19 +170,21 @@ import org.aimos.abstractg.physics.Weapon;
     }
 
     @Override
-    public int getWidth(){
+    public int getWidth() {
         return animations.get(animationIndex).getFrame().getRegionWidth();
     }
 
     @Override
-    public int getHeight(){
+    public int getHeight() {
         return animations.get(animationIndex).getFrame().getRegionHeight();
     }
 
     public void setAnimation(int i) {
-        if(animationIndex == i || animationIndex < 0 || animationIndex > animations.size) return;
+        if (animationIndex == i || i < 0 || i > animations.size) return;
         animationIndex = i;
-        updateBody(i);
+        transition = true;
+        updateBody();
+        transition = false;
     }
 
     public void update(float dt) {
@@ -186,12 +198,13 @@ import org.aimos.abstractg.physics.Weapon;
         sb.end();
     }
 
-    public boolean jump(){
-        if(isCrouching()){
+    public boolean jump() {
+        if (isCrouching()) {
             return false;
-        }else {
+        } else {
             float forceY = (getBody().getMass() * (5f / (1 / 60.0f))); // f = mv/t
-            if (jumps > 0) {
+            if (canJump()) {
+                jumping = true;
                 setAnimation(2);
                 getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
                 jumps--;
@@ -202,55 +215,56 @@ import org.aimos.abstractg.physics.Weapon;
         }
     }
 
-    public void flip(boolean x, boolean y){
-        for (Animation a: animations) {
-            a.flip(x,y);
+    public void flip(boolean x, boolean y) {
+        for (Animation a : animations) {
+            a.flip(x, y);
         }
     }
 
-    public boolean isOnGround(){
-        return jumps == maxJumps;
+    public boolean isOnGround() {
+        return jumps == maxJumps && !isJumping();
     }
 
-    public void onGround(){
-        if(isOnGround()) return;
+    public void onGround() {
+        if (isOnGround()) return;
         jumps = maxJumps;
-        if(isWalking()) {
-            if(isCrouching()) {
+        jumping = false;
+        if (isWalking()) {
+            if (isCrouching()) {
                 setAnimation(4);
-            }else{
+            } else {
                 setAnimation(1);
             }
-        }else {
-            if(isCrouching()) {
+        } else {
+            if (isCrouching()) {
                 setAnimation(3);
-            }else{
+            } else {
                 setAnimation(0);
             }
         }
     }
 
-    public boolean move(boolean direction){
+    public boolean move(boolean direction) {
         float desiredVelX;
         setDirection(direction);
-        if(direction){
-            if(isOnGround()) {
-                if(isCrouching()) {
+        if (direction) {
+            if (isOnGround()) {
+                if (isCrouching()) {
                     desiredVelX = 0.5f;
-                }else{
+                } else {
                     desiredVelX = 0.7f;
                 }
-            }else{
+            } else {
                 desiredVelX = 0.1f;
             }
-        }else{
-            if(isOnGround()) {
-                if(isCrouching()) {
+        } else {
+            if (isOnGround()) {
+                if (isCrouching()) {
                     desiredVelX = -0.5f;
-                }else{
+                } else {
                     desiredVelX = -0.7f;
                 }
-            }else{
+            } else {
                 desiredVelX = -0.1f;
             }
         }
@@ -259,15 +273,21 @@ import org.aimos.abstractg.physics.Weapon;
         return true;
     }
 
-    public boolean isCrouching(){
+    public void fall() {
+        setAnimation(2);// cambiar a fall
+        jumps--;
+    }
+
+    public boolean isCrouching() {
         return crouch;
     }
 
-    public void createBody(float x, float y) {
+    @Override
+    public void createBody(Vector2 pos) {
         // create bodydef
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
-        bodyDef.position.set(x / Constants.PTM, y / Constants.PTM);
+        bodyDef.position.set(pos.x / Constants.PTM, pos.y / Constants.PTM);
 
         // create body from bodydef
         body = world.createBody(bodyDef);
@@ -281,59 +301,51 @@ import org.aimos.abstractg.physics.Weapon;
         fdef.shape = shape;
         fdef.density = 1;
         fdef.friction = 1f;
-        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
-        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | //Constants.BIT_GRANADE |
-                Constants.BIT_BULLET;
+        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | //Constants.bit.GRANADE.BIT() |
+                        Constants.BIT.BULLET.BIT());
         fdef.restitution = 0f;
 
         // create character collision box fixture
-        body.createFixture(fdef).setUserData("body");
+        body.createFixture(fdef).setUserData(Constants.DATA.BODY);
 
         // create fixturedef for player foot
-        shape.setAsBox(((getWidth() / BODY_SCALE)/ 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM , new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+        shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
-        fdef.filter.maskBits = Constants.BIT_FLOOR;
-        body.createFixture(fdef).setUserData("foot");
+        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.maskBits = Constants.BIT.FLOOR.BIT();
+        body.createFixture(fdef).setUserData(Constants.DATA.FOOT);
 
         //create fixturedef for player head
-        shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM , new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
+        shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
-        fdef.filter.maskBits = Constants.BIT_WALL | Constants.BIT_FLOOR;
-        body.createFixture(fdef).setUserData("head");
+        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.maskBits = (short) (Constants.BIT.WALL.BIT() | Constants.BIT.FLOOR.BIT());
+        body.createFixture(fdef).setUserData(Constants.DATA.HEAD);
 
         //create fixturedef for player shoulders
-        shape.setAsBox(((getWidth() / BODY_SCALE)* 1.1f) / Constants.PTM, ((getHeight() / BODY_SCALE ) / 4) / Constants.PTM );
+        shape.setAsBox(((getWidth() / BODY_SCALE) * 1.1f) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
-        fdef.filter.maskBits = Constants.BIT_WALL;
-        body.createFixture(fdef).setUserData("shoulders");
+        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.maskBits = Constants.BIT.WALL.BIT();
+        body.createFixture(fdef).setUserData(Constants.DATA.SHOULDER);
 
         //create fixturedef for player attack zone
-        shape.setAsBox(((getWidth() / BODY_SCALE) * 1.4f) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM );
+        shape.setAsBox(((getWidth() / BODY_SCALE) * 1.4f) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
-        fdef.filter.maskBits = Constants.BIT_CHARACTER;
-        body.createFixture(fdef).setUserData("attack");
-
-        //create fixturedef for player interact
-        shape.setAsBox(((getWidth() / BODY_SCALE)/ 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM , new Vector2(0, (-(getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
-        fdef.shape = shape;
-        fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT_CHARACTER;
-        fdef.filter.maskBits = Constants.BIT_CHARACTER;
-        body.createFixture(fdef).setUserData("interact");
+        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.maskBits = Constants.BIT.CHARACTER.BIT();
+        body.createFixture(fdef).setUserData(Constants.DATA.ATTACK);
 
         //dispose shape
         shape.dispose();
 
         //set character extra fixtures
-        createBodyExtra(x, y);
+        createBodyExtra(pos);
         //sets body's userData as this player
         body.setUserData(this);
 
@@ -345,11 +357,10 @@ import org.aimos.abstractg.physics.Weapon;
         body.setFixedRotation(true);
     }
 
-    public void updateBody(int pose){
+    protected void updateBody() {
         Fixture fix = getBody().getFixtureList().get(0);
         PolygonShape shape = (PolygonShape) fix.getShape();
-
-        switch (pose){
+        switch (animationIndex) {
             case 0://stand
             case 1://walk
             case 2://jump
@@ -375,86 +386,19 @@ import org.aimos.abstractg.physics.Weapon;
         getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
     }
 
-    public void shootAtk(){
-        BodyDef bdef = new BodyDef();
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.bullet = true;
-        bdef.position.set(new Vector2(getX(),getY()));
-
-        Body bullet = world.createBody(bdef);
-        FixtureDef fdef = new FixtureDef();
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(5f / Constants.PTM);
-        fdef.shape = shape;
-        fdef.friction = 0;
-        fdef.density = 1;
-        fdef.filter.categoryBits = Constants.BIT_BULLET;
-        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | Constants.BIT_GRANADE |
-                Constants.BIT_CHARACTER | Constants.BIT_BULLET;
-        fdef.restitution = 0.1f;
-
-        bullet.createFixture(fdef).setUserData("bullet");
-        shape.dispose();
-
-        MassData mass = bullet.getMassData();
-        mass.mass = 0.2f;
-        body.setMassData(mass);
-
-        bullet.applyForce(new Vector2((bullet.getMass() * (getBody().getLinearVelocity().x + 30.0f) / (1 / 60.0f)), 0), bullet.getWorldCenter(), true);
-    }
-
-    public void throwAtk(){
-        BodyDef bdef = new BodyDef();
-        bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.position.set(getPosition().cpy());
-
-        Body granade = world.createBody(bdef);
-        FixtureDef fdef = new FixtureDef();
-
-        CircleShape shape = new CircleShape();
-        shape.setRadius(10f / Constants.PTM);
-        fdef.shape = shape;
-        fdef.friction = 1;
-        fdef.density = 1;
-        fdef.filter.categoryBits = Constants.BIT_GRANADE;
-        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | Constants.BIT_CHARACTER |
-                Constants.BIT_BULLET;
-        fdef.restitution = 0.5f;
-        granade.createFixture(fdef).setUserData("granade");
-
-        shape.setRadius(100f / Constants.PTM);
-        fdef.filter.maskBits = Constants.BIT_FLOOR | Constants.BIT_WALL | Constants.BIT_GRANADE |
-                Constants.BIT_CHARACTER | Constants.BIT_BULLET;
-        fdef.isSensor = true;
-        granade.createFixture(fdef).setUserData("granade_exp");
-
-        shape.dispose();
-
-        MassData mass = granade.getMassData();
-        mass.mass = 0.5f;
-        body.setMassData(mass);
-
-        granade.applyForce(new Vector2((granade.getMass() * (getBody().getLinearVelocity().x + 3.5f) / (1 / 60.0f)),
-                (granade.getMass() * (getBody().getLinearVelocity().y + 3.0f) / (1 / 60.0f))), granade.getWorldCenter(), true);
-    }
-
-    public void meeleAtk(){
-
-    }
-
-    public boolean isForceCrouched(){
+    public boolean isForceCrouched() {
         return keepCrouched;
     }
 
     /**
-     * En este metodo se define la logica
-     * del ataque del jugador hacia el enemigo
-     *
-     * @params enemy Type Enemy
+     * Attack Logic
      **/
-    public void attack(Enemy enemy) {
-
+    public void attack() {
+        if(weapon != null) {
+            weapon.attack();
+        }else{
+            //Ataque con puño
+        }
     }
 
     /**
@@ -463,19 +407,52 @@ import org.aimos.abstractg.physics.Weapon;
      * del escenario
      **/
     public void interact() {
-        if(interactive == null) return;
+        if (interactive == null) return;
         interactive.interact();
     }
 
-    public void setInteractive(Interactive i){
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
+        this.weapon.setOwner(this);
+    }
+
+    public Weapon removeWeapon() {
+        Weapon w = weapon;
+        weapon = null;
+        w.dispose();
+        return w;
+    }
+
+    public void setInteractive(Interactive i) {
         interactive = i;
     }
 
-    public void removeInteractive(){
+    public void removeInteractive() {
         interactive = null;
     }
 
-    protected abstract void createBodyExtra(float x, float y);
+    protected abstract void createBodyExtra(Vector2 pos);
 
     protected abstract void setExtraAnimations();
+
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public boolean damage(long d) {
+        if(invencible){
+            return false;
+        }else{
+            hp -= d;
+            return true;
+        }
+    }
+
+    public long getAttack() {
+        return attack;
+    }
+
+    public boolean isInTransition() {
+        return transition;
+    }
 }

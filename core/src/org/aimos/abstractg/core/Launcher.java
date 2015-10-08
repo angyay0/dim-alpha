@@ -39,7 +39,7 @@ public class Launcher extends Game {
         //Load Resources
         res = new org.aimos.abstractg.handlers.Resources();
         res.loadAtlas("hero/player.atlas");
-        res.loadAtlas("ui/control.atlas");
+        res.loadAtlas("control/control.atlas");
         //------------------------
         res.loadTexture("menu/fondo.png");
         res.loadTexture("menu/mask.png");
@@ -54,7 +54,7 @@ public class Launcher extends Game {
         res.loadTexture("splash/aimos.png");
         res.loadTexture("splash/studio.png");
 
-        res.loadTexture("ui/bgcpad.png");
+        res.loadTexture("menu/bgcpad.png");
         res.loadTexture("menu/back.png");
         res.loadTexture("menu/pause.png");
 

@@ -25,16 +25,22 @@ public class Hud{
 
     //Default Buttons Name With Atlas file
     //Salto
-    private static final String JUMP_ATLAS = "boton_jump";
-    //Ataque
-    private static final String ATTACK_ATLAS = "boton_attack";
-    //Pad
-    private static final String PAD_ATLAS = "pad";
+    private static final String JUMP = "jump";
+    //Ataque Melee
+    private static final String MELEE = "punch";
+    //Ataque disparo
+    private static final String SHOOT = "shoot";
+    //Ataque granada
+    private static final String THROW = "granade";
+    //Pad BG
+    private static final String BGPAD = "bgpad";
+    //Pad Circle
+    private static final String PAD = "circle";
     //Default Buttons Name With Atlas file
     //MARGEN (Tile)
     private static final float CTRL_MARGIN = 50f;
     //Square Size for circle pad
-    private static final float CTRL_SIZE = 75f;
+    private static final float CTRL_SIZE = 160f;
 
     //Lista con los botones del control
     private List<Button> buttons;
@@ -42,19 +48,18 @@ public class Hud{
     private int posX1, posX2, posY1, posY2;
 
     //Tamaño de las imagenes
-    private float cuadrado = 50f;
+    private float SQUARE = 50f;
 
 
     public Hud(final Play play) {
         super();
         TextureAtlas atlas = Launcher.res.getAtlas("control");
-        AtlasRegion jumpRegion = atlas.findRegion(JUMP_ATLAS);
-        AtlasRegion crossRegion = atlas.findRegion(PAD_ATLAS);
+        AtlasRegion jumpRegion = atlas.findRegion(JUMP);
+        AtlasRegion bgpadRegion = atlas.findRegion(BGPAD);
+        AtlasRegion padRegion = atlas.findRegion(PAD);
+
 
         Button jumpButton = new Button(new TextureRegionDrawable(jumpRegion));
-        /*jumpButton.setWidth(jumpRegion.getRegionWidth());
-        jumpButton.setHeight(jumpRegion.getRegionHeight());
-        */
         jumpButton.setSize(90f, 90f);
         jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(),
                 CTRL_MARGIN);
@@ -63,8 +68,6 @@ public class Hud{
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
                 play.getPlayer().jump();
-                //play.getPlayer().shootAtk();
-                //play.getPlayer().throwAtk();
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -80,13 +83,13 @@ public class Hud{
             }
         });
 
-        final Image bgPad = new Image(new TextureRegionDrawable(crossRegion));
+        final Image bgPad = new Image(new TextureRegionDrawable(bgpadRegion));
         bgPad.setSize(CTRL_SIZE, CTRL_SIZE);
         bgPad.setPosition(0, 0);
         bgPad.setVisible(false);
 
-        final Image pad = new Image(new TextureRegionDrawable(crossRegion));
-        pad.setSize(CTRL_SIZE, CTRL_SIZE);
+        final Image pad = new Image(new TextureRegionDrawable(padRegion));
+        pad.setSize(CTRL_SIZE/2, CTRL_SIZE/2);
         pad.setPosition(0, 0);
         pad.setVisible(false);
 
@@ -123,11 +126,7 @@ public class Hud{
                         play.getPlayer().setCrouching(true);
                     }
                 } else if (posY2 > 20) {//mirar arriba
-                    if (play.getPlayer().isCrouching() && !play.getPlayer().isForceCrouched()) {
-                        play.getPlayer().setCrouching(false);
-                    }// else {
                     //interactuar escaleras
-                    //}
                 }
 
 
@@ -153,13 +152,14 @@ public class Hud{
                 play.getPlayer().setWalking(false);
                 if (play.getPlayer().isCrouching() && !play.getPlayer().isForceCrouched()) {
                     play.getPlayer().setCrouching(false);
+                    System.out.println("levantarse");
                 }
 
             }
         });
 
         Button pause = new Button(new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("pause"))));//pause
-        pause.setSize(cuadrado, cuadrado);
+        pause.setSize(SQUARE, SQUARE);
         pause.setPosition(375f, 410f);
         pause.addListener(new ClickListener() {
             @Override
@@ -168,10 +168,10 @@ public class Hud{
             }
         });
         Image cir = new Image(Launcher.res.getTexture("circle"));
-        cir.setSize(cuadrado,cuadrado);
+        cir.setSize(SQUARE, SQUARE);
         cir.setPosition(10f, 410f);
         Image bar = new Image(Launcher.res.getTexture("bar"));
-        bar.setSize(250, cuadrado);
+        bar.setSize(250, SQUARE);
         bar.setPosition(35f, 410f);
 
 

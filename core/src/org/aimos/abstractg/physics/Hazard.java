@@ -1,6 +1,8 @@
 //abstractg->item->Hazard
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.math.Vector2;
+
 import org.aimos.abstractg.character.Player;
 
 /**
@@ -46,6 +48,11 @@ import org.aimos.abstractg.character.Player;
 	}
 	@Override
 	public void interact() {
+
+	}
+
+	@Override
+	protected final void createBody(Vector2 pos) {
 
 	}
  }

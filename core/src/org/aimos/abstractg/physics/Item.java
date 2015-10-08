@@ -2,7 +2,9 @@
 package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import org.aimos.abstractg.handlers.Constants;
@@ -23,6 +25,7 @@ public abstract class Item extends PhysicalBody{
 
     @Override
     public void render(SpriteBatch sb) {
+        if (body == null) return;
         sb.begin();
         sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
         sb.end();
@@ -38,4 +41,10 @@ public abstract class Item extends PhysicalBody{
         return sprite.getRegionHeight();
     }
 
+    @Override
+    protected abstract void createBody(Vector2 pos);
+
+    public AtlasRegion getSprite() {
+        return sprite;
+    }
 }

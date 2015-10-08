@@ -1,6 +1,7 @@
 //Boss
 package org.aimos.abstractg.character;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -29,8 +30,8 @@ public class Boss extends Enemy {
 	 * @param name
 	 * @param world
 	 */
-	protected Boss(String spriteSrc, String name, World world,int x,int y) {
-		super(spriteSrc, name, world, x, y);
+	protected Boss(String spriteSrc, String name, World world, Vector2 pos) {
+		super(spriteSrc, name, world, pos);
 	}
 
 
@@ -48,7 +49,7 @@ public class Boss extends Enemy {
 	 *@return Type Enemy
 	 **/
 	public Enemy createEnemy(){
-		return new Enemy("cambia esto luego","Minion",world,0,0);
+		return new Enemy("cambia esto luego","Minion",world, new Vector2());
 	}
 
 

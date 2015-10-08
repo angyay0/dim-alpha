@@ -64,8 +64,7 @@ public class LevelSelectScreen extends GameState {
 
 
     public void initButtons(){
-        buttonsLevel = new Button[Constants.botones];
-        Gdx.app.debug("total botones", ""+Constants.botones);
+        buttonsLevel = new Button[3];//Arreglar
         //for(int i=0; i < buttonsLevel.length ; i++){
         buttonsLevel[0]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Level
         buttonsLevel[1]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Level
@@ -116,7 +115,7 @@ public class LevelSelectScreen extends GameState {
 
 
     public void setLevel(String mapLevel){
-        Constants.mapa = mapLevel;
+        //Constants.mapa = mapLevel;
         gsm.setState(GameStateManager.SOLO_PLAY);
     }
 }

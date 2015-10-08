@@ -1,6 +1,7 @@
 //abstractg->character->Unique
 package org.aimos.abstractg.character;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.physics.Hazard.EFFECT_TYPE;
@@ -38,7 +39,7 @@ import org.aimos.abstractg.physics.Hazard.EFFECT_TYPE;
 	 * @param name
 	 * @param world
 	 */
-	protected Unique(String spriteSrc, String name, World world,int x,int y) {
-		super(spriteSrc, name, world, x, y);
+	protected Unique(String spriteSrc, String name, World world, Vector2 pos) {
+		super(spriteSrc, name, world, pos);
 	}
 }

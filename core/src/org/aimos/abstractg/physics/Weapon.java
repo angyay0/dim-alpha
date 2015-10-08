@@ -1,8 +1,10 @@
 // abstractg->item->Weapon
 package org.aimos.abstractg.physics;
 
-import org.aimos.abstractg.character.Enemy;
-import org.aimos.abstractg.character.Player;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Joint;
+
+import org.aimos.abstractg.character.Character;
 
 /**
  * Clase generadora de las armas de las cuales puede ser utilizada por los jugadores y enemigos
@@ -16,13 +18,15 @@ import org.aimos.abstractg.character.Player;
 public abstract class Weapon extends Item {
 
     //El dano extra que hace
-    private long bonusDamage;
+    protected long bonusDamage;
     //El multiplicador de dano
-    private float multiplier;
+    protected float multiplier;
     //El valor del arma (Precio)
-    private long value;
+    protected long value;
     //Dueño del arma
-    private Character owner;
+    protected Character owner;
+    //Union con el dueño
+    protected Joint joint;
 
     /**
      * Default Constructor for Weapon
@@ -43,6 +47,7 @@ public abstract class Weapon extends Item {
      */
     public void setOwner(Character chara){
         owner = chara;
+        createBody(chara.getPosition().cpy());
     }
 
     /**
@@ -68,12 +73,22 @@ public abstract class Weapon extends Item {
      * Attack method for weapon
      * @return
      */
-    public boolean attack() {
-        if (owner == null) return false;
-        return subAttack();
+    public void attack() {
+        if (owner == null) return;
+        attackMotion();
     }
 
-    //Specialized Attack Method
-    protected abstract boolean subAttack();
+    public long damage(Character c) {
+        long d = (long) ((owner.getAttack() + bonusDamage) * multiplier);
+        c.damage(d);
+        return d;
+    }
+
+    //Initiate weapon attack motion
+    protected abstract void attackMotion();
+
+
+    @Override
+    protected abstract void createBody(Vector2 pos);
 
 }

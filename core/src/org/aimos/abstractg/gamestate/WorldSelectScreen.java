@@ -55,7 +55,7 @@ public class WorldSelectScreen  extends GameState {
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                 Constants.botones =3;
+                 //Constants.botones =3;
                  gsm.setState(GameStateManager.LEVEL_SELECT);
             }
         });

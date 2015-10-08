@@ -1,6 +1,7 @@
 //abstractg->character->NPC
 package org.aimos.abstractg.character;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.physics.Interactive;
@@ -24,12 +25,12 @@ import org.aimos.abstractg.physics.Interactive;
 	 * @param spriteSrc del personaje Type String
 	 * @param world del personaje Type String
  	 **/
- 	 public NPC(String spriteSrc, String name, World world,int x,int y) {
-		 super(spriteSrc, name, world, x, y);
+ 	 public NPC(String spriteSrc, String name, World world, Vector2 pos) {
+		 super(spriteSrc, name, world, pos);
 	 }
 
 	@Override
-	protected final void createBodyExtra(float x, float y) {
+	protected final void createBodyExtra(Vector2 pos) {
 
 	}
 

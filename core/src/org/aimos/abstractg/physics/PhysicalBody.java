@@ -27,6 +27,7 @@ public abstract class PhysicalBody {
     }
 
     public void dispose(){
+        visible = false;
         world.destroyBody(body);
     }
 
@@ -44,20 +45,29 @@ public abstract class PhysicalBody {
     }
 
     public void setPosition(float x, float y){
+        if(body == null )return;
         body.getPosition().x = x;
         body.getPosition().y = y;
     }
 
     public float getX(){
+        if(body == null) return -1;
         return body.getPosition().x;
     }
 
     public float getY(){
+        if(body == null) return -1;
         return body.getPosition().y;
     }
 
     public Vector2 getPosition() {
+        if(body == null) return null;
         return body.getPosition();
+    }
+
+    public void initBody(Vector2 pos){
+        visible = true;
+        createBody(pos);
     }
 
     public abstract void render(SpriteBatch sb);
@@ -65,4 +75,6 @@ public abstract class PhysicalBody {
     public abstract int getWidth();
 
     public abstract int getHeight();
+
+    protected abstract void createBody(Vector2 pos);
 }

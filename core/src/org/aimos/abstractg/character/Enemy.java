@@ -1,7 +1,10 @@
 //abstractg->character->Enemy
 package org.aimos.abstractg.character;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+
+import org.aimos.abstractg.physics.DroppedWeapon;
 
 /**
  * Representa el personaje enemigo generico
@@ -33,8 +36,8 @@ import com.badlogic.gdx.physics.box2d.World;
 	 * @param name
 	 * @param world
 	 */
-	protected Enemy(String spriteSrc, String name, World world,int x,int y) {
-		super(spriteSrc, name, world, x, y);
+	protected Enemy(String spriteSrc, String name, World world, Vector2 pos) {
+		super(spriteSrc, name, world, pos);
 	}
 
 	/**
@@ -46,27 +49,17 @@ import com.badlogic.gdx.physics.box2d.World;
 
 	}
 
-	/**
-	 * Metodo para atacar
-	 **/
-	public void attack(){
-
-	}
-
-	/**
-	 * Metodo para defenderse
-	 **/
-	public void defend(){
-
-	}
-
 	@Override
-	protected void createBodyExtra(float x, float y) {
+	protected void createBodyExtra(Vector2 pos) {
 
 	}
 
 	@Override
 	protected void setExtraAnimations() {
 
+	}
+
+	public DroppedWeapon dropWeapon(){
+		return new DroppedWeapon(weapon, getPosition().cpy());
 	}
 }
