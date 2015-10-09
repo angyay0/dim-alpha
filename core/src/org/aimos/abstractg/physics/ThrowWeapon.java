@@ -30,6 +30,7 @@ public class ThrowWeapon extends Weapon {
         //Eliminar joint
         body.applyForce(new Vector2((body.getMass() * (getBody().getLinearVelocity().x + 3.5f) / (1 / 60.0f)),
                 (body.getMass() * (getBody().getLinearVelocity().y + 3.0f) / (1 / 60.0f))), body.getWorldCenter(), true);
+        //Concurrencia explosion / regenerar granada
     }
 
     @Override

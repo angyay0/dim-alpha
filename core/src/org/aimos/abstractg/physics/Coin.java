@@ -26,15 +26,15 @@ import org.aimos.abstractg.handlers.Constants;
 public class Coin extends Item implements PickUp{
 
     //Lista para especificar el tipo de pixel y valor
-	public enum COIN_TYPE {
-		BLUE(1, "coina"),
-		RED(50, "coinb"),
-		GOLD(100, "coinc");
+	public enum CTYPE {
+		GOLD(100, "coinc"),
+        RED(50, "coinb"),
+        BLUE(1, "coina");// arrglar create body // arreglar nombre
 
 		private int value;
         private String spriteSrc;
 
-		COIN_TYPE(int val, String src){
+		CTYPE(int val, String src){
 			value = val;
             spriteSrc = src;
 		}
@@ -49,14 +49,14 @@ public class Coin extends Item implements PickUp{
 	};
 
 	//Tipo de moneda
-	public COIN_TYPE type;
+	public CTYPE type;
 
-	private Coin(COIN_TYPE type, World world, Vector2 pos){
+	private Coin(CTYPE type, World world, Vector2 pos){
         super(world);
 		this.type = type;
         TextureAtlas atlas = Launcher.res.getAtlas("coins");
         sprite = atlas.findRegion(type.getSrc());
-        createBody(pos);
+        initBody(pos);
 	}
 
 	public int getValue(){
@@ -66,7 +66,7 @@ public class Coin extends Item implements PickUp{
     public static Array<Coin> generateCoins(World w, Vector2 pos, long val){
         Array<Coin> coins = new Array<Coin>();
         long res;
-        for(COIN_TYPE c : COIN_TYPE.values()){
+        for(CTYPE c : CTYPE.values()){
             res = val % c.getValue();
             for(int i = 0; i < val / c.getValue(); i++){
                 coins.add(new Coin(c, w, pos));

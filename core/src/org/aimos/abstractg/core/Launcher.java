@@ -9,24 +9,28 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import org.aimos.abstractg.gamestate.GameStateManager;
+import org.aimos.abstractg.handlers.BoundedCamera;
+import org.aimos.abstractg.handlers.Resources;
+
 
 /**
  * Created by Einargretch,DiegoArmando on 13/09/2015.
  */
 public class Launcher extends Game {
 
-    public static final String TITLE = "Coin Dimensions";
+    public static final String TITLE = "Dimensions";
     public static final float WIDTH = 800f;
     public static final float HEIGHT = 512f;
     public static final float STEP = 1 / 60f;
 
-    public static org.aimos.abstractg.handlers.Resources res;
+    public static Resources res;
 
     public SpriteBatch batch;
-    private org.aimos.abstractg.handlers.BoundedCamera cam;
+    private BoundedCamera cam;
     private OrthographicCamera hudCam;
 
-    public org.aimos.abstractg.gamestate.GameStateManager manager;
+    public GameStateManager manager;
 
     private BitmapFont font;
 
@@ -70,7 +74,7 @@ public class Launcher extends Game {
         batch = new SpriteBatch();
 
         //Cameras
-        cam = new org.aimos.abstractg.handlers.BoundedCamera();
+        cam = new BoundedCamera();
         cam.setToOrtho(false, WIDTH, HEIGHT);
         hudCam = new OrthographicCamera();
         hudCam.setToOrtho(false, WIDTH, HEIGHT);
@@ -79,7 +83,7 @@ public class Launcher extends Game {
         initFonts();
 
         //GameStateManager
-        manager = new org.aimos.abstractg.gamestate.GameStateManager(this);
+        manager = new GameStateManager(this);
     }
 
     @Override
@@ -107,7 +111,6 @@ public class Launcher extends Game {
         params.color = Color.SKY;
         font = generator.generateFont(params);
         generator.dispose();
-
     }
 
     public BitmapFont getFont() {
@@ -117,7 +120,7 @@ public class Launcher extends Game {
     public SpriteBatch getSpriteBatch() {
         return batch;
     }
-    public org.aimos.abstractg.handlers.BoundedCamera getCamera() {
+    public BoundedCamera getCamera() {
         return cam;
     }
     public OrthographicCamera getHUDCamera() {

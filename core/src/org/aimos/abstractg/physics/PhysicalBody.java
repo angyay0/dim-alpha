@@ -48,10 +48,9 @@ public abstract class PhysicalBody {
         return visible;
     }
 
-    public void setPosition(float x, float y){
+    public void setPosition(Vector2 pos){
         if(body == null )return;
-        body.getPosition().x = x;
-        body.getPosition().y = y;
+        body.getPosition().set(pos);
     }
 
     public float getX(){

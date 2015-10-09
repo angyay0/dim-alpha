@@ -15,7 +15,7 @@ public class DroppedWeapon extends Item implements PickUp{
         super(world);
         weapon = w;
         sprite = w.getSprite();
-        createBody(pos);
+        initBody(pos);
     }
 
     @Override

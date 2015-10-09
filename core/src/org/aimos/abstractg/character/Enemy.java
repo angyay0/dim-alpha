@@ -50,6 +50,11 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 
 	}
 
+	@Override
+	public void setSelfToScript() {//correct with avstract factory
+		iaChunk.setCharacter(this);
+	}
+
 	public DroppedWeapon dropWeapon(){
 		return new DroppedWeapon(weapon, world, getPosition().cpy());
 	}

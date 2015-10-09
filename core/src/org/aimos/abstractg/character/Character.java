@@ -1,6 +1,7 @@
 //abstractg->character->Character
 package org.aimos.abstractg.character;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
@@ -13,6 +14,9 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+import org.aimos.abstractg.control.script.BehaviorListener;
+import org.aimos.abstractg.control.script.lua.LuaChunk;
+import org.aimos.abstractg.control.script.lua.LuaLoader;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Animation;
 import org.aimos.abstractg.handlers.Constants;
@@ -31,7 +35,7 @@ import org.aimos.abstractg.physics.Weapon;
  * @company AIMOS Studio
  **/
 
-public abstract class Character extends PhysicalBody {
+public abstract class Character extends PhysicalBody implements BehaviorListener{
 
     protected String name;
     protected int animationIndex = 0;
@@ -64,10 +68,12 @@ public abstract class Character extends PhysicalBody {
     protected static final String JUMP_SEQ = "jump"; // 2
     protected static final String CROUCH_SEQ = "crouch"; // 3
     protected static final String CROUCH_MOVE_SEQ = "crouch"; // 4
+
     protected boolean jumping;
-    private boolean invencible = false;
-    private long attack;
-    private boolean transition;
+    protected boolean invencible = false;
+    protected long attack;
+    protected boolean transition;
+    protected LuaChunk iaChunk;
 
     /**
      * @param spriteSrc
@@ -86,28 +92,15 @@ public abstract class Character extends PhysicalBody {
         animations.add(new Animation(atlas.findRegions(CROUCH_SEQ), ANIMATION_DELTA));
         animations.add(new Animation(atlas.findRegions(CROUCH_MOVE_SEQ), ANIMATION_DELTA));
         setExtraAnimations();
-        createBody(pos);
+        initBody(pos);
     }
 
     public Animation getAnimation() {
         return animations.get(animationIndex);
     }
 
-    public Body getBody() {
-        return body;
-    }
-
     public void forceCrouch(boolean keepCrouched) {
         this.keepCrouched = keepCrouched;
-    }
-
-
-    public boolean setBody(Body body) {
-        if (body != null) {
-            this.body = body;
-            return true;
-        }
-        return false;
     }
 
     public void setDirection(boolean dir) {
@@ -147,8 +140,6 @@ public abstract class Character extends PhysicalBody {
         return (jumps > 0);
     }
 
-    ;
-
     public void setCrouching(boolean crouch) {
         if (this.crouch == crouch) return;
         this.crouch = crouch;
@@ -171,12 +162,12 @@ public abstract class Character extends PhysicalBody {
 
     @Override
     public int getWidth() {
-        return animations.get(animationIndex).getFrame().getRegionWidth();
+        return getAnimation().getFrame().getRegionWidth();
     }
 
     @Override
     public int getHeight() {
-        return animations.get(animationIndex).getFrame().getRegionHeight();
+        return getAnimation().getFrame().getRegionHeight();
     }
 
     public void setAnimation(int i) {
@@ -255,7 +246,7 @@ public abstract class Character extends PhysicalBody {
                     desiredVelX = 0.7f;
                 }
             } else {
-                desiredVelX = 0.1f;
+                desiredVelX = 0.1f;//*
             }
         } else {
             if (isOnGround()) {
@@ -383,6 +374,7 @@ public abstract class Character extends PhysicalBody {
                 shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
                 break;
         }
+        //review papa
         getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
     }
 
@@ -455,4 +447,26 @@ public abstract class Character extends PhysicalBody {
     public boolean isInTransition() {
         return transition;
     }
+
+    @Override
+    public void act(){
+        if( iaChunk.isCharacterSet() ){
+            Gdx.app.debug("Should Execute Script","Let see if it works!");
+            iaChunk.exec();
+        }
+        else
+            Gdx.app.error("Cannot Execute Script","Character Is Not Set");
+    }
+
+    @Override
+    public void loadScript(){
+        iaChunk = LuaLoader.getInstance().loadScript();
+    }
+
+    @Override
+    public void loadScript(String file){
+
+    }
+
+    public abstract void setSelfToScript();
 }

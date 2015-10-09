@@ -117,27 +117,6 @@ public class Resources {
         }
     }
 
-    /******************/
-	/* Lua FileHandle */
-    /******************/
-
-    public void loadLua(String path) {
-        loadLua(path,nameFromPath(path));
-    }
-    public void loadLua(String path, String key) {
-        FileHandle lua = new FileHandle(path);
-        luas.put(key, lua);
-    }
-    public FileHandle getLua(String key) {
-        return luas.get(key);
-    }
-    public void removeLua(String key) {
-        FileHandle lua = luas.get(key);
-        if(lua != null) {
-            luas.remove(key);
-        }
-    }
-
     //Load JSON
 
     /*********/

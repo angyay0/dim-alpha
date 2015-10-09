@@ -12,6 +12,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
 
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 /**
  * Created by DiegoArmando on 28/09/2015.
  */
@@ -55,8 +60,8 @@ public class WorldSelectScreen  extends GameState {
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                 //Constants.botones =3;
-                 gsm.setState(GameStateManager.LEVEL_SELECT);
+                //Constants.botones =3;
+                gsm.setState(GameStateManager.LEVEL_SELECT);
             }
         });
 
@@ -95,6 +100,9 @@ public class WorldSelectScreen  extends GameState {
                  gsm.setState(GameStateManager.MENU);
             }
         });
+        for (int i = 0; i < btnWorld.length; i++) {
+            btnWorld[i].addAction(sequence(alpha(0.5f),delay(.5f),fadeIn(.5f)));
+        }
     }
 
     @Override

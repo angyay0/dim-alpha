@@ -40,6 +40,11 @@ import org.aimos.abstractg.physics.Interactive;
 	}
 
 	@Override
+	public void setSelfToScript() {
+
+	}
+
+	@Override
 	public void interact() {
 
 	}

@@ -49,7 +49,7 @@ public abstract class Weapon extends Item {
      */
     public void setOwner(Character chara){
         owner = chara;
-        createBody(chara.getPosition().cpy());
+        initBody(chara.getPosition().cpy());
     }
 
     /**

@@ -5,7 +5,7 @@ package org.aimos.abstractg.handlers;
  */
 public class Constants {
 
-    //Coin to Meter ratio
+    //Pixel to Meter ratio
     public static final float PTM = 100f;
 
     /*public static final short BIT_CHARACTER = 2;

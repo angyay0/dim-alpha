@@ -33,6 +33,8 @@ public class AudioManager {
         this.audio = audio;
     }
 
+    //Agregar metoddo de loop personaliado MANGEEEEE
+
     public void play(float vol,boolean loop){
         audio.setVolume(vol);
         audio.setLooping(loop);

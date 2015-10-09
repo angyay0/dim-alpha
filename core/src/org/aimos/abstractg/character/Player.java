@@ -47,6 +47,11 @@ public class Player extends Character {
 
     }
 
+    @Override
+    public void setSelfToScript() {
+
+    }
+
     public void addMoney(Coin c) {
         money += c.getValue();
         c.dispose();

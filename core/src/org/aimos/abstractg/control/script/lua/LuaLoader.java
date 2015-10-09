@@ -24,7 +24,7 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
 
     private static final String URL = "scripts/";
 
-    private Globals GLOBALS;
+    public static Globals GLOBALS;
 
     private Config conf;
 
@@ -35,6 +35,7 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
     public static LuaLoader getInstance(){
         if( loader == null ){
             loader = new LuaLoader();
+            GLOBALS = JsePlatform.standardGlobals();
             loader.setGlobals();
             loader.id = (long) (Math.random()*1000.0);
         }
@@ -45,6 +46,8 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
     private void setGlobals(){
         GLOBALS = JsePlatform.standardGlobals();
         GLOBALS.finder = this;
+
+        Gdx.app.debug("SETTED","GLOBALS");
     }
 
     @Override
@@ -58,22 +61,35 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
     }
 
     @Override
-    public Chunk loadIAScript(String file) {
+    public LuaChunk loadIAScript(String file) {
+
+        LuaChunk chunk = new LuaChunk("TestScript","LUA",getId());
+        //GLOBALS.loadfile(file);
+     //   chunk.setBehavior( );
+      //  chunk.inflate();
+        return chunk;
+    }
+
+    @Override
+    public LuaChunk loadBehaviorScript(String file) {
         return null;
     }
 
     @Override
-    public Chunk loadBehaviorScript(String file) {
-        return null;
-    }
-
-    @Override
-    public Chunk loadScript() {
+    public LuaChunk loadScript() {
         //Try Script
         //basic.lua
         LuaChunk chunk = new LuaChunk("TestScript","LUA",getId());
-        chunk.setBehavior( GLOBALS.get("behavior") );
-        chunk.inflate();
+       //;
+        //GLOBALS.load
+        GLOBALS.loadfile("basic.lua").call();
+        try{
+            chunk.setBehavior( GLOBALS.get("behavior")  );
+        }catch (Exception e){
+            e.printStackTrace();
+            Gdx.app.exit();
+        }
+       // chunk.inflate();
         return chunk;
     }
 
@@ -98,10 +114,9 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
     @Override
     public InputStream findResource(String filename) {
         try{
-            Launcher.res.loadLua(URL+filename);
-            return Launcher.res.getLua(Resources.nameFromPath(URL+filename)).read();
-            //return Gdx.files.internal(URL+filename).read();
+            return Gdx.files.internal(URL+filename).read();
         }catch(Exception e){
+            Gdx.app.error("Error Loading Script",e.getMessage());
             return null;
         }
     }

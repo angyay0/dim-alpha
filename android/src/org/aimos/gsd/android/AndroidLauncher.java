@@ -39,6 +39,7 @@ public class AndroidLauncher extends AndroidApplication {
 		//initialize(new MainScreenFX(), config);
 		//initialize(new PhysicsBox2D(), config);
 		//initialize(new ScreenWithSceneLoader(), config);
+		config.useWakelock = true;
 		initialize(new Launcher(), config);
 
 

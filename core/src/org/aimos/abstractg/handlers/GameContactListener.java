@@ -34,7 +34,7 @@ public class GameContactListener implements ContactListener {
         //Jump
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
-            if (c != null) c.onGround();
+            if (c != null) c.onGround();//Corregir fixture del pie
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fb.getBody().getUserData();
@@ -110,6 +110,8 @@ public class GameContactListener implements ContactListener {
                 w.damage(c);
             }
         }
+
+        //add explosion
     }
 
     @Override
