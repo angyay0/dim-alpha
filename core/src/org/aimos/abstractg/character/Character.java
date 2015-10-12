@@ -35,7 +35,7 @@ import org.aimos.abstractg.physics.Weapon;
  * @company AIMOS Studio
  **/
 
-public abstract class Character extends PhysicalBody implements BehaviorListener,Runnable {
+public abstract class Character extends PhysicalBody implements BehaviorListener, Runnable {
 
     protected String name;
     protected int animationIndex = 0;
@@ -106,8 +106,11 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void setDirection(boolean dir) {
         if (direction == dir) return;
         direction = dir;
-        if (direction) flip(false, false);
-        else flip(true, false);
+        if (direction) {
+            if(getAnimation().getFrame().isFlipX()) flip(false, false);
+        }else {
+            if(!getAnimation().getFrame().isFlipX()) flip(true, false);
+        }
     }
 
     public boolean getDirection() {
@@ -180,12 +183,19 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     public void update(float dt) {
         animations.get(animationIndex).update(dt);
+        if (getDirection()) {
+            if (getAnimation().getFrame().isFlipX()) getAnimation().getFrame().flip(false, false);
+        } else {
+            if (!getAnimation().getFrame().isFlipX()) getAnimation().getFrame().flip(true, false);
+        }
     }
 
     @Override
     public void render(SpriteBatch sb) {
         sb.begin();
-        sb.draw(animations.get(animationIndex).getFrame(), getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
+        sb.draw(getAnimation().getFrame(), getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
+        //sb.draw(getAnimation().getFrame().getTexture(), getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2),
+        //        0, 0, getWidth(), this.getHeight(), 1, 1, 0 , 0, 0, getWidth(), getHeight(), !getDirection() ,false);
         sb.end();
     }
 
@@ -234,6 +244,8 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             }
         }
     }
+
+    //public AtlasRegion getFrame(){}
 
     public boolean move(boolean direction) {
         float desiredVelX;
@@ -294,7 +306,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         fdef.friction = 1f;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | //Constants.bit.GRANADE.BIT() |
-                        Constants.BIT.BULLET.BIT());
+                Constants.BIT.BULLET.BIT());
         fdef.restitution = 0f;
 
         // create character collision box fixture
@@ -386,9 +398,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
      * Attack Logic
      **/
     public void attack() {
-        if(weapon != null) {
+        if (weapon != null) {
             weapon.attack();
-        }else{
+        } else {
             //Ataque con puño
         }
     }
@@ -432,9 +444,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public boolean damage(long d) {
-        if(invencible){
+        if (invencible) {
             return false;
-        }else{
+        } else {
             hp -= d;
             return true;
         }
@@ -449,22 +461,21 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     @Override
-    public void act(){
-        if( iaChunk.isCharacterSet() ){
-            Gdx.app.debug("Should Execute Script","Let see if it works!");
+    public void act() {
+        if (iaChunk.isCharacterSet()) {
+            Gdx.app.debug("Should Execute Script", "Let see if it works!");
             iaChunk.exec();
-        }
-        else
-            Gdx.app.error("Cannot Execute Script","Character Is Not Set");
+        } else
+            Gdx.app.error("Cannot Execute Script", "Character Is Not Set");
     }
 
     @Override
-    public void loadScript(){
+    public void loadScript() {
         iaChunk = LuaLoader.getInstance().loadScript();
     }
 
     @Override
-    public void loadScript(String file){
+    public void loadScript(String file) {
 
     }
 

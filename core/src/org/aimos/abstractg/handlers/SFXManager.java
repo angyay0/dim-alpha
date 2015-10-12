@@ -5,13 +5,13 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.handlers.factory.Factory;
+//import org.aimos.abstractg.handlers.factory.Factory;
 
 /**
  * Created by Angyay0 on 09/10/2015.
  */
 
-public class SFXManager implements Factory {
+public class SFXManager{ //implements Factory {
 
     private static float VOLUME = 0.4f;
 

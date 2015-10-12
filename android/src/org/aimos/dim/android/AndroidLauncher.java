@@ -1,5 +1,5 @@
 //AndroidLauncher.java
-package org.aimos.gsd.android;
+package org.aimos.dim.android;
 
 import android.annotation.TargetApi;
 import android.os.Build;
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * @company AIMOS
  */
 
-public class AndroidLauncher extends Activity/* AndroidApplication*/ {
+public class AndroidLauncher extends  AndroidApplication {
 
 	private Launcher launcher;
 
@@ -40,13 +40,13 @@ public class AndroidLauncher extends Activity/* AndroidApplication*/ {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		//config.
 		//Log.d("Cores","->"+getCores()+"<-");
-	//	launcher = new Launcher();
+		launcher = new Launcher();
 		//Metodo para inicial0000000izar la siguiente vista
 		//initialize(new MainScreenFX(), config);
 		//initialize(new PhysicsBox2D(), config);
 		//initialize(new ScreenWithSceneLoader(), config);
 		config.useWakelock = true;
-		//initialize(launcher, config);
+		initialize(launcher, config);
 
 
 		//// Sondea y oculta desde KITKAT(4.4)
