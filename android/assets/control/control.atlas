@@ -1,0 +1,41 @@
+
+control.png
+size: 512,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bgpad
+  rotate: false
+  xy: 0, 176
+  size: 312, 302
+  orig: 312, 302
+  offset: 0, 0
+  index: -1
+circle
+  rotate: false
+  xy: 320, 163
+  size: 147, 139
+  orig: 147, 139
+  offset: 0, 0
+  index: -1
+jump
+  rotate: false
+  xy: 0, 0
+  size: 160, 176
+  orig: 160, 176
+  offset: 0, 0
+  index: -1
+punch
+  rotate: false
+  xy: 312, 302
+  size: 160, 176
+  orig: 160, 176
+  offset: 0, 0
+  index: -1
+shoot
+  rotate: false
+  xy: 160, 0
+  size: 160, 176
+  orig: 160, 176
+  offset: 0, 0
+  index: -1
