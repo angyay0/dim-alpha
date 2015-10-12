@@ -8,6 +8,12 @@ public class Constants {
     //Pixel to Meter ratio
     public static final float PTM = 100f;
 
+    //LOAD RATIO PER THREAD
+    public static final float LRPT = 0.80f;
+
+    //CONCURRENTMAP CAPACITY
+    public static final int CCAPACITY = 100;
+
     /*public static final short BIT_CHARACTER = 2;
     public static final short BIT_FLOOR = 4;
     public static final short BIT_WALL = 8;

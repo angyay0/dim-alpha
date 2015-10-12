@@ -117,6 +117,10 @@ public class Resources {
         }
     }
 
+    public HashMap getAllSounds(){
+        return sounds;
+    }
+
     //Load JSON
 
     /*********/

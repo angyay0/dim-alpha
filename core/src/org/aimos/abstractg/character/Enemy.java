@@ -58,4 +58,10 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 	public DroppedWeapon dropWeapon(){
 		return new DroppedWeapon(weapon, world, getPosition().cpy());
 	}
+
+	@Override
+	public void run() {
+
+	}
+
 }

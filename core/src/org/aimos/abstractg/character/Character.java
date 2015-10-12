@@ -35,7 +35,7 @@ import org.aimos.abstractg.physics.Weapon;
  * @company AIMOS Studio
  **/
 
-public abstract class Character extends PhysicalBody implements BehaviorListener{
+public abstract class Character extends PhysicalBody implements BehaviorListener,Runnable {
 
     protected String name;
     protected int animationIndex = 0;
@@ -469,4 +469,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public abstract void setSelfToScript();
+
+    @Override
+    public abstract void run();
 }
