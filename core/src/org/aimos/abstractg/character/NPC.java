@@ -45,6 +45,11 @@ import org.aimos.abstractg.physics.Interactive;
 	}
 
 	@Override
+	public void run() {
+
+	}
+
+	@Override
 	public void interact() {
 
 	}

@@ -5,8 +5,12 @@ import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Toast;
+import android.app.Activity;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 
@@ -24,7 +28,9 @@ import java.util.regex.Pattern;
  * @company AIMOS
  */
 
-public class AndroidLauncher extends AndroidApplication {
+public class AndroidLauncher extends Activity/* AndroidApplication*/ {
+
+	private Launcher launcher;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +40,36 @@ public class AndroidLauncher extends AndroidApplication {
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
 		//config.
 		//Log.d("Cores","->"+getCores()+"<-");
-
+	//	launcher = new Launcher();
 		//Metodo para inicial0000000izar la siguiente vista
 		//initialize(new MainScreenFX(), config);
 		//initialize(new PhysicsBox2D(), config);
 		//initialize(new ScreenWithSceneLoader(), config);
 		config.useWakelock = true;
-		initialize(new Launcher(), config);
+		//initialize(launcher, config);
 
 
 		//// Sondea y oculta desde KITKAT(4.4)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-			hideVirtualButtons();
+	//		hideVirtualButtons();
 		}
 		//Bloque para realizar ajustes y ocultar botones virtuales
 	}
 
-	@Override
+	/*@Override
 	public void onBackPressed(){
 		//Disabled for controlling from Inside libGDX
+	//	Game g = (Game) launcher;
+	//	g.pause();
+	}
+*/
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if( keyCode == KeyEvent.KEYCODE_BACK ){
+			Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	/**

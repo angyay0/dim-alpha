@@ -126,4 +126,5 @@ public class Launcher extends Game {
     public OrthographicCamera getHUDCamera() {
         return hudCam;
     }
+
 }
