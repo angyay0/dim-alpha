@@ -23,12 +23,10 @@ public class LevelSelectScreen extends GameState {
     private Texture background;
     private Texture back;
     private float dCircular = 220f;
-    private float x=0;
-
 
     protected LevelSelectScreen(GameStateManager gsm) {
         super(gsm);
-
+        game.setFlagF();
         background = new Texture("menu/fondo.png");
         back = new Texture("menu/back.png");
 

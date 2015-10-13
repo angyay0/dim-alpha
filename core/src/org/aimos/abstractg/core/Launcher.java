@@ -31,8 +31,8 @@ public class Launcher extends Game {
     private OrthographicCamera hudCam;
 
     public GameStateManager manager;
-
     private BitmapFont font;
+    public static boolean flag;
 
     @Override
     public void create () {
@@ -126,5 +126,25 @@ public class Launcher extends Game {
     public OrthographicCamera getHUDCamera() {
         return hudCam;
     }
+
+
+    @Override
+    public void pause() {
+        super.pause();
+        if(flag){
+            if(!manager.isPause()) {
+                manager.setTempState();
+            }
+        }
+    }
+
+
+    public void setFlagT(){
+        flag = true;
+    }
+    public void setFlagF(){
+        flag = false;
+    }
+
 
 }
