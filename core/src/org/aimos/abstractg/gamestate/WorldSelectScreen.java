@@ -30,7 +30,7 @@ public class WorldSelectScreen  extends GameState {
 
     protected WorldSelectScreen(GameStateManager gsm) {
         super(gsm);
-        game.setFlagF();
+        game.setFlag(false);
         background = new Texture("menu/fondo.png");
         back = new Texture("menu/back.png");
 

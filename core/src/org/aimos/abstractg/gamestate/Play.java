@@ -1,5 +1,6 @@
 package org.aimos.abstractg.gamestate;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
@@ -33,6 +34,7 @@ public class Play extends GameState{
 
     protected Play(GameStateManager gsm) {
         super(gsm);
+        game.setFlag(true);
 
         //Load music
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));

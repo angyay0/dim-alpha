@@ -119,5 +119,7 @@ public class GameStateManager {
         }
     }
 
-
+    public boolean isPause() {
+        return (tmp != null);
+    }
 }

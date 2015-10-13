@@ -139,11 +139,8 @@ public class Launcher extends Game {
     }
 
 
-    public void setFlagT(){
-        flag = true;
-    }
-    public void setFlagF(){
-        flag = false;
+    public void setFlag(boolean f){
+        flag = f;
     }
 
 
