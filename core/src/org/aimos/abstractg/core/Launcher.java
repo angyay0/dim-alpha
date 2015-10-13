@@ -41,7 +41,7 @@ public class Launcher extends Game {
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
         //Load Resources
-        res = new org.aimos.abstractg.handlers.Resources();
+        res = new Resources();
         res.loadAtlas("hero/player.atlas");
         res.loadAtlas("control/control.atlas");
         res.loadAtlas("coins/coins.atlas");

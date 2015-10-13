@@ -124,6 +124,13 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
                 setAnimation(1);
             }
         } else {
+
+            float velX = -getBody().getLinearVelocity().x * .96f;
+            float velY = -getBody().getLinearVelocity().y * .96f;
+            float forceX = (float) (getBody().getMass() * velX / (1 / 60.0)); // f = mv/t
+            float forceY = (float) (getBody().getMass() * velY / (1 / 60.0)); // f = mv/t
+            getBody().applyForce(new Vector2(forceX, forceY), getBody().getWorldCenter(), true);
+
             if (isCrouching()) {
                 setAnimation(3);
             } else {
@@ -212,7 +219,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         return jumps == maxJumps;
     }
 
-
     public void onGround() {
         if (isOnGround()) return;
         jumps = maxJumps;
@@ -235,6 +241,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public boolean move(boolean direction) {
         float desiredVelX;
         setDirection(direction);
+        setWalking(true);
         if (direction) {
             if (isOnGround()) {
                 if (isCrouching()) {

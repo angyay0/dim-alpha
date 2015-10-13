@@ -47,7 +47,7 @@ public class Play extends GameState{
         player = new Player("player","Hero", world, new Vector2(120, 120));
         loader = new MapLoader(world, player);
 
-        Coin.generateCoins(world, new Vector2(160, 140), 116);
+        addCoins(Coin.generateCoins(world, new Vector2(160, 140), 116));
 
         //Create Hud
         hud = new Hud(this);

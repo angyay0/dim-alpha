@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * Created by EinarGretch,Angyay0 on 09/09/2015.
  */
-public class Hud{
+public class Hud {
 
     //Default Buttons Name With Atlas file
     //Salto
@@ -89,7 +89,7 @@ public class Hud{
         bgPad.setVisible(false);
 
         final Image pad = new Image(new TextureRegionDrawable(padRegion));
-        pad.setSize(CTRL_SIZE/2, CTRL_SIZE/2);
+        pad.setSize(CTRL_SIZE / 2, CTRL_SIZE / 2);
         pad.setPosition(0, 0);
         pad.setVisible(false);
 
@@ -105,7 +105,7 @@ public class Hud{
                 pad.setPosition(posX1 - (pad.getWidth() / 2), posY1 - (pad.getHeight() / 2));
                 bgPad.setVisible(true);
                 pad.setVisible(true);
-                play.getPlayer().setWalking(true);
+                //play.getPlayer().setWalking(true);
             }
 
             @Override
@@ -113,51 +113,71 @@ public class Hud{
                 posX2 = (int) x - posX1;
                 posY2 = (int) y - posY1;
 
-                if (posX2 > 40) {//derecha
+                double radius = Math.sqrt(Math.pow(posX2, 2) + Math.pow(posY2, 2));
+
+                double angle = Math.toDegrees(Math.atan2(posY2, posX2));
+
+                angle = (angle < 0) ? 360 + angle : angle;
+
+                int cuad = (int) angle / 45;
+
+                switch (cuad) {
+                    case 0:
+                    case 7://Derecha
+                        play.getPlayer().move(true);
+                        break;
+                    case 1://Arriba
+                    case 2:
+                        if (play.getPlayer().isCrouching() && !play.getPlayer().isForceCrouched()) {
+                            play.getPlayer().setCrouching(false);
+                        }
+                        break;
+                    case 3://Izquierda
+                    case 4:
+                        play.getPlayer().move(false);
+                        break;
+                    case 5://Abajo
+                    case 6:
+                        play.getPlayer().setCrouching(true);
+                        break;
+                }
+
+                /*if (posX2 > 40) {//derecha
                     play.getPlayer().move(true);
                 } else if (posX2 < -40) {//izquierda
                     play.getPlayer().move(false);
                 }
                 //System.out.println(posX2);
                 if (posY2 < -20) {//agacharse
-                    if (play.getPlayer().isCrouching()) {
-                        //interactuar suelo
-                    } else {
+                    if (!play.getPlayer().isCrouching()) {
                         play.getPlayer().setCrouching(true);
                     }
                 } else if (posY2 > 20) {//mirar arriba
                     //interactuar escaleras
+                }*/
+
+                //System.out.println("x " + posX2 + ", Angle " + angle + ", Radius " + radius + ", Cos " + (Math.cos(Math.toRadians(angle)))+", X " + (angle * Math.cos(Math.toRadians(angle))));
+                //System.out.println("y " + posY2 + ", Angle " + angle + ", Radius " + radius + ", Sen " + (Math.sin(Math.toRadians(angle)))+", Y " + (angle * Math.sin(Math.toRadians(angle))));
+                if ((CTRL_SIZE / 2) >= radius) {
+                    pad.setPosition(x - (pad.getWidth() / 2), y - (pad.getHeight() / 2));
+                }else{
+                    pad.setPosition((float)((CTRL_SIZE / 2) * Math.cos(Math.toRadians(angle))) - (pad.getWidth() / 2) + posX1,
+                            (float)((CTRL_SIZE / 2) * Math.sin(Math.toRadians(angle))) - (pad.getHeight() / 2) + posY1);
                 }
 
-
-                pad.setPosition(x - (pad.getWidth() / 2), y - (pad.getHeight() / 2));
             }
 
             @Override
             public void dragStop(InputEvent event, float x, float y, int pointer) {
-                float velX = -play.getPlayer().getBody().getLinearVelocity().x * .96f;
-                float velY = -play.getPlayer().getBody().getLinearVelocity().y * .96f;
-                float forceX = (float) (play.getPlayer().getBody().getMass() * velX / (1 / 60.0)); // f = mv/t
-                float forceY = (float) (play.getPlayer().getBody().getMass() * velY / (1 / 60.0)); // f = mv/t
-
-                if (play.getPlayer().getBody().getPosition().x <= 1.15) {
-                    forceX = 0;
-                }
-
-                play.getPlayer().getBody().applyForce(new Vector2(forceX, forceY), play.getPlayer().getBody().getWorldCenter(), true);
                 bgPad.setVisible(false);
                 pad.setVisible(false);
                 bgPad.setPosition(0, 0);
                 pad.setPosition(0, 0);
                 play.getPlayer().setWalking(false);
-                if (play.getPlayer().isCrouching() && !play.getPlayer().isForceCrouched()) {
-                    play.getPlayer().setCrouching(false);
-                }
-
             }
         });
 
-        Button pause = new Button(new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("pause"))));//pause
+        Button pause = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("pause"))));//pause
         pause.setSize(SQUARE, SQUARE);
         pause.setPosition(375f, 410f);
         pause.addListener(new ClickListener() {

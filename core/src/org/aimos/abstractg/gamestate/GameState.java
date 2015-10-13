@@ -26,7 +26,7 @@ public abstract class GameState extends Stage {
     protected BitmapFont font;
 
     protected GameState(GameStateManager gsm) {
-        super( new FillViewport(800f, 480f, gsm.game().getCamera()) );
+        super( new FillViewport(Launcher.WIDTH, Launcher.HEIGHT, gsm.game().getCamera()) );
         this.gsm = gsm;
         game = gsm.game();
         sb = game.getSpriteBatch();
