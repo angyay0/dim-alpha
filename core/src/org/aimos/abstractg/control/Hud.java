@@ -152,7 +152,6 @@ public class Hud{
                 play.getPlayer().setWalking(false);
                 if (play.getPlayer().isCrouching() && !play.getPlayer().isForceCrouched()) {
                     play.getPlayer().setCrouching(false);
-                    System.out.println("levantarse");
                 }
 
             }

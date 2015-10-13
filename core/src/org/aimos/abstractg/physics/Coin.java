@@ -13,7 +13,7 @@ import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
 
 /**
- * Clase que representa el objeto pixel
+ * Clase que representa el objeto Coin
  * que representa la moneda del juego
  *
  * @version 1.0.0
@@ -44,8 +44,6 @@ public class Coin extends Item implements PickUp{
         public String getSrc(){
             return spriteSrc;
         }
-
-
 	};
 
 	//Tipo de moneda
@@ -100,7 +98,7 @@ public class Coin extends Item implements PickUp{
         fdef.restitution = 0.2f;
 
         // create character collision box fixture
-        body.createFixture(fdef).setUserData(Constants.DATA.BODY);
+        body.createFixture(fdef).setUserData(Constants.DATA.PICKUP);
         shape.dispose();
     }
 }

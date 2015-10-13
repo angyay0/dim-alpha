@@ -59,13 +59,6 @@ public class Animation {
     public AtlasRegion getFrame() {
         return frames[currentFrame];
     }
-
-    public void flip(boolean x, boolean y){
-        for (AtlasRegion frame : frames) {
-            frame.flip(x,y);
-        }
-    }
-
     public int getTimesPlayed() {
         return timesPlayed;
     }

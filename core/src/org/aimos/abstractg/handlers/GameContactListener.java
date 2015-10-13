@@ -35,35 +35,29 @@ public class GameContactListener implements ContactListener {
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
             if (c != null) {
-                c.setOnGround(true);
-                c.onGround();//Corregir fixture del pie
+                c.onGround();
             }
 
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fb.getBody().getUserData();
             if (c != null) {
-                c.setOnGround(true);
-                c.onGround();//Corregir fixture del pie
+                c.onGround();
             }
         }
-
-
+        //Side Collisions
         if(fa.getUserData() !=null && fa.getUserData().equals(Constants.DATA.BODY)){
             Player p = (Player)fa.getBody().getUserData();
             if(fb.getUserData().equals(Constants.DATA.CELL)){
                 if(!p.isOnGround()){
-                    System.out.println("Entro");
                     fb.setFriction(0);
                 }
             }
         }
-
         if(fb.getUserData() !=null && fb.getUserData().equals(Constants.DATA.BODY)){
             Player p = (Player)fb.getBody().getUserData();
             if(fa.getUserData().equals(Constants.DATA.CELL)){
                 if(!p.isOnGround()){
-                    System.out.println("Entro");
                     fa.setFriction(0);
                 }
             }
@@ -73,14 +67,12 @@ public class GameContactListener implements ContactListener {
             Character c = (Character) fa.getBody().getUserData();
             if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.CELL)) {
                 if (c.isCrouching()) c.forceCrouch(true);
-                System.out.println("force");
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.HEAD)) {
             Character c = (Character) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.CELL)) {
                 if (c.isCrouching()) c.forceCrouch(true);
-                System.out.println("force");
             }
         }
         //Interact
@@ -150,34 +142,17 @@ public class GameContactListener implements ContactListener {
 
         if (fa == null || fb == null) return;
 
-        //On Ground
-        if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
-            Character c = (Character) fa.getBody().getUserData();
-            if (c != null) {
-                c.setOnGround(false);
-                //c.onGround();//Corregir fixture del pie
-            }
-
-        }
-        if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
-            Character c = (Character) fb.getBody().getUserData();
-            if (c != null) {
-                c.setOnGround(false);
-                //c.onGround();//Corregir fixture del pie
-            }
-        }
-
         //Fall
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Player p = (Player) fa.getBody().getUserData();
             if(!(p.isJumping() || p.isInTransition())){
-                //p.fall(); //needs fixing
+                p.fall(); //needs fixing
             }
         }
         if(fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
             Player p = (Player) fb.getBody().getUserData();
             if(!(p.isJumping() || p.isInTransition())){
-                //op.fall(); //needs fixing
+                p.fall(); //needs fixing
             }
         }
         //Crouch
@@ -189,33 +164,28 @@ public class GameContactListener implements ContactListener {
                 }
             }
         }
-
-        //Slide action
-        if(fa.getUserData() !=null && fa.getUserData().equals(Constants.DATA.BODY)){
-            Player p = (Player)fa.getBody().getUserData();
-            if(fb.getUserData().equals(Constants.DATA.CELL)){
-                if(fb.getFriction() == 0){
-                    System.out.println("Salio");
-                    fb.setFriction(1);
-                }
-            }
-        }
-
-        if(fb.getUserData() !=null && fb.getUserData().equals(Constants.DATA.BODY)){
-            Player p = (Player)fb.getBody().getUserData();
-            if(fa.getUserData().equals(Constants.DATA.CELL)){
-                if(fa.getFriction() == 0){
-                    System.out.println("Salio");
-                    fa.setFriction(1);
-                }
-            }
-        }
-
         if(fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.HEAD)) {
             Player p = (Player) fb.getBody().getUserData();
             if(fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.CELL)){
                 if (p.isCrouching() && p.isForceCrouched()){
                     p.forceCrouch(false);
+                }
+            }
+        }
+        //Slide action
+        if(fa.getUserData() !=null && fa.getUserData().equals(Constants.DATA.BODY)){
+            Player p = (Player)fa.getBody().getUserData();
+            if(fb.getUserData().equals(Constants.DATA.CELL)){
+                if(fb.getFriction() == 0){
+                    fb.setFriction(1);
+                }
+            }
+        }
+        if(fb.getUserData() !=null && fb.getUserData().equals(Constants.DATA.BODY)){
+            Player p = (Player)fb.getBody().getUserData();
+            if(fa.getUserData().equals(Constants.DATA.CELL)){
+                if(fa.getFriction() == 0){
+                    fa.setFriction(1);
                 }
             }
         }

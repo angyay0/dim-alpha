@@ -4,8 +4,8 @@ package org.aimos.abstractg.character;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
@@ -48,7 +48,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected int maxJumps = 1;
     protected boolean direction = true;
     protected Weapon weapon;
-    protected boolean onGround;
     protected Interactive interactive;
     // Hp value of the character
     protected long hp;
@@ -69,6 +68,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected static final String JUMP_SEQ = "jump"; // 2
     protected static final String CROUCH_SEQ = "crouch"; // 3
     protected static final String CROUCH_MOVE_SEQ = "crouch"; // 4
+    protected static final String FALL_SEQ = "jump"; // 5
 
     protected boolean jumping;
     protected boolean invencible = false;
@@ -92,6 +92,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         animations.add(new Animation(atlas.findRegions(JUMP_SEQ), ANIMATION_DELTA));
         animations.add(new Animation(atlas.findRegions(CROUCH_SEQ), ANIMATION_DELTA));
         animations.add(new Animation(atlas.findRegions(CROUCH_MOVE_SEQ), ANIMATION_DELTA));
+        animations.add(new Animation(atlas.findRegions(FALL_SEQ), ANIMATION_DELTA));
         setExtraAnimations();
         initBody(pos);
     }
@@ -107,11 +108,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void setDirection(boolean dir) {
         if (direction == dir) return;
         direction = dir;
-        if (direction) {
-            if(getAnimation().getFrame().isFlipX()) flip(false, false);
-        }else {
-            if(!getAnimation().getFrame().isFlipX()) flip(true, false);
-        }
     }
 
     public boolean getDirection() {
@@ -166,12 +162,12 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     @Override
     public int getWidth() {
-        return getAnimation().getFrame().getRegionWidth();
+        return getFrame().getRegionWidth();
     }
 
     @Override
     public int getHeight() {
-        return getAnimation().getFrame().getRegionHeight();
+        return getFrame().getRegionHeight();
     }
 
     public void setAnimation(int i) {
@@ -184,19 +180,14 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     public void update(float dt) {
         animations.get(animationIndex).update(dt);
-        if (getDirection()) {
-            if (getAnimation().getFrame().isFlipX()) getAnimation().getFrame().flip(false, false);
-        } else {
-            if (!getAnimation().getFrame().isFlipX()) getAnimation().getFrame().flip(true, false);
-        }
     }
 
     @Override
     public void render(SpriteBatch sb) {
+        float x = (getX() * Constants.PTM) - (getWidth() / 2);
+        float y = (getY() * Constants.PTM) - (getHeight() / 2);
         sb.begin();
-        sb.draw(getAnimation().getFrame(), getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
-        //sb.draw(getAnimation().getFrame().getTexture(), getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2),
-        //        0, 0, getWidth(), this.getHeight(), 1, 1, 0 , 0, 0, getWidth(), getHeight(), !getDirection() ,false);
+        sb.draw(getFrame(), getDirection() ? x : x + getWidth(), y, getDirection() ? getWidth() : -getWidth(), getHeight());
         sb.end();
     }
 
@@ -217,24 +208,13 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
-    public void flip(boolean x, boolean y) {
-        for (Animation a : animations) {
-            a.flip(x, y);
-        }
-    }
-
     public boolean isOnGround() {
-        //return jumps == maxJumps && !isJumping();
-        return  onGround;
+        return jumps == maxJumps;
     }
 
-    public void setOnGround(boolean onGround){
-        this.onGround = onGround;
-
-    }
 
     public void onGround() {
-        //if (isOnGround()) return;
+        if (isOnGround()) return;
         jumps = maxJumps;
         jumping = false;
         if (isWalking()) {
@@ -251,8 +231,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             }
         }
     }
-
-    //public AtlasRegion getFrame(){}
 
     public boolean move(boolean direction) {
         float desiredVelX;
@@ -284,7 +262,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public void fall() {
-        setAnimation(2);// cambiar a fall
+        setAnimation(5);// cambiar a fall
         jumps--;
     }
 
@@ -320,7 +298,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         body.createFixture(fdef).setUserData(Constants.DATA.BODY);
 
         // create fixturedef for player foot
-        shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+        shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
@@ -328,23 +306,15 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         body.createFixture(fdef).setUserData(Constants.DATA.FOOT);
 
         //create fixturedef for player head
-        shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
+        shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = (short) (Constants.BIT.WALL.BIT() | Constants.BIT.FLOOR.BIT() | Constants.BIT.ITEM.BIT());
         body.createFixture(fdef).setUserData(Constants.DATA.HEAD);
 
-        //create fixturedef for player shoulders
-        shape.setAsBox(((getWidth() / BODY_SCALE) * 1.1f) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
-        fdef.shape = shape;
-        fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
-        fdef.filter.maskBits = Constants.BIT.WALL.BIT();
-        body.createFixture(fdef).setUserData(Constants.DATA.SHOULDER);
-
         //create fixturedef for player attack zone
-        shape.setAsBox(((getWidth() / BODY_SCALE) * 1.4f) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
+        shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
         fdef.shape = shape;
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
@@ -353,7 +323,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
         //dispose shape
         shape.dispose();
-
         //set character extra fixtures
         createBodyExtra(pos);
         //sets body's userData as this player
@@ -374,26 +343,26 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             case 0://stand
             case 1://walk
             case 2://jump
+            case 5://fall
                 shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
                 fix = getBody().getFixtureList().get(1);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
                 fix = getBody().getFixtureList().get(2);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE)) / Constants.PTM), 0);
                 break;
             case 3://crouch
             case 4://crouch walk
                 shape.setAsBox((getWidth() / BODY_SCALE) * 1.25f / Constants.PTM, (getHeight() / BODY_SCALE) * 0.62f / Constants.PTM);
                 fix = getBody().getFixtureList().get(1);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 fix = getBody().getFixtureList().get(2);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() / BODY_SCALE) / 2) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) / 2) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 break;
         }
-        //review papa
         getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
     }
 
@@ -459,6 +428,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    public AtlasRegion getFrame(){
+        return getAnimation().getFrame();
+    }
+
     public long getAttack() {
         return attack;
     }
@@ -486,6 +459,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     }
 
+    @Override
     public abstract void setSelfToScript();
 
     @Override
