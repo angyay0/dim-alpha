@@ -24,6 +24,9 @@ public class Player extends Character {
     private Array<Weapon> weapons;
     private long enemiesKilled = 0;
 
+    public volatile boolean running = true;
+    int count = 0;
+
     /**
      * Creates a new character
      *
@@ -35,6 +38,11 @@ public class Player extends Character {
     public Player(String spriteSrc, String name, World world, Vector2 pos) {
         super(spriteSrc, name, world, pos);
         weapons = new Array<Weapon>();
+        loadScript();
+        setSelfToScript();
+
+        Thread t = new Thread(this);
+        t.start();
     }
 
     @Override
@@ -49,12 +57,26 @@ public class Player extends Character {
 
     @Override
     public void setSelfToScript() {
-
+        iaChunk.setCharacter(this);
     }
 
     @Override
     public void run() {
+        while(running){
+            act();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+            if(count < 100){
+                count++;
+            }else{
+                running = false;
+            }
+
+        }
     }
 
     public void addMoney(Coin c) {

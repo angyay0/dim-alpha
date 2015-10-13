@@ -456,7 +456,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     @Override
     public void loadScript(String file) {
-
+        iaChunk = LuaLoader.getInstance().loadIAScript("basic_enemy.lua");
     }
 
     @Override
