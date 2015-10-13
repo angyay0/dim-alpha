@@ -60,7 +60,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
-    protected float BODY_SCALE = 2.2f;
+    public final float BODY_SCALE = 2.2f;
 
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0

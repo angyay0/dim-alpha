@@ -23,7 +23,6 @@ public class GameStateManager {
     public static final int SOLO_PLAY = 3;
     public static final int LEVEL_SELECT =4;
 
-    private boolean inPause = true;
 
     public GameStateManager(Launcher game) {
         this.game = game;
@@ -85,7 +84,6 @@ public class GameStateManager {
     }
 
     public void setTempState(){
-        inPause = true;
         tmp = new Pause(this, gameStates.peek());
     }
 
@@ -109,14 +107,17 @@ public class GameStateManager {
 
     public void backToMenu(){
         if(tmp != null) {
-            inPause = false;
             disposeTemp();
             pushState(MENU);
         }
     }
 
-    public boolean isPause(){
-        return inPause;
+    public  void  reloadGame(){
+        if(tmp != null) {
+            disposeTemp();
+            pushState(SOLO_PLAY);
+        }
     }
+
 
 }
