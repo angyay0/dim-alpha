@@ -1,10 +1,15 @@
 package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ai.btree.Task;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.utils.Timer;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
@@ -14,6 +19,9 @@ import org.aimos.abstractg.handlers.GameContactListener;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
 import org.aimos.abstractg.physics.Coin;
+
+import java.awt.event.KeyEvent;
+
 
 /**
  * Created by EinarGretch on 17/09/2015.
@@ -38,6 +46,7 @@ public class Play extends GameState{
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
 
         coins = new Array<Coin>();
+        game.setFlagT();
 
         //set up the world
         world = new World(new Vector2(0, -9.81f), true);
@@ -57,6 +66,13 @@ public class Play extends GameState{
 
         //Play music
         AudioManager.getInstance().play(0.5f, true);
+
+        Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCatchMenuKey(true);
+
+
+
     }
 
     @Override
@@ -74,6 +90,13 @@ public class Play extends GameState{
         Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         loader.render();
+
+        /*
+        if(Gdx.input.isKeyPressed(Keys.HOME) || Gdx.input.isButtonPressed(Keys.HOME) || Gdx.input.isTouched(Keys.HOME)){
+            game.setFlag();
+            game.pause();
+            Gdx.app.debug("EVentooo!!!","pause");
+        }*/
 
         // draw player
         sb.setProjectionMatrix(loader.getFloorCamera().combined);
@@ -106,4 +129,12 @@ public class Play extends GameState{
     public static String getMap(){
         return map;
     }
+/*
+    @Override
+    public boolean keyDown(int keycode) {
+
+        return super.keyDown(keycode);
+    }
+*/
+
 }

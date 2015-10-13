@@ -69,6 +69,10 @@ public class AndroidLauncher extends  AndroidApplication {
 			Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
 			return true;
 		}
+		if( keyCode == KeyEvent.KEYCODE_MENU){
+			Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
+			return true;
+		}
 		return super.onKeyDown(keyCode, event);
 	}
 

@@ -31,8 +31,8 @@ public class Launcher extends Game {
     private OrthographicCamera hudCam;
 
     public GameStateManager manager;
-
     private BitmapFont font;
+    public static boolean flag;
 
     @Override
     public void create () {
@@ -102,7 +102,7 @@ public class Launcher extends Game {
 
     public void initFonts(){
         //font = new BitmapFont();
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/24_LED_Bright.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arcon.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
 
         params.size = 48;
@@ -126,5 +126,25 @@ public class Launcher extends Game {
     public OrthographicCamera getHUDCamera() {
         return hudCam;
     }
+
+
+    @Override
+    public void pause() {
+        super.pause();
+        if(flag){
+            if(!manager.isPause()) {
+                manager.setTempState();
+            }
+        }
+    }
+
+
+    public void setFlagT(){
+        flag = true;
+    }
+    public void setFlagF(){
+        flag = false;
+    }
+
 
 }
