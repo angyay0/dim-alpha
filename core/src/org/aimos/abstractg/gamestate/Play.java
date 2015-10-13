@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.CoinGenerator;
 import org.aimos.abstractg.handlers.GameContactListener;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
@@ -47,7 +48,9 @@ public class Play extends GameState{
         player = new Player("player","Hero", world, new Vector2(120, 120));
         loader = new MapLoader(world, player);
 
-        Coin.generateCoins(world, new Vector2(160, 140), 116);
+       // addCoins( Coin.generateCoins(world, new Vector2(160, 140), 116) );
+        addCoins( new CoinGenerator().generateObjectBox2D(world, new Vector2(160, 140), 116) );
+        //Coin.generateCoin(world, new Vector2(160, 140), 116);
 
         //Create Hud
         hud = new Hud(this);

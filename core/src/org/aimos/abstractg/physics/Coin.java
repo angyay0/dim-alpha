@@ -49,7 +49,7 @@ public class Coin extends Item implements PickUp{
 	//Tipo de moneda
 	public CTYPE type;
 
-	private Coin(CTYPE type, World world, Vector2 pos){
+	public Coin(CTYPE type, World world, Vector2 pos){
         super(world);
 		this.type = type;
         TextureAtlas atlas = Launcher.res.getAtlas("coins");
@@ -72,6 +72,10 @@ public class Coin extends Item implements PickUp{
             val = res;
         }
         return coins;
+    }
+
+    public static Coin generateCoin(World w, Vector2 pos, long val){
+        return new Coin(CTYPE.BLUE,w,pos);
     }
 
     public static Array<Coin> generateCoins(World w, Array<Vector2> points, long val){
