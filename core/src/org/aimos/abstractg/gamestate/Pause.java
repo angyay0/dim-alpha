@@ -68,9 +68,18 @@ public class Pause extends GameState {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gsm.disposeTemp();
+
             }
         });
+        Button btnreload = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/hideWin.png"))));//Close
+        btnreload.setSize(imgCuad, imgCuad);
+        btnreload.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                gsm.reloadGame();
 
+            }
+        });
         //Btones para Opciones o Regresar a menu principal, depende de la pantalla
         if(opt){
             btnPause[0] = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("menu/creditos.png")))); //options
@@ -84,6 +93,7 @@ public class Pause extends GameState {
             });
             labels = new Label("Continuar  Opciones",skin);
         }else {
+
             btnPause[0] = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("menu/home2.png")))); //Home
             btnPause[0].setSize(imgCuad, imgCuad);
             btnPause[0].addListener(new ClickListener() {
@@ -163,7 +173,7 @@ public class Pause extends GameState {
         });
 
 
-        SplitPane botonesAxu = new SplitPane(btnhide,btnPause[0], false, skin, "default-horizontal");
+        //SplitPane botonesAxu = new SplitPane(btnhide,btnPause[0], false, skin, "default-horizontal");
         //Ventana
         window = new Window(" ", skin);
         window.setDebug(true);
@@ -180,7 +190,10 @@ public class Pause extends GameState {
         window.add(Musica);
         window.add(Efecto);
         window.row();
-        window.add(botonesAxu).colspan(4);
+        window.add(btnreload).padLeft(5);
+        window.add(btnhide).padLeft(5);
+        window.add(btnPause[0]).padLeft(5).padRight(5);
+        //window.add(botonesAxu).colspan(4);
         window.pack();
         addActor(window);
 

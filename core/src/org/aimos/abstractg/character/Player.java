@@ -38,10 +38,11 @@ public class Player extends Character {
     public Player(String spriteSrc, String name, World world, Vector2 pos) {
         super(spriteSrc, name, world, pos);
         weapons = new Array<Weapon>();
-        //loadScript();
-        //setSelfToScript();
-        //Thread t = new Thread(this);
-        //t.start();
+     //   loadScript();
+      //  setSelfToScript();
+
+      //  Thread t = new Thread(this);
+    //    t.start();
     }
 
     @Override

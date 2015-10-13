@@ -23,6 +23,7 @@ public class MainMenu extends GameState{
 
     protected MainMenu(final GameStateManager gsm) {
         super(gsm);
+        game.setFlagF();
 
         TextureRegion bgRegion = new TextureRegion(Launcher.res.getTexture("fondo"));
         TextureRegion logoRegion = new TextureRegion(Launcher.res.getTexture("mask"));

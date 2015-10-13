@@ -112,5 +112,12 @@ public class GameStateManager {
         }
     }
 
+    public  void  reloadGame(){
+        if(tmp != null) {
+            disposeTemp();
+            pushState(SOLO_PLAY);
+        }
+    }
+
 
 }

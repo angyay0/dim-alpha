@@ -1,6 +1,7 @@
 package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +35,11 @@ public abstract class GameState extends Stage {
         hudCam = game.getHUDCamera();
         font = game.getFont();
         Gdx.input.setInputProcessor(this);
+        /*
+        Gdx.input.setCatchBackKey(true);
+        Gdx.input.setCursorCatched(true);
+        Gdx.input.setCatchMenuKey(true);
+        */
     }
 
     public abstract void update(float dt);

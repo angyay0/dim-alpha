@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.GameContactListener;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
@@ -25,7 +26,7 @@ public class Play extends GameState{
     private Player player;
     private Array<Coin> coins;
     private MapLoader loader;
-
+    private boolean gameOver = false;
     private Hud hud;
 
     private static String map = "";
@@ -67,18 +68,27 @@ public class Play extends GameState{
     public void render() {
 
 
-        // clear the screen
-        Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        loader.render();
+            // clear the screen
+            Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            loader.render();
 
-        // draw player
-        sb.setProjectionMatrix(loader.getFloorCamera().combined);
-        for (Coin coin : coins) {
-            coin.render(sb);
-        }
-        player.render(sb);
-        draw();
+            // draw player
+            sb.setProjectionMatrix(loader.getFloorCamera().combined);
+            for (Coin coin : coins) {
+                coin.render(sb);
+            }
+            player.render(sb);
+
+            if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
+
+                if (!gameOver) {
+                    gameOver = true;
+                    getManager().setTempState();
+                }
+            }
+            draw();
+
     }
 
     @Override
@@ -86,6 +96,7 @@ public class Play extends GameState{
         if(AudioManager.getInstance().isPlaying()){
             AudioManager.getInstance().stopAudio();
         }
+
     }
 
     public Player getPlayer() {
