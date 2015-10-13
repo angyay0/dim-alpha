@@ -48,6 +48,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected int maxJumps = 1;
     protected boolean direction = true;
     protected Weapon weapon;
+    protected boolean onGround;
     protected Interactive interactive;
     // Hp value of the character
     protected long hp;
@@ -60,7 +61,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
-    protected float BODY_SCALE = 2.1f;
+    protected float BODY_SCALE = 2.2f;
 
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0
@@ -223,11 +224,17 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public boolean isOnGround() {
-        return jumps == maxJumps && !isJumping();
+        //return jumps == maxJumps && !isJumping();
+        return  onGround;
+    }
+
+    public void setOnGround(boolean onGround){
+        this.onGround = onGround;
+
     }
 
     public void onGround() {
-        if (isOnGround()) return;
+        //if (isOnGround()) return;
         jumps = maxJumps;
         jumping = false;
         if (isWalking()) {
