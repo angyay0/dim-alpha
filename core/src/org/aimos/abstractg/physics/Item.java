@@ -34,7 +34,7 @@ public abstract class Item extends PhysicalBody{
         if (body == null){ Gdx.app.debug("NO ITEM","EIT");
             return;}
         sb.begin();
-        sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
+        sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2)); //Corregir
         sb.end();
     }
 

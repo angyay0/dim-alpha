@@ -1,11 +1,13 @@
 // abstractg->item->Weapon
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.character.Character;
+import org.aimos.abstractg.core.Launcher;
 
 /**
  * Clase generadora de las armas de las cuales puede ser utilizada por los jugadores y enemigos
@@ -35,12 +37,14 @@ public abstract class Weapon extends Item {
      * @param m multiplier
      * @param v value
      */
-    public Weapon(long bd, float m, long v, World w){
+    public Weapon(long bd, float m, long v, World w, String spriteSrc){
         super(w);
         bonusDamage = bd;
         multiplier = m;
         value = v;
         owner = null;
+        TextureAtlas atlas = Launcher.res.getAtlas("armas");
+        sprite = atlas.findRegion(spriteSrc);
     }
 
     /**
