@@ -15,6 +15,7 @@ import org.aimos.abstractg.handlers.GameContactListener;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
 import org.aimos.abstractg.physics.Coin;
+import org.aimos.abstractg.physics.MeleeWeapon;
 
 /**
  * Created by EinarGretch on 17/09/2015.
@@ -29,6 +30,7 @@ public class Play extends GameState{
     private MapLoader loader;
     private boolean gameOver = false;
     private Hud hud;
+    MeleeWeapon mw;
 
     private static String map = "";
 
@@ -49,6 +51,8 @@ public class Play extends GameState{
         //create player
         player = new Player("player","Hero", world, new Vector2(120, 120));
         loader = new MapLoader(world, player);
+        //mw = new MeleeWeapon(10,10,10,world,"sword");
+        //player.setWeapon(mw);
 
         addCoins(Coin.generateCoins(world, new Vector2(160, 140), 116));
 
@@ -81,7 +85,7 @@ public class Play extends GameState{
                 coin.render(sb);
             }
             player.render(sb);
-
+            //mw.render(sb);
             if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
 
                 if (!gameOver) {

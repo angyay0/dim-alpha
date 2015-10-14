@@ -14,15 +14,18 @@ import org.aimos.abstractg.handlers.Constants;
  */
 public class ThrowWeapon extends Weapon {
 
+
     /**
      * Default Constructor for Weapon
      *
-     * @param bd bonus damage
-     * @param m  multiplier
-     * @param v  value
+     * @param bd        bonus damage
+     * @param m         multiplier
+     * @param v         value
+     * @param w
+     * @param spriteSrc
      */
-    public ThrowWeapon(long bd, float m, long v, World w) {
-        super(bd, m, v, w);
+    public ThrowWeapon(long bd, float m, long v, World w, String spriteSrc) {
+        super(bd, m, v, w, spriteSrc);
     }
 
     @Override
