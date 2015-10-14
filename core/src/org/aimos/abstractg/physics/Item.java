@@ -1,6 +1,7 @@
 //abstractg->item->Item
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
@@ -30,7 +31,8 @@ public abstract class Item extends PhysicalBody{
 
     @Override
     public void render(SpriteBatch sb) {
-        if (body == null) return;
+        if (body == null){ Gdx.app.debug("NO ITEM","EIT");
+            return;}
         sb.begin();
         sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2));
         sb.end();
