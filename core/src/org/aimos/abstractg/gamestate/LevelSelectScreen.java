@@ -26,7 +26,7 @@ public class LevelSelectScreen extends GameState {
 
     protected LevelSelectScreen(GameStateManager gsm) {
         super(gsm);
-        game.setFlagF();
+        game.setFlag(false);
         background = new Texture("menu/fondo.png");
         back = new Texture("menu/back.png");
 

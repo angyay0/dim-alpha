@@ -23,7 +23,7 @@ public class GameStateManager {
     public static final int SOLO_PLAY = 3;
     public static final int LEVEL_SELECT =4;
 
-    private boolean inPause = true;
+    private boolean inPause = false;
 
     public GameStateManager(Launcher game) {
         this.game = game;

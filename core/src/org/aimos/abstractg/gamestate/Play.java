@@ -45,7 +45,7 @@ public class Play extends GameState{
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
 
         coins = new Array<Coin>();
-        game.setFlagT();
+        game.setFlag(true);
 
         //set up the world
         world = new World(new Vector2(0, -9.81f), true);
