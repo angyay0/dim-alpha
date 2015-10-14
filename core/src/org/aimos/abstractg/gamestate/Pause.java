@@ -59,7 +59,6 @@ public class Pause extends GameState {
     private void createWindowPause() {
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-        final Label labels;
 
         //boton ocultar ventana
         Button btnhide = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/hideWin.png"))));//Close
@@ -71,12 +70,13 @@ public class Pause extends GameState {
 
             }
         });
-        Button btnreload = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/hideWin.png"))));//Close
+
+        Button btnreload = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/violenceOn.png"))));//Close
         btnreload.setSize(imgCuad, imgCuad);
         btnreload.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.reloadGame();
+                //gsm.reloadGame();
 
             }
         });
@@ -91,7 +91,6 @@ public class Pause extends GameState {
                     Gdx.app.debug("Evento", "Optiones");
                 }
             });
-            labels = new Label("Continuar  Opciones",skin);
         }else {
 
             btnPause[0] = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("menu/home2.png")))); //Home
@@ -102,7 +101,6 @@ public class Pause extends GameState {
                     gsm.backToMenu();
                 }
             });
-            labels = new Label("Continuar Salir",skin);
         }
 
         //boton Violencia y check
@@ -178,7 +176,8 @@ public class Pause extends GameState {
         window = new Window(" ", skin);
         window.setDebug(true);
         window.setMovable(false);
-        window.setResizable(false);
+        window.setResizable(true);
+        window.setSize(300,350);
         window.setPosition(270, 100);
         window.defaults().spaceBottom(10);
         window.row().fill().expandX();
@@ -211,5 +210,6 @@ public class Pause extends GameState {
     public void render() {
         actual.render();
         draw();
+        act();
     }
 }

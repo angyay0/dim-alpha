@@ -85,7 +85,7 @@ public class GameStateManager {
     }
 
     public void setTempState(){
-        inPause = true;
+        //inPause = true;
         tmp = new Pause(this, gameStates.peek());
     }
 
@@ -94,6 +94,7 @@ public class GameStateManager {
     }
 
     public void disposeTemp(){
+        inPause = false;
         tmp.dispose();
         tmp = null;
     }
@@ -109,7 +110,6 @@ public class GameStateManager {
 
     public void backToMenu(){
         if(tmp != null) {
-            inPause = false;
             disposeTemp();
             pushState(MENU);
         }

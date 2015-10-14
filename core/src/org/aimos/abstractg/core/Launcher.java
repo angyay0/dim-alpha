@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.aimos.abstractg.gamestate.GameStateManager;
 import org.aimos.abstractg.handlers.BoundedCamera;
@@ -33,6 +37,7 @@ public class Launcher extends Game {
     public GameStateManager manager;
     private BitmapFont font;
     public static boolean flag;
+    private Viewport viewport;
 
     @Override
     public void create () {
@@ -75,9 +80,12 @@ public class Launcher extends Game {
 
         //Cameras
         cam = new BoundedCamera();
-        cam.setToOrtho(false, WIDTH, HEIGHT);
+        cam.setToOrtho(false,WIDTH,HEIGHT);
         hudCam = new OrthographicCamera();
-        hudCam.setToOrtho(false, WIDTH, HEIGHT);
+
+        viewport = new StretchViewport(800,512,hudCam);
+        viewport.apply();
+        //hudCam.setToOrtho(false, WIDTH, HEIGHT);
 
         //Fonts
         initFonts();
@@ -139,5 +147,17 @@ public class Launcher extends Game {
     }
     public void setFlag(boolean flagP){
         flag = flagP;
+    }
+    @Override
+    public void resize(int width, int height) {
+        viewport.update(width,height);
+        hudCam.position.set(hudCam.viewportWidth/2,hudCam.viewportHeight/2,0);
+    }
+
+    public void initSkinLabel(){
+        Skin skin = new Skin();
+        skin.addRegions(Launcher.res.getAtlas("uiskin"));
+        skin.add("default-font", font);
+        skin.load(Gdx.files.internal("data/uiskin2.json"));
     }
 }

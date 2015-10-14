@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -15,7 +16,7 @@ import org.aimos.abstractg.handlers.Constants;
 /**
  * Created by DiegoArmando on 07/10/2015.
  */
-public class LevelSelectScreen extends GameState {
+public class LevelSelectScreen extends GameState{
 
     Button [] buttonsLevel;
 
@@ -23,6 +24,7 @@ public class LevelSelectScreen extends GameState {
     private Texture background;
     private Texture back;
     private float dCircular = 220f;
+
 
     protected LevelSelectScreen(GameStateManager gsm) {
         super(gsm);
@@ -44,14 +46,14 @@ public class LevelSelectScreen extends GameState {
     public void render() {
         Gdx.gl.glClearColor(0.86f, 0.86f, 0.86f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        sb.setProjectionMatrix(cam.combined);
+        sb.setProjectionMatrix(hudCam.combined);
 
         sb.begin();
-        sb.draw(background, 120f, 0f, 600f, 480f);
-        font.draw(sb, "Selecciona El Nivel", 200, 450);
-        font.draw(sb, "Tutorial", 60f, 110f);
-        font.draw(sb, "Ciudad 1",320,110f);
-        font.draw(sb, "Ciudad 2",520,110f);
+            sb.draw(background, 120f, 0f, 600f, 480f);
+            font.draw(sb, "Selecciona El Nivel", 200, 400);
+            font.draw(sb, "Tutorial", 60f, 110f);
+            font.draw(sb, "Ciudad 1", 320, 110f);
+            font.draw(sb, "Ciudad 2", 520, 110f);
         sb.end();
         super.act(delta);
         super.draw();

@@ -6,9 +6,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import org.aimos.abstractg.core.Factory;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
 
@@ -103,6 +105,10 @@ public class WorldSelectScreen  extends GameState {
         for (int i = 0; i < btnWorld.length; i++) {
             btnWorld[i].addAction(sequence(alpha(0.5f),delay(.5f),fadeIn(.5f)));
         }
+
+
+        //Label infoL = Factory.initInfoLabel(font,200,400,"Selecciona El Capitulo");
+        //addActor(infoL);
     }
 
     @Override
@@ -120,15 +126,16 @@ public class WorldSelectScreen  extends GameState {
     public void render() {
         Gdx.gl.glClearColor(0.86f, 0.86f, 0.86f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        sb.setProjectionMatrix(cam.combined);
+        sb.setProjectionMatrix(hudCam.combined);
 
         sb.begin();
-            sb.draw(background, 120f, 0f, 600f, 480f);
-            font.draw(sb, "Selecciona El Capitulo", 200, 450);
+        sb.draw(background, 120f, 0f, 600f, 480f);
+        font.draw(sb, "Selecciona El Capitulo", 200, 440);
         sb.end();
 
         super.act(delta);
         super.draw();
+
 
     }
 
