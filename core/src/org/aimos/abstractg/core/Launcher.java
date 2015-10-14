@@ -98,7 +98,7 @@ public class Launcher extends Game {
     @Override
     public void render() {
         super.render();
-        Gdx.graphics.setTitle(TITLE + " -- FPS: " + Gdx.graphics.getFramesPerSecond());
+        //Gdx.graphics.setTitle(TITLE + " -- FPS: " + Gdx.graphics.getFramesPerSecond());
         manager.update(Gdx.graphics.getDeltaTime());
         manager.render();
     }
@@ -149,6 +149,7 @@ public class Launcher extends Game {
     public void setFlag(boolean flagP){
         flag = flagP;
     }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width,height);

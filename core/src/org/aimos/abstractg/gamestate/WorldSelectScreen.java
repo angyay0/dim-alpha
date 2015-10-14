@@ -130,6 +130,7 @@ public class WorldSelectScreen  extends GameState {
 
         sb.begin();
         sb.draw(background, 120f, 0f, 600f, 480f);
+
         font.draw(sb, "Selecciona El Capitulo", 200, 440);
         sb.end();
 

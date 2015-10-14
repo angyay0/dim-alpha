@@ -51,7 +51,7 @@ public class LevelSelectScreen extends GameState{
 
         sb.begin();
             sb.draw(background, 120f, 0f, 600f, 480f);
-            font.draw(sb, "Selecciona El Nivel", 200, 400);
+            font.draw(sb, "Click any Level", 200, 400);
             font.draw(sb, "Tutorial", 60f, 110f);
             font.draw(sb, "Ciudad 1", 320, 110f);
             font.draw(sb, "Ciudad 2", 520, 110f);

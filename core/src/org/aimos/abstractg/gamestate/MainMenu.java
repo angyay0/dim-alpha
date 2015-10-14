@@ -47,7 +47,6 @@ public class MainMenu extends GameState{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-            //sb.draw(background, 120f, 0f, 600f, 480f);
             super.draw();
             super.act();
         sb.end();

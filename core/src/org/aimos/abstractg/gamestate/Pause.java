@@ -59,7 +59,6 @@ public class Pause extends GameState {
     private void createWindowPause() {
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
 
-
         //boton ocultar ventana
         Button btnhide = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/hideWin.png"))));//Close
         btnhide.setSize(imgCuad, imgCuad);

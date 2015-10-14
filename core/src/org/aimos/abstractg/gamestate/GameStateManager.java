@@ -29,7 +29,6 @@ public class GameStateManager {
         this.game = game;
         gameStates = new Stack<GameState>();
         pushState(SPLASH);
-
     }
 
     public void update(float dt) {
@@ -86,7 +85,7 @@ public class GameStateManager {
     }
 
     public void setTempState(){
-        //inPause = true;
+        inPause = true;
         tmp = new Pause(this, gameStates.peek());
     }
 
@@ -119,5 +118,4 @@ public class GameStateManager {
     public boolean isPause(){
         return inPause;
     }
-
 }
