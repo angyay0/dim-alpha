@@ -174,7 +174,7 @@ public class Pause extends GameState {
         //SplitPane botonesAxu = new SplitPane(btnhide,btnPause[0], false, skin, "default-horizontal");
         //Ventana
         window = new Window(" ", skin);
-        window.setDebug(true);
+        //window.setDebug(true);
         window.setMovable(false);
         window.setResizable(true);
         window.setSize(300,350);

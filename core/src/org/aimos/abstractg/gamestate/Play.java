@@ -94,6 +94,7 @@ public class Play extends GameState{
         }*/
 
         // draw player
+
         sb.setProjectionMatrix(loader.getFloorCamera().combined);
         for (Coin coin : coins) {
             coin.render(sb);

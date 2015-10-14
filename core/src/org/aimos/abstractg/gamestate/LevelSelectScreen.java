@@ -35,6 +35,7 @@ public class LevelSelectScreen extends GameState{
         initButtons();
 
         for(Button btn: buttonsLevel) addActor(btn);
+
     }
 
     @Override

@@ -15,10 +15,12 @@ import org.aimos.abstractg.handlers.AudioManager;
 
 
 /**
- * Created by EinarGretch,angyay0 on 17/09/2015.
+ * Created by EinarGretch,angyay0,DiegoArmando on 17/09/2015.
+ * @version 3.5
  */
 
 public class MainMenu extends GameState{
+
 
     private float dx = 0f;
     private float dy = 0f;

@@ -29,6 +29,7 @@ public class GameStateManager {
         this.game = game;
         gameStates = new Stack<GameState>();
         pushState(SPLASH);
+
     }
 
     public void update(float dt) {

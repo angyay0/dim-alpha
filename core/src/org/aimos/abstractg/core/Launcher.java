@@ -160,4 +160,5 @@ public class Launcher extends Game {
         skin.add("default-font", font);
         skin.load(Gdx.files.internal("data/uiskin2.json"));
     }
+
 }

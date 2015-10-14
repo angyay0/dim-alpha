@@ -32,6 +32,7 @@ public abstract class GameState extends Stage{
     private Viewport viewport;
 
     protected GameState(GameStateManager gsm) {
+
         //super(new FillViewport(800,512, gsm.game().getHUDCamera()));
         super( new StretchViewport(Launcher.WIDTH, Launcher.HEIGHT, gsm.game().getHUDCamera()) );
         //viewport = new FitViewport(800, 512, gsm.game().getCamera());
