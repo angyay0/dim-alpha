@@ -41,15 +41,19 @@ public class MeleeWeapon extends Weapon {
 
     @Override
     protected final void createBody(Vector2 pos) {
+        Vector2 npos = pos.cpy();
+        npos.set(npos.x*2f,npos.y);
+
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
-        bdef.position.set(pos.cpy());
+        bdef.position.set(npos);
 
         body = world.createBody(bdef);
         FixtureDef fdef = new FixtureDef();
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(sprite.getRegionWidth() / 2 / Constants.PTM, sprite.getRegionHeight() / 2 / Constants.PTM);
+        //shape.setAsBox(sprite.getRegionWidth() / 2 / Constants.PTM, sprite.getRegionHeight() / 2 / Constants.PTM);// mw.getWidth()/4,mw.getHeight()/4
+        shape.setAsBox(sprite.getRegionWidth() / (2f * Constants.PTM), sprite.getRegionHeight() / (2f * Constants.PTM) );
         fdef.shape = shape;
         fdef.friction = 1;
         fdef.density = 1;
@@ -68,12 +72,15 @@ public class MeleeWeapon extends Weapon {
 
         rjd.bodyA = owner.getBody();
         rjd.bodyB = body;
-        rjd.enableLimit = true;
-        rjd.enableMotor = true;
-        rjd.maxMotorTorque = 0.5f;
-        rjd.lowerAngle = 0f;
+        rjd.localAnchorA .set(0.44f,0.10f);
+       // rjd.localAnchorB.set(0f,-1f);
+        rjd.lowerAngle = -0.5f * 3.14159f;
         rjd.motorSpeed = 1f;
-        rjd.upperAngle = 60f;
+        rjd.upperAngle = 0.25f * 3.14159f;
+        rjd.enableLimit = true;
+        rjd.maxMotorTorque = 0.5f;
+        rjd.motorSpeed = 0.1f;
+        rjd.enableMotor = true;
 
         joint = world.createJoint(rjd);
     }

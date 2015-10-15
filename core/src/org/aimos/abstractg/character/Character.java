@@ -381,7 +381,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
      * Attack Logic
      **/
     public void attack() {
-        if (weapon != null) {
+        if (hasWeapon()) {
             weapon.attack();
         } else {
             //Ataque con puño
@@ -401,6 +401,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
         this.weapon.setOwner(this);
+    }
+
+    public boolean hasWeapon(){
+        return (weapon != null);
     }
 
     public Weapon removeWeapon() {
