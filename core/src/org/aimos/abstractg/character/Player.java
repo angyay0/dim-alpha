@@ -81,7 +81,6 @@ public class Player extends Character {
 
     public void addMoney(Coin c) {
         money += c.getValue();
-        System.out.println("deshacer moneda");
     }
 
     public void addWeapon(DroppedWeapon w) {
@@ -106,5 +105,20 @@ public class Player extends Character {
 
     public void addWeapon(Weapon w){
         weapons.add(w);
+    }
+
+    public long getMoney(){
+        return money;
+    }
+    public Array<Weapon> getWeapons(){
+        return weapons;
+    }
+
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    public long getEnemiesKilled() {
+        return enemiesKilled;
     }
 }
