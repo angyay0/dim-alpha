@@ -4,24 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 
+import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.gamestate.Play;
+import org.aimos.abstractg.gamestate.GameStateManager;
 
 import java.util.List;
 
 /**
  * Created by EinarGretch,Angyay0 on 09/09/2015.
  */
-public class Hud {
+public class Hud extends Table {
 
     //Default Buttons Name With Atlas file
     //Salto
@@ -36,23 +38,36 @@ public class Hud {
     private static final String BGPAD = "bgpad";
     //Pad Circle
     private static final String PAD = "circle";
-    //Default Buttons Name With Atlas file
-    //MARGEN (Tile)
+    //Tamaño de las imagenes
+    private float SQUARE = 50f;
+    //Margen para los botones
     private static final float CTRL_MARGIN = 50f;
     //Square Size for circle pad
     private static final float CTRL_SIZE = 160f;
 
     //Lista con los botones del control
     private List<Button> buttons;
-    //coordenadas para eventos del control
+    //Coordenadas para eventos del control
     private int posX1, posX2, posY1, posY2;
+    //Instancia de player
+    private Player player;
+    //Instancia del GameStateManager
+    private GameStateManager manager;
 
-    //Tamaño de las imagenes
-    private float SQUARE = 50f;
+    public Hud(Player player, GameStateManager gsm) {
+        this.player = player;
+        manager = gsm;
+    }
 
+    @Override
+    public void setStage(Stage stage) {
+        super.setStage(stage);
+        init();
+    }
 
-    public Hud(final Play play) {
-        super();
+    private void init() {
+        final Player p = player;
+        final GameStateManager gsm = manager;
         TextureAtlas atlas = Launcher.res.getAtlas("control");
         AtlasRegion jumpRegion = atlas.findRegion(JUMP);
         AtlasRegion bgpadRegion = atlas.findRegion(BGPAD);
@@ -67,7 +82,7 @@ public class Hud {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                play.getPlayer().jump();
+                p.jump();
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -105,7 +120,7 @@ public class Hud {
                 pad.setPosition(posX1 - (pad.getWidth() / 2), posY1 - (pad.getHeight() / 2));
                 bgPad.setVisible(true);
                 pad.setVisible(true);
-                //play.getPlayer().setWalking(true);
+                //p.setWalking(true);
             }
 
             @Override
@@ -124,33 +139,33 @@ public class Hud {
                 switch (cuad) {
                     case 0:
                     case 7://Derecha
-                        play.getPlayer().move(true);
+                        p.move(true);
                         break;
                     case 1://Arriba
                     case 2:
-                        if (play.getPlayer().isCrouching() && !play.getPlayer().isForceCrouched()) {
-                            play.getPlayer().setCrouching(false);
+                        if (p.isCrouching() && !p.isForceCrouched()) {
+                            p.setCrouching(false);
                         }
                         break;
                     case 3://Izquierda
                     case 4:
-                        play.getPlayer().move(false);
+                        p.move(false);
                         break;
                     case 5://Abajo
                     case 6:
-                        play.getPlayer().setCrouching(true);
+                        p.setCrouching(true);
                         break;
                 }
 
                 /*if (posX2 > 40) {//derecha
-                    play.getPlayer().move(true);
+                    p.move(true);
                 } else if (posX2 < -40) {//izquierda
-                    play.getPlayer().move(false);
+                    p.move(false);
                 }
                 //System.out.println(posX2);
                 if (posY2 < -20) {//agacharse
-                    if (!play.getPlayer().isCrouching()) {
-                        play.getPlayer().setCrouching(true);
+                    if (!p.isCrouching()) {
+                        p.setCrouching(true);
                     }
                 } else if (posY2 > 20) {//mirar arriba
                     //interactuar escaleras
@@ -160,9 +175,9 @@ public class Hud {
                 //System.out.println("y " + posY2 + ", Angle " + angle + ", Radius " + radius + ", Sen " + (Math.sin(Math.toRadians(angle)))+", Y " + (angle * Math.sin(Math.toRadians(angle))));
                 if ((CTRL_SIZE / 2) >= radius) {
                     pad.setPosition(x - (pad.getWidth() / 2), y - (pad.getHeight() / 2));
-                }else{
-                    pad.setPosition((float)((CTRL_SIZE / 2) * Math.cos(Math.toRadians(angle))) - (pad.getWidth() / 2) + posX1,
-                            (float)((CTRL_SIZE / 2) * Math.sin(Math.toRadians(angle))) - (pad.getHeight() / 2) + posY1);
+                } else {
+                    pad.setPosition((float) ((CTRL_SIZE / 2) * Math.cos(Math.toRadians(angle))) - (pad.getWidth() / 2) + posX1,
+                            (float) ((CTRL_SIZE / 2) * Math.sin(Math.toRadians(angle))) - (pad.getHeight() / 2) + posY1);
                 }
 
             }
@@ -173,7 +188,7 @@ public class Hud {
                 pad.setVisible(false);
                 bgPad.setPosition(0, 0);
                 pad.setPosition(0, 0);
-                play.getPlayer().setWalking(false);
+                p.setWalking(false);
             }
         });
 
@@ -183,9 +198,10 @@ public class Hud {
         pause.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                play.getManager().setTempState();
+                manager.setTempState();
             }
         });
+
         Image cir = new Image(Launcher.res.getTexture("circle"));
         cir.setSize(SQUARE, SQUARE);
         cir.setPosition(10f, 410f);
@@ -193,14 +209,13 @@ public class Hud {
         bar.setSize(250, SQUARE);
         bar.setPosition(35f, 410f);
 
-
-        play.addActor(bgPad);
-        play.addActor(pad);
-        play.addActor(jumpButton);
-        play.addActor(movementCross);
-        play.addActor(pause);
-        play.addActor(bar);
-        play.addActor(cir);
+        addActor(bgPad);
+        addActor(pad);
+        addActor(jumpButton);
+        addActor(movementCross);
+        addActor(pause);
+        addActor(bar);
+        addActor(cir);
     }
 
 }

@@ -104,5 +104,7 @@ public class Coin extends Item implements PickUp{
         // create character collision box fixture
         body.createFixture(fdef).setUserData(Constants.DATA.PICKUP);
         shape.dispose();
+
+        body.setUserData(this);
     }
 }

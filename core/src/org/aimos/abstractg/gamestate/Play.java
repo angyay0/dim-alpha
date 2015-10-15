@@ -16,6 +16,7 @@ import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.MeleeWeapon;
+import org.aimos.abstractg.physics.PickUp;
 
 /**
  * Created by EinarGretch on 17/09/2015.
@@ -49,15 +50,16 @@ public class Play extends GameState{
         world.setContactListener(contact);
 
         //create player
-        player = new Player("player","Hero", world, new Vector2(120, 120));
+        player = new Player("player","Hero", world, new Vector2(128,128));
         loader = new MapLoader(world, player);
         //mw = new MeleeWeapon(10,10,10,world,"sword");
         //player.setWeapon(mw);
 
-        addCoins(Coin.generateCoins(world, new Vector2(160, 140), 116));
+        addCoins(Coin.generateCoins(world, new Vector2(256, 512), 116));
 
         //Create Hud
-        hud = new Hud(this);
+        hud = new Hud(player, gsm);
+        addActor(hud);
 
         //Play music
         AudioManager.getInstance().play(0.5f, true);
@@ -68,6 +70,7 @@ public class Play extends GameState{
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
+        removeBodies(contact.getRemovedBodies());
     }
 
     @Override
@@ -103,6 +106,14 @@ public class Play extends GameState{
             AudioManager.getInstance().stopAudio();
         }
 
+    }
+
+    public void removeBodies(Array<PickUp> pickUp){
+        for (PickUp p : pickUp) {
+            if(p instanceof Coin) coins.removeValue((Coin)p, false);
+            p.dispose();
+        }
+        pickUp.clear();
     }
 
     public Player getPlayer() {

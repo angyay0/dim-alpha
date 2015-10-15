@@ -297,8 +297,8 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         fdef.density = 1;
         fdef.friction = 1f;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
-        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | //Constants.bit.GRANADE.BIT() |
-                Constants.BIT.BULLET.BIT());
+        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() |
+                Constants.BIT.GRANADE.BIT() | Constants.BIT.BULLET.BIT() | Constants.BIT.ITEM.BIT());
         fdef.restitution = 0f;
 
         // create character collision box fixture

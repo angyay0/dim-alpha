@@ -5,4 +5,6 @@ package org.aimos.abstractg.physics;
  */
 public interface PickUp {
 
+    void dispose();
+
 }

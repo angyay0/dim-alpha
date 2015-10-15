@@ -5,12 +5,15 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.character.Character;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.DroppedWeapon;
 import org.aimos.abstractg.physics.Interactive;
+import org.aimos.abstractg.physics.Item;
+import org.aimos.abstractg.physics.PickUp;
 import org.aimos.abstractg.physics.PickUp;
 import org.aimos.abstractg.physics.Weapon;
 
@@ -22,6 +25,8 @@ public class GameContactListener implements ContactListener {
     public GameContactListener() {
         super();
     }
+
+    private Array<PickUp> remove = new Array<PickUp>();
 
     @Override
     public void beginContact(Contact contact) {
@@ -92,6 +97,7 @@ public class GameContactListener implements ContactListener {
         }
         //Pick-up
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.PICKUP)) {
+            System.out.println("Pick Up");
             PickUp pi = (PickUp) fa.getBody().getUserData();
             if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fb.getBody().getUserData();
@@ -101,9 +107,11 @@ public class GameContactListener implements ContactListener {
                 }else if(pi instanceof DroppedWeapon) {
                     p.addWeapon((DroppedWeapon) pi);
                 }
+                remove.add(pi);
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.PICKUP)) {
+            System.out.println("Pick Up");
             PickUp pi = (PickUp) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fa.getBody().getUserData();
@@ -113,6 +121,7 @@ public class GameContactListener implements ContactListener {
                 }else if(pi instanceof DroppedWeapon) {
                     p.addWeapon((DroppedWeapon) pi);
                 }
+                remove.add(pi);
             }
         }
         //weapon
@@ -204,6 +213,10 @@ public class GameContactListener implements ContactListener {
                 p.removeInteractive();
             }
         }
+    }
+
+    public Array<PickUp> getRemovedBodies(){
+        return remove;
     }
 
     @Override

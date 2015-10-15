@@ -51,7 +51,7 @@ public class ThrowWeapon extends Weapon {
         fdef.friction = 1;
         fdef.density = 1;
         fdef.filter.categoryBits = Constants.BIT.GRANADE.BIT();
-        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.CHARACTER.BIT() |
+        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.GRANADE.BIT() |
                         Constants.BIT.BULLET.BIT());
         fdef.restitution = 0.5f;
         body.createFixture(fdef).setUserData(Constants.DATA.GRANADE);

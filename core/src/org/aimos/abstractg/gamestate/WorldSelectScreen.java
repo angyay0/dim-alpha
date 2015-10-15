@@ -6,13 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
-import org.aimos.abstractg.core.Factory;
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.handlers.Constants;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
@@ -22,9 +19,9 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 /**
  * Created by DiegoArmando on 28/09/2015.
  */
-public class WorldSelectScreen  extends GameState {
+public class WorldSelectScreen extends GameState {
 
-    private  Button [] btnWorld = new Button[6];
+    private Button[] btnWorld = new Button[6];
     private float delta = 0;
     private Texture background;
     private Texture back;
@@ -37,16 +34,16 @@ public class WorldSelectScreen  extends GameState {
         back = new Texture("menu/back.png");
 
         initButtons();
-        for(Button btn: btnWorld) addActor(btn);
+        for (Button btn : btnWorld) addActor(btn);
     }
 
     private void initButtons() {
-        btnWorld[0]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Cuidad
-        btnWorld[1]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Bosque
-        btnWorld[2]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Espacio
-        btnWorld[3]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //PCH1
-        btnWorld[4]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad")))); //Tierra
-        btnWorld[5]  = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("back")))); //back
+        btnWorld[0] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("bgcpad")))); //Cuidad
+        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("bgcpad")))); //Bosque
+        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("bgcpad")))); //Espacio
+        btnWorld[3] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("bgcpad")))); //PCH1
+        btnWorld[4] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("bgcpad")))); //Tierra
+        btnWorld[5] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("back")))); //back
 
         btnWorld[0].setSize(dCircular, dCircular);
         btnWorld[0].setPosition(30f, 175f);
@@ -99,11 +96,11 @@ public class WorldSelectScreen  extends GameState {
         btnWorld[5].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                 gsm.setState(GameStateManager.MENU);
+                gsm.setState(GameStateManager.MENU);
             }
         });
         for (int i = 0; i < btnWorld.length; i++) {
-            btnWorld[i].addAction(sequence(alpha(0.5f),delay(.5f),fadeIn(.5f)));
+            btnWorld[i].addAction(sequence(alpha(0.5f), delay(.5f), fadeIn(.5f)));
         }
 
 
@@ -140,7 +137,6 @@ public class WorldSelectScreen  extends GameState {
 
 
     }
-
 
 
 }

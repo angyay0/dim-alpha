@@ -5,6 +5,6 @@ package org.aimos.abstractg.physics;
  */
 public interface Interactive {
 
-    public void interact();
+    void interact();
 
 }
