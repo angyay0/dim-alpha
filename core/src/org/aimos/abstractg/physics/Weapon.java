@@ -2,6 +2,7 @@
 package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
@@ -44,7 +45,8 @@ public abstract class Weapon extends Item {
         value = v;
         owner = null;
         TextureAtlas atlas = Launcher.res.getAtlas("armas");
-        sprite = atlas.findRegion(spriteSrc);
+        sprite = atlas.createSprite(spriteSrc);
+        //sprite.set
     }
 
     /**
@@ -96,5 +98,4 @@ public abstract class Weapon extends Item {
 
     @Override
     protected abstract void createBody(Vector2 pos);
-
 }

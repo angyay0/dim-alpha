@@ -53,7 +53,7 @@ public class Coin extends Item implements PickUp{
         super(world);
 		this.type = type;
         TextureAtlas atlas = Launcher.res.getAtlas("coins");
-        sprite = atlas.findRegion(type.getSrc());
+        sprite = atlas.createSprite(type.getSrc());
         initBody(pos);
 	}
 
