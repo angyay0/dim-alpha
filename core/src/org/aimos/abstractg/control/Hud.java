@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -73,71 +72,30 @@ public class Hud extends Table {
         AtlasRegion jumpRegion = atlas.findRegion(JUMP);
         AtlasRegion bgpadRegion = atlas.findRegion(BGPAD);
         AtlasRegion padRegion = atlas.findRegion(PAD);
-        setPosition(0,0);
-        setFillParent(true);
+
 
         Button jumpButton = new Button(new TextureRegionDrawable(jumpRegion));
         jumpButton.setSize(90f, 90f);
-        jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(), CTRL_MARGIN);
+        jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(),
+                CTRL_MARGIN);
         jumpButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                p.jump();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
 
-        Button attackButton = new Button(new TextureRegionDrawable(jumpRegion));
-        //jumpButton.setSize(90f, 90f);
-        //jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(), CTRL_MARGIN);
-        attackButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+            //    p.jump();
                 p.attack();
                 return super.touchDown(event, x, y, pointer, button);
             }
-        });
 
-        Button interactButton = new Button(new TextureRegionDrawable(jumpRegion));
-        //jumpButton.setSize(90f, 90f);
-        //jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(), CTRL_MARGIN);
-        interactButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                p.interact();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
-
-        Button superButton = new Button(new TextureRegionDrawable(jumpRegion));
-        //jumpButton.setSize(90f, 90f);
-        //jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(), CTRL_MARGIN);
-        superButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //p.();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
-
-        Button weaponButton = new Button(new TextureRegionDrawable(jumpRegion));
-        //jumpButton.setSize(90f, 90f);
-        //jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(), CTRL_MARGIN);
-        weaponButton.addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                //p.jump();
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
-
-        Button pauseButton = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("pause"))));//pause
-        pauseButton.setSize(SQUARE, SQUARE);
-        pauseButton.setPosition(375f, 410f);
-        pauseButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                manager.setTempState();
+                super.clicked(event, x, y);
+            }
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+                super.touchUp(event, x, y, pointer, button);
+
             }
         });
 
@@ -171,9 +129,9 @@ public class Hud extends Table {
                 posX2 = (int) x - posX1;
                 posY2 = (int) y - posY1;
 
-                float radius = (float) Math.sqrt(Math.pow(posX2, 2) + Math.pow(posY2, 2));
+                double radius = Math.sqrt(Math.pow(posX2, 2) + Math.pow(posY2, 2));
 
-                float angle = MathUtils.radiansToDegrees * MathUtils.atan2(posY2, posX2);
+                double angle = Math.toDegrees(Math.atan2(posY2, posX2));
 
                 angle = (angle < 0) ? 360 + angle : angle;
 
@@ -214,11 +172,13 @@ public class Hud extends Table {
                     //interactuar escaleras
                 }*/
 
+                //System.out.println("x " + posX2 + ", Angle " + angle + ", Radius " + radius + ", Cos " + (Math.cos(Math.toRadians(angle)))+", X " + (angle * Math.cos(Math.toRadians(angle))));
+                //System.out.println("y " + posY2 + ", Angle " + angle + ", Radius " + radius + ", Sen " + (Math.sin(Math.toRadians(angle)))+", Y " + (angle * Math.sin(Math.toRadians(angle))));
                 if ((CTRL_SIZE / 2) >= radius) {
                     pad.setPosition(x - (pad.getWidth() / 2), y - (pad.getHeight() / 2));
                 } else {
-                    pad.setPosition(((CTRL_SIZE / 2) * MathUtils.cosDeg(angle)) - (pad.getWidth() / 2) + posX1,
-                            ((CTRL_SIZE / 2) * MathUtils.sinDeg(angle)) - (pad.getHeight() / 2) + posY1);
+                    pad.setPosition((float) ((CTRL_SIZE / 2) * Math.cos(Math.toRadians(angle))) - (pad.getWidth() / 2) + posX1,
+                            (float) ((CTRL_SIZE / 2) * Math.sin(Math.toRadians(angle))) - (pad.getHeight() / 2) + posY1);
                 }
 
             }
@@ -233,7 +193,15 @@ public class Hud extends Table {
             }
         });
 
-
+        Button pause = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("pause"))));//pause
+        pause.setSize(SQUARE, SQUARE);
+        pause.setPosition(375f, 410f);
+        pause.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                manager.setTempState();
+            }
+        });
 
         Image cir = new Image(Launcher.res.getTexture("circle"));
         cir.setSize(SQUARE, SQUARE);
@@ -244,28 +212,11 @@ public class Hud extends Table {
 
         addActor(bgPad);
         addActor(pad);
-        addActor(pauseButton);
+        addActor(jumpButton);
         addActor(movementCross);
+        addActor(pause);
         addActor(bar);
         addActor(cir);
-        addActor(jumpButton);
-
-        /*Table group = new Table();
-
-        group.addActor(bgPad);
-        group.addActor(pad);
-        group.addActor(pauseButton);
-        group.add(movementCross).expand();
-
-        group.addActor(bar);
-        group.addActor(cir);
-        add(group).expandY();
-
-        Table actionButtons = new Table();
-        actionButtons.add(jumpButton).width(90f).height(90f).right().bottom();
-        actionButtons.add(attackButton).width(90f).height(90f);//.right().bottom();
-        add(actionButtons).expandY();*/
-
     }
 
 }

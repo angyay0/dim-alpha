@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -57,6 +58,8 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected long score;
     // Current money the character has or gives when killed
     protected long money;
+
+    boolean chainShape = true;
 
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
@@ -194,7 +197,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         float x = (getX() * Constants.PTM) - (getWidth() / 2);
         float y = (getY() * Constants.PTM) - (getHeight() / 2);
         sb.begin();
+     //   if( !chainShape)
         sb.draw(getFrame(), getDirection() ? x : x + getWidth(), y, getDirection() ? getWidth() : -getWidth(), getHeight());
+     //   else
+     //       sb.draw(getFrame(), (getX() * Constants.PTM), (getY() * Constants.PTM));
         sb.end();
     }
 
@@ -213,6 +219,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
                 return false;
             }
         }
+        //return  true;
     }
 
     public boolean isOnGround() {
@@ -290,6 +297,28 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         // create box shape for character collision box
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
+   //     ChainShape shape = new ChainShape();
+    //    Vector2 points[] = new Vector2[11];
+/*
+        points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
+        points[1] = new Vector2(15 / Constants.PTM, 20 / Constants.PTM);
+        points[2] = new Vector2(15 / Constants.PTM, 60 / Constants.PTM);
+        points[3] = new Vector2(0 / Constants.PTM, 95 / Constants.PTM);
+        points[4] = new Vector2(50 / Constants.PTM, 95 / Constants.PTM);
+        points[5] = new Vector2(50 / Constants.PTM, 60 / Constants.PTM);
+        points[6] = new Vector2(62 / Constants.PTM, 40 / Constants.PTM);
+        points[7] = new Vector2(62 / Constants.PTM, 30 / Constants.PTM);
+        points[8] = new Vector2(50 / Constants.PTM, 30 / Constants.PTM);
+        points[9] = new Vector2(50 / Constants.PTM, 0 / Constants.PTM);
+        points[10] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
+/*
+points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
+        points[1] = new Vector2(0 / Constants.PTM, 95 / Constants.PTM);
+        points[2] = new Vector2(62 / Constants.PTM, 95 / Constants.PTM);
+        points[3] = new Vector2(62 / Constants.PTM, 0 / Constants.PTM);
+ */
+  //      shape.createChain(points);
+       // shape.createLoop(points);
 
         // create fixturedef for character collision box
         FixtureDef fdef = new FixtureDef();

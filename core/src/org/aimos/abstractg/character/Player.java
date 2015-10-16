@@ -38,6 +38,7 @@ public class Player extends Character {
     public Player(String spriteSrc, String name, World world, Vector2 pos) {
         super(spriteSrc, name, world, pos);
         weapons = new Array<Weapon>();
+     //   chainShape = true;
      //   loadScript();
       //  setSelfToScript();
 
