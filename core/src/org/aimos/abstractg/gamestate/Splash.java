@@ -138,4 +138,9 @@ public class Splash extends GameState{
         for(int i=0;i<imgs.size;i++)
             imgs.pop().getTexture().dispose();
     }
+
+    @Override
+    public void back() {
+
+    }
 }

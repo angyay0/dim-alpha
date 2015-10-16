@@ -56,6 +56,8 @@ public class ShootWeapon extends Weapon {
         mass.mass = 0.2f;
         bullet.setMassData(mass);
 
+        bullet.setUserData(owner);
+
         bullet.applyForce(new Vector2((bullet.getMass() * (getBody().getLinearVelocity().x + 30.0f) / (1 / 60.0f)), 0), bullet.getWorldCenter(), true);
     }
 

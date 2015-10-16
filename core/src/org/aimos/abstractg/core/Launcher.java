@@ -140,6 +140,7 @@ public class Launcher extends Game {
     @Override
     public void pause() {
         super.pause();
+        //gsm.back();
         if(flag){
             if(!manager.isPause()) {
                 manager.setTempState();

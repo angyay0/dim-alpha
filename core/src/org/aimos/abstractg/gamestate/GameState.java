@@ -69,4 +69,6 @@ public abstract class GameState extends Stage{
 
     protected abstract void disposeState();
 
+    public abstract void back();
+
 }

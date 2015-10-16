@@ -37,7 +37,8 @@ public class MainMenu extends GameState{
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("field"));
         AudioManager.getInstance().play(0.5f, true);
 
-        JsonIO.readProfile();
+        //JsonIO.readProfile();
+        //JsonIO.ReadJSON();
     }
 
     @Override
@@ -65,6 +66,11 @@ public class MainMenu extends GameState{
         if(AudioManager.getInstance().isPlaying()){
             AudioManager.getInstance().stopAudio();
         }
+    }
+
+    @Override
+    public void back() {
+
     }
 
     public void initButtons(){

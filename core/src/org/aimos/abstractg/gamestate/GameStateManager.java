@@ -115,6 +115,10 @@ public class GameStateManager {
         }
     }
 
+    public void back(){
+        getState().back();
+    }
+
     public boolean isPause(){
         return inPause;
     }

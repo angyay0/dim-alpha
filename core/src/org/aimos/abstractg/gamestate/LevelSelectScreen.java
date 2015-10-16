@@ -66,6 +66,11 @@ public class LevelSelectScreen extends GameState{
         back.dispose();
     }
 
+    @Override
+    public void back() {
+
+    }
+
 
     public void initButtons(){
         buttonsLevel = new Button[3];

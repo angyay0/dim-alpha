@@ -97,11 +97,9 @@ public class GameContactListener implements ContactListener {
         }
         //Pick-up
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.PICKUP)) {
-            System.out.println("Pick Up");
             PickUp pi = (PickUp) fa.getBody().getUserData();
             if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fb.getBody().getUserData();
-                System.out.println("Recoger");
                 if(pi instanceof Coin) {
                     p.addMoney((Coin) pi);
                 }else if(pi instanceof DroppedWeapon) {
@@ -111,11 +109,9 @@ public class GameContactListener implements ContactListener {
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.PICKUP)) {
-            System.out.println("Pick Up");
             PickUp pi = (PickUp) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fa.getBody().getUserData();
-                System.out.println("Recoger");
                 if(pi instanceof Coin) {
                     p.addMoney((Coin) pi);
                 }else if(pi instanceof DroppedWeapon) {
@@ -127,16 +123,16 @@ public class GameContactListener implements ContactListener {
         //weapon
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
             Character c = (Character) fa.getBody().getUserData();
-            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.WEAPON)) {
-                Weapon w = (Weapon) fb.getBody().getUserData();
-                w.damage(c);
+            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.ATTACK)) {
+                Character attacker = (Character) fb.getBody().getUserData();
+                attacker.damage(c);
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
             Character c = (Character) fb.getBody().getUserData();
-            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.WEAPON)) {
-                Weapon w = (Weapon) fa.getBody().getUserData();
-                w.damage(c);
+            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.ATTACK)) {
+                Character attacker = (Character) fb.getBody().getUserData();
+                attacker.damage(c);
             }
         }
 

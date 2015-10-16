@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.physics.Weapon;
@@ -16,6 +18,7 @@ public class JsonIO {
     public static long coins = 0;
     public static long enemy = 0;
     public static Array<Weapon> weapons = null;
+    public static Array<String> level;
 
 
     public static void savePlay(Player player,String chapter, int world){
@@ -64,6 +67,20 @@ public class JsonIO {
         return false;
     }
 
+    public static void ReadJSON(String world){
+        JsonValue json = new JsonReader().parse(Gdx.files.internal("data/chapter.json"));
+        level = new Array<String>();
+        JsonValue levelJson = json.get(world);
+            for (JsonValue lvelJson : levelJson.iterator()) // iterator() returns a list of children
+            {
+                //level.add();
+                //SavePoint.Level level = new SavePoint.Level();
+                //level.name = lvelJson.getString("name");
+                //level.icon = lvelJson.getString("icon");
+                //level.txm =  lvelJson.getString("tmx");
+                Gdx.app.debug("Mundo Tierra:::", lvelJson.getString("name"));
+            }
+    }
 
 
 }

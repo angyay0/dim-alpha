@@ -203,6 +203,11 @@ public class Pause extends GameState {
     }
 
     @Override
+    public void back() {
+
+    }
+
+    @Override
     public void update(float dt) {}
 
     @Override
