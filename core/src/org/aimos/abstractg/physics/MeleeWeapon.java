@@ -1,6 +1,8 @@
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -36,7 +38,14 @@ public class MeleeWeapon extends Weapon {
 
     @Override
     protected void attackMotion() {
-
+        RevoluteJoint revj = (RevoluteJoint) joint;
+        //body.applyTorque(5f,true);
+       // body.setTransform( new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), -5f );
+        body.setAngularVelocity(0f);
+        //body.setTransform(new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), 45f * MathUtils.radiansToDegrees);
+        body.setTransform( new Vector2(body.getWorldCenter().x , body.getWorldCenter().y), 0.5f * MathUtils.degreesToRadians );
+        //body.setAngularVelocity(0.5f);//0.5f,0.5f,body.getWorldCenter().x,body.getWorldCenter().y,true);
+        Gdx.app.debug("Si","LO HAGO");
     }
 
     @Override
@@ -68,19 +77,22 @@ public class MeleeWeapon extends Weapon {
         mass.mass = 0.5f;
         body.setMassData(mass);
 
+
         RevoluteJointDef rjd = new RevoluteJointDef();
 
         rjd.bodyA = owner.getBody();
         rjd.bodyB = body;
-        rjd.localAnchorA .set(0.44f,0.10f);
+        rjd.localAnchorA .set(0.30f,0.23f);
        // rjd.localAnchorB.set(0f,-1f);
-        rjd.lowerAngle = -0.5f * 3.14159f;
-        rjd.motorSpeed = 1f;
-        rjd.upperAngle = 0.25f * 3.14159f;
+        rjd.referenceAngle = 0.49f * MathUtils.PI;
+        rjd.upperAngle = 0.50f * MathUtils.PI;
+        rjd.lowerAngle = 0f;// * MathUtils.PI;
+        //rjd.motorSpeed = 1f;
         rjd.enableLimit = true;
         rjd.maxMotorTorque = 0.5f;
-        rjd.motorSpeed = 0.1f;
-        rjd.enableMotor = true;
+        rjd.motorSpeed = 0f;
+        rjd.enableMotor = false;
+
 
         joint = world.createJoint(rjd);
     }

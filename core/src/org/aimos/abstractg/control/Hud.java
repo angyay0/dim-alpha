@@ -82,7 +82,8 @@ public class Hud extends Table {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 
-                p.jump();
+            //    p.jump();
+                p.attack();
                 return super.touchDown(event, x, y, pointer, button);
             }
 
