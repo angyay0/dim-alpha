@@ -82,16 +82,16 @@ public class MeleeWeapon extends Weapon {
 
         rjd.bodyA = owner.getBody();
         rjd.bodyB = body;
-        rjd.localAnchorA .set(0.30f,0.23f);
-       // rjd.localAnchorB.set(0f,-1f);
-        rjd.referenceAngle = 0.49f * MathUtils.PI;
+         rjd.localAnchorA .set(0.28f,0.15f);
+        rjd.localAnchorB.set(-0.30f,0f);
+        rjd.referenceAngle = 0f * MathUtils.PI;
         rjd.upperAngle = 0.50f * MathUtils.PI;
-        rjd.lowerAngle = 0f;// * MathUtils.PI;
+        rjd.lowerAngle = -0.45f *MathUtils.PI;// * MathUtils.PI;
         //rjd.motorSpeed = 1f;
         rjd.enableLimit = true;
-        rjd.maxMotorTorque = 0.5f;
+        rjd.maxMotorTorque = -0.6f;
         rjd.motorSpeed = 0f;
-        rjd.enableMotor = false;
+        rjd.enableMotor = true;
 
 
         joint = world.createJoint(rjd);

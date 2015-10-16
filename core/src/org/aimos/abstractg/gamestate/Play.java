@@ -62,8 +62,8 @@ public class Play extends GameState{
         //create player
         player = new Player("player","Hero", world, new Vector2(128,128));
         loader = new MapLoader(world, player);
-      //  mw = new MeleeWeapon(10,10,10,world,"sword");
-      //  player.setWeapon(mw);
+        mw = new MeleeWeapon(10,10,10,world,"sword");
+        player.setWeapon(mw);
 
         addCoins(Coin.generateCoins(world, new Vector2(256, 512), 116));
 
@@ -96,7 +96,7 @@ public class Play extends GameState{
                 coin.render(sb);
             }
             player.render(sb);
-          //  mw.render(sb);
+            mw.render(sb);
             if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
 
                 if (!gameOver) {
