@@ -50,6 +50,7 @@ public abstract class GameState extends Stage{
         */
 
         Gdx.input.setInputProcessor(this);
+        Gdx.input.setCatchBackKey(true);
 
     }
 
