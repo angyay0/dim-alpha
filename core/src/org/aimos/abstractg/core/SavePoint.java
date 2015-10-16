@@ -96,5 +96,40 @@ public class SavePoint {
             this.weapons = weapons;
         }
     }
+
+    static class Level{
+
+        private String nombre;
+        private String icon;
+        private String txm;
+
+        public Level(){}
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public String getTxm() {
+            return txm;
+        }
+
+        public void setTxm(String txm) {
+            this.txm = txm;
+        }
+        //setter and getter
+
+    }
 }
 

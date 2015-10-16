@@ -37,7 +37,8 @@ public class MainMenu extends GameState{
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("field"));
         AudioManager.getInstance().play(0.5f, true);
 
-        JsonIO.readProfile();
+        //JsonIO.readProfile();
+        //JsonIO.ReadJSON();
     }
 
     @Override
