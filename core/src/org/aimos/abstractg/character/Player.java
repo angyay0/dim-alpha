@@ -12,7 +12,7 @@ import org.aimos.abstractg.physics.Weapon;
 /**
  * Clase que define al jugador
  *
- * @author Angyay0, Gretch
+ * @author EinarGretch, Angyay0
  * @version 1.0.3
  * @date 07/09/2015
  * @updated 14/09/2015
@@ -112,10 +112,6 @@ public class Player extends Character {
     }
     public Array<Weapon> getWeapons(){
         return weapons;
-    }
-
-    public Weapon getWeapon() {
-        return weapon;
     }
 
     public long getEnemiesKilled() {

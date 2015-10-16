@@ -388,6 +388,18 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    public long damage(Character c) {
+        long dam;
+        if(hasWeapon()){
+            dam = weapon.damage(c);
+
+        }else{
+            c.damage(getAttack());
+            dam = getAttack();
+        }
+        return dam;
+    }
+
     /**
      * En este metodo se define la interaccion
      * que el usuario tiene con los objectos y otros personajes
@@ -403,15 +415,15 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         this.weapon.setOwner(this);
     }
 
-    public boolean hasWeapon(){
-        return (weapon != null);
-    }
-
     public Weapon removeWeapon() {
         Weapon w = weapon;
         weapon = null;
         w.dispose();
         return w;
+    }
+
+    public Weapon getWeapon(){
+        return weapon;
     }
 
     public void setInteractive(Interactive i) {
@@ -437,6 +449,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             hp -= d;
             return true;
         }
+    }
+
+    public boolean hasWeapon(){
+        return (weapon != null);
     }
 
     public AtlasRegion getFrame(){
