@@ -417,6 +417,18 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         }
     }
 
+    public long damage(Character c) {
+        long dam;
+        if(hasWeapon()){
+            dam = weapon.damage(c);
+
+        }else{
+            c.damage(getAttack());
+            dam = getAttack();
+        }
+        return dam;
+    }
+
     /**
      * En este metodo se define la interaccion
      * que el usuario tiene con los objectos y otros personajes
@@ -432,15 +444,15 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         this.weapon.setOwner(this);
     }
 
-    public boolean hasWeapon(){
-        return (weapon != null);
-    }
-
     public Weapon removeWeapon() {
         Weapon w = weapon;
         weapon = null;
         w.dispose();
         return w;
+    }
+
+    public Weapon getWeapon(){
+        return weapon;
     }
 
     public void setInteractive(Interactive i) {
@@ -466,6 +478,10 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
             hp -= d;
             return true;
         }
+    }
+
+    public boolean hasWeapon(){
+        return (weapon != null);
     }
 
     public AtlasRegion getFrame(){

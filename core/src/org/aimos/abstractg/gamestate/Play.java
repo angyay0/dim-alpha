@@ -125,6 +125,11 @@ public class Play extends GameState{
 
     }
 
+    @Override
+    public void back() {
+
+    }
+
     public void removeBodies(Array<PickUp> pickUp){
         for (PickUp p : pickUp) {
             if(p instanceof Coin) coins.removeValue((Coin)p, false);

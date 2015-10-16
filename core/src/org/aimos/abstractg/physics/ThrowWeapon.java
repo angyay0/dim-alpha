@@ -68,6 +68,8 @@ public class ThrowWeapon extends Weapon {
         mass.mass = 0.5f;
         body.setMassData(mass);
 
+        body.setUserData(owner);
+
         //Crear Joint
     }
 }

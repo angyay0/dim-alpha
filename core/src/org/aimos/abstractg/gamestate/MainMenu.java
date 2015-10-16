@@ -68,6 +68,11 @@ public class MainMenu extends GameState{
         }
     }
 
+    @Override
+    public void back() {
+
+    }
+
     public void initButtons(){
         TextureRegion bgRegion = new TextureRegion(Launcher.res.getTexture("fondo"));
         TextureRegion logoRegion = new TextureRegion(Launcher.res.getTexture("mask"));
