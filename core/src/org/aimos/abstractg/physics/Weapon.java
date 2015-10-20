@@ -31,6 +31,8 @@ public abstract class Weapon extends Item {
     protected Character owner;
     //Union con el dueño
     protected Joint joint;
+    //Variable para saber joint
+    protected boolean hasJoint;
 
     /**
      * Default Constructor for Weapon
@@ -91,6 +93,10 @@ public abstract class Weapon extends Item {
         c.damage(d);
         return d;
     }
+
+   // public boolean hasJoint(){
+    //    return (joint != null);
+   // }
 
     //Initiate weapon attack motion
     protected abstract void attackMotion();

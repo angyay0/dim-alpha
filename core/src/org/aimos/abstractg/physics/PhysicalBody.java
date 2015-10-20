@@ -22,6 +22,10 @@ public abstract class PhysicalBody {
         return body;
     }
 
+    public boolean hasBody(){
+        return (body != null);
+    }
+
     public boolean setBody(Body body){
         if(body != null) {
             this.body = body;
@@ -70,6 +74,7 @@ public abstract class PhysicalBody {
 
     public void initBody(Vector2 pos){
         visible = true;
+        if()
         createBody(pos);
     }
 

@@ -19,6 +19,8 @@ import org.aimos.abstractg.handlers.MapLoader;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.MeleeWeapon;
 import org.aimos.abstractg.physics.PickUp;
+import org.aimos.abstractg.physics.ShootWeapon;
+import org.aimos.abstractg.physics.ThrowWeapon;
 import org.aimos.abstractg.physics.Weapon;
 
 
@@ -39,6 +41,8 @@ public class Play extends GameState{
     private boolean gameOver = false;
     private Hud hud;
     MeleeWeapon mw;
+    ShootWeapon sw;
+    ThrowWeapon tw;
     Json json = new Json();
 
     private static String map = "tutorial";
@@ -62,8 +66,12 @@ public class Play extends GameState{
         //create player
         player = new Player("player","Hero", world, new Vector2(128,128));
         loader = new MapLoader(world, player);
-        mw = new MeleeWeapon(10,10,10,world,"sword");
-        player.setWeapon(mw);
+       // mw = new MeleeWeapon(10,10,10,world,"sword");
+        sw = new ShootWeapon(10,10,10,world,"gun");
+      //  tw = new ThrowWeapon(10,10,10,world,"steel");
+       // player.setWeapon(mw);
+        player.setWeapon(sw);
+      //  player.setWeapon(tw);
 
         addCoins(Coin.generateCoins(world, new Vector2(256, 512), 116));
 
@@ -96,7 +104,9 @@ public class Play extends GameState{
                 coin.render(sb);
             }
             player.render(sb);
-            mw.render(sb);
+          //  mw.render(sb);
+            sw.render(sb);
+           // tw.render(sb);
             if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
 
                 if (!gameOver) {

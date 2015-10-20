@@ -1,11 +1,14 @@
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
+import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 
 import org.aimos.abstractg.handlers.Constants;
 
@@ -31,9 +34,15 @@ public class ThrowWeapon extends Weapon {
     @Override
     protected void attackMotion() {
         //Eliminar joint
-        body.applyForce(new Vector2((body.getMass() * (getBody().getLinearVelocity().x + 3.5f) / (1 / 60.0f)),
-                (body.getMass() * (getBody().getLinearVelocity().y + 3.0f) / (1 / 60.0f))), body.getWorldCenter(), true);
-        //Concurrencia explosion / regenerar granada
+        if(hasJoint){
+            RevoluteJoint revj = (RevoluteJoint) joint;
+            world.destroyJoint(revj);
+            hasJoint = false;
+
+            body.applyForce(new Vector2((body.getMass() * (getBody().getLinearVelocity().x + 3.5f) / (1 / 60.0f)),
+                    (body.getMass() * (getBody().getLinearVelocity().y + 3.0f) / (1 / 60.0f))), body.getWorldCenter(), true);
+            //Concurrencia explosion / regenerar granada
+        }
     }
 
     @Override
@@ -71,5 +80,23 @@ public class ThrowWeapon extends Weapon {
         body.setUserData(owner);
 
         //Crear Joint
+        RevoluteJointDef rjd = new RevoluteJointDef();
+
+        rjd.bodyA = owner.getBody();
+        rjd.bodyB = body;
+        rjd.localAnchorA .set(0.36f,0.15f);
+        // rjd.localAnchorB.set(0f,-1f);
+        rjd.referenceAngle = 0.49f * MathUtils.PI;
+        rjd.upperAngle = 0.50f * MathUtils.PI;
+        rjd.lowerAngle = 0f * MathUtils.PI;// * MathUtils.PI;
+        //rjd.motorSpeed = 1f;
+        rjd.enableLimit = true;
+        rjd.maxMotorTorque = 0f;
+        rjd.motorSpeed = 0f;
+        rjd.enableMotor = false;
+
+
+        joint = world.createJoint(rjd);
+        hasJoint = true;
     }
 }

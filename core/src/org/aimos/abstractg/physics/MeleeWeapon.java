@@ -43,7 +43,7 @@ public class MeleeWeapon extends Weapon {
        // body.setTransform( new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), -5f );
         body.setAngularVelocity(0f);
         //body.setTransform(new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), 45f * MathUtils.radiansToDegrees);
-        body.setTransform( new Vector2(body.getWorldCenter().x , body.getWorldCenter().y), 0.5f * MathUtils.degreesToRadians );
+        body.setTransform( new Vector2(body.getWorldCenter().x , body.getWorldCenter().y), 1f * MathUtils.degreesToRadians );
         //body.setAngularVelocity(0.5f);//0.5f,0.5f,body.getWorldCenter().x,body.getWorldCenter().y,true);
         Gdx.app.debug("Si","LO HAGO");
     }
@@ -85,10 +85,10 @@ public class MeleeWeapon extends Weapon {
        // rjd.localAnchorB.set(0f,-1f);
         rjd.referenceAngle = 0.49f * MathUtils.PI;
         rjd.upperAngle = 0.50f * MathUtils.PI;
-        rjd.lowerAngle = -0.45f *MathUtils.PI;// * MathUtils.PI;
+        rjd.lowerAngle = 0f * MathUtils.PI;// * MathUtils.PI;
         //rjd.motorSpeed = 1f;
         rjd.enableLimit = true;
-        rjd.maxMotorTorque = -0.6f;
+        rjd.maxMotorTorque = -1f;
         rjd.motorSpeed = 0f;
         rjd.enableMotor = false;
 
