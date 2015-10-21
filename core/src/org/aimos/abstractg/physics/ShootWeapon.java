@@ -1,14 +1,15 @@
 package org.aimos.abstractg.physics;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.utils.Pool;
 
 import org.aimos.abstractg.handlers.Constants;
 
@@ -17,9 +18,7 @@ import org.aimos.abstractg.handlers.Constants;
  */
 public class ShootWeapon extends Weapon {
 
-    //private Pool<Bullet> bullets;
-
-    private int ammo = 7;
+    private int RECOVERY = 2200;
 
     /**
      * Default Constructor for Weapon
@@ -30,23 +29,74 @@ public class ShootWeapon extends Weapon {
      * @param w
      * @param spriteSrc
      */
-    public ShootWeapon(long bd, float m, long v, World w, String spriteSrc) {
-        super(bd, m, v, w, spriteSrc);
-
-        /*bullets = new Pool<Bullet>(ammo) {
+    public ShootWeapon(long bd, float m, long v, long a, World w, String spriteSrc) {
+        super(bd, m, v, a, w, spriteSrc);
+        /*ammoPool = new Pool<Bullet>((int)ammo, (int)ammo) {
             @Override
             protected Bullet newObject() {
-                Bullet b = new Bullet(world,bullets);
-                b.createBody(getBody().getPosition());
+                Bullet b = new Bullet(world, this);
                 return b;
             }
         };*/
+        final Weapon tw = this;
+        ammoPool = new Pool<Ammo>((int)ammo, (int)maxAmmo) {
+            @Override
+            protected Ammo newObject() {
+                return new Ammo(world, tw) {
+                    @Override
+                    protected void setSprite() {}
+
+                    @Override
+                    protected void extraDispose() {}
+
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(RECOVERY);
+                            getWeapon().setVisibility(true);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    protected void createBody(Vector2 pos) {
+                        BodyDef bdef = new BodyDef();
+                        bdef.type = BodyDef.BodyType.DynamicBody;
+                        bdef.bullet = true;
+                        bdef.position.set(pos.cpy());
+
+                        body = world.createBody(bdef);
+                        FixtureDef fdef = new FixtureDef();
+
+                        CircleShape shape = new CircleShape();
+                        shape.setRadius(5f / Constants.PTM);
+                        fdef.shape = shape;
+                        fdef.friction = 0;
+                        fdef.density = 1;
+                        fdef.filter.categoryBits = Constants.BIT.BULLET.BIT();
+                        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.GRANADE.BIT() |
+                                Constants.BIT.CHARACTER.BIT() | Constants.BIT.BULLET.BIT());
+                        fdef.restitution = 0.1f;
+
+                        body.createFixture(fdef).setUserData(Constants.DATA.BULLET);
+                        shape.dispose();
+
+                        MassData mass = body.getMassData();
+                        mass.mass = 0.2f;
+                        body.setMassData(mass);
+
+                        body.setUserData(this);
+                    }
+                };
+            }
+        };
     }
 
     @Override
     protected void attackMotion() {
-        if (ammo > 0) {
-            BodyDef bdef = new BodyDef();
+        if (isVisible() && ammo > 0) {
+            /*BodyDef bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.DynamicBody;
             bdef.bullet = true;
             bdef.position.set(getPosition().cpy());
@@ -74,13 +124,18 @@ public class ShootWeapon extends Weapon {
             bullet.setUserData(owner);
 
             bullet.applyForce(new Vector2((bullet.getMass() * (getBody().getLinearVelocity().x + 30.0f) / (1 / 60.0f)), 0), bullet.getWorldCenter(), true);
+            */
+
+            //Bullet bullet = ammoPool.obtain();
+            Ammo bullet = ammoPool.obtain();
+            bullet.createBody(getBody().getPosition());
+            Gdx.app.debug("Amount free ammoPool", "" + ammoPool.peak + "-" + ammoPool.max);
+            setVisibility(false);
+            new Thread(bullet).start();
+            bullet.getBody().applyForce(new Vector2((bullet.getBody().getMass() * (getBody().getLinearVelocity().x + 30.0f) / (1 / 60.0f)), 0), bullet.getBody().getWorldCenter(), true);
+
             ammo--;
         }
-        /*Bullet bullet = bullets.obtain();
-        Gdx.app.debug("Amount free bullets",""+bullets.max+"-"+bullets.peak);
-        bullet.getBody().applyForce(new Vector2((bullet.getBody().getMass() * (getBody().getLinearVelocity().x + 30.0f) / (1 / 60.0f)), 0), bullet.getBody().getWorldCenter(), true);
-        */
-
     }
 
     @Override
@@ -111,11 +166,12 @@ public class ShootWeapon extends Weapon {
     }
 
     /*public class Bullet extends Item implements Pool.Poolable {
-        private Pool pool;
 
-        public Bullet(World w,Pool pool) {
+        private ShootWeapon weapon;
+
+        public Bullet(World w, ShootWeapon sw) {
             super(w);
-            this.pool = pool;
+            weapon = sw;
         }
 
         @Override
@@ -125,7 +181,7 @@ public class ShootWeapon extends Weapon {
             bdef.bullet = true;
             bdef.position.set(pos.cpy());
 
-            Body bullet = world.createBody(bdef);
+            body = world.createBody(bdef);
             FixtureDef fdef = new FixtureDef();
 
             CircleShape shape = new CircleShape();
@@ -138,20 +194,28 @@ public class ShootWeapon extends Weapon {
                     Constants.BIT.CHARACTER.BIT() | Constants.BIT.BULLET.BIT());
             fdef.restitution = 0.1f;
 
-            bullet.createFixture(fdef).setUserData(Constants.DATA.BULLET);
+            body.createFixture(fdef).setUserData(Constants.DATA.BULLET);
             shape.dispose();
 
-            MassData mass = bullet.getMassData();
+            MassData mass = body.getMassData();
             mass.mass = 0.2f;
-            bullet.setMassData(mass);
+            body.setMassData(mass);
 
-            bullet.setUserData(owner);
-            body = bullet;
+            body.setUserData(this);
+        }
+
+        public Weapon getWeapon(){
+            return weapon;
         }
 
         @Override
         public void reset() {
+            super.dispose();
+        }
 
+        @Override
+        public void dispose() {
+            weapon.getPool().free(this);
         }
     }*/
 }

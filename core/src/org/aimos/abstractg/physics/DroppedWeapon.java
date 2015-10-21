@@ -19,8 +19,8 @@ public class DroppedWeapon extends Item implements PickUp{
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-        weapon.render(sb);
+    public void draw(SpriteBatch sb) {
+        weapon.draw(sb);
     }
 
     @Override

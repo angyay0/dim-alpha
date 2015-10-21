@@ -2,10 +2,11 @@
 package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -67,7 +68,9 @@ public class Coin extends Item implements PickUp{
         for(CTYPE c : CTYPE.values()){
             res = val % c.getValue();
             for(int i = 0; i < val / c.getValue(); i++){
-                coins.add(new Coin(c, w, pos));
+                Vector2 nPos = pos.cpy();
+                nPos.add(MathUtils.random(-2, 2),MathUtils.random(-2,2));
+                coins.add(new Coin(c, w, nPos));
             }
             val = res;
         }
@@ -88,18 +91,19 @@ public class Coin extends Item implements PickUp{
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(pos.x / Constants.PTM, pos.y / Constants.PTM);
+        //bodyDef.fixedRotation = true;
         body = world.createBody(bodyDef);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox((getWidth() / 2) / Constants.PTM, (getHeight() / 2) / Constants.PTM);
+        CircleShape shape = new CircleShape();
+        shape.setRadius((getWidth() / 2) / Constants.PTM);
 
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fdef.density = 1;
         fdef.friction = 1f;
-        fdef.filter.categoryBits = Constants.BIT.ITEM.BIT();
-        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.CHARACTER.BIT());
-        fdef.restitution = 0.2f;
+        fdef.filter.categoryBits = (short) (Constants.BIT.ITEM.BIT() | Constants.BIT.COIN.BIT());
+        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.CHARACTER.BIT() | Constants.BIT.COIN.BIT());
+        fdef.restitution = 0.4f;
 
         // create character collision box fixture
         body.createFixture(fdef).setUserData(Constants.DATA.PICKUP);

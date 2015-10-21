@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
@@ -196,11 +195,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void render(SpriteBatch sb) {
         float x = (getX() * Constants.PTM) - (getWidth() / 2);
         float y = (getY() * Constants.PTM) - (getHeight() / 2);
+        if(hasWeapon()) weapon.draw(sb);
         sb.begin();
-     //   if( !chainShape)
         sb.draw(getFrame(), getDirection() ? x : x + getWidth(), y, getDirection() ? getWidth() : -getWidth(), getHeight());
-     //   else
-     //       sb.draw(getFrame(), (getX() * Constants.PTM), (getY() * Constants.PTM));
         sb.end();
     }
 

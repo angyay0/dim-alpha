@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Created by EinarGretch,Angyay0 on 09/09/2015.
  */
-public class Hud extends Table {
+public class Hud extends WidgetGroup {
 
     //Default Buttons Name With Atlas file
     //Salto
@@ -81,7 +82,6 @@ public class Hud extends Table {
         jumpButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-
             //    p.jump();
                 p.attack();
                 return super.touchDown(event, x, y, pointer, button);

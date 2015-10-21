@@ -52,6 +52,10 @@ public abstract class PhysicalBody {
         return visible;
     }
 
+    public boolean isVisible(){
+        return visible;
+    }
+
     public void setPosition(Vector2 pos){
         if(body == null )return;
         body.getPosition().set(pos);
@@ -74,11 +78,15 @@ public abstract class PhysicalBody {
 
     public void initBody(Vector2 pos){
         visible = true;
-        if()
+        if(hasBody()) return;
         createBody(pos);
     }
 
-    public abstract void render(SpriteBatch sb);
+    public void draw(SpriteBatch sb){
+        if(isVisible()) render(sb);
+    }
+
+    protected abstract void render(SpriteBatch sb);
 
     public abstract int getWidth();
 

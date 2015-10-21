@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Pool;
 
 import org.aimos.abstractg.character.Character;
 import org.aimos.abstractg.core.Launcher;
@@ -31,8 +32,12 @@ public abstract class Weapon extends Item {
     protected Character owner;
     //Union con el dueño
     protected Joint joint;
-    //Variable para saber joint
-    protected boolean hasJoint;
+    //Munición del arma
+    protected long ammo;
+    //Capacidad macima de munición del arma
+    protected long maxAmmo;
+    //Pool para los objetos Ammo
+    protected Pool<Ammo> ammoPool;
 
     /**
      * Default Constructor for Weapon
@@ -40,15 +45,17 @@ public abstract class Weapon extends Item {
      * @param m multiplier
      * @param v value
      */
-    public Weapon(long bd, float m, long v, World w, String spriteSrc){
+    public Weapon(long bd, float m, long v, long a, World w, String spriteSrc){
         super(w);
         bonusDamage = bd;
         multiplier = m;
         value = v;
+        maxAmmo = a;
+        ammo = maxAmmo;
         owner = null;
+        ammoPool = null;
         TextureAtlas atlas = Launcher.res.getAtlas("armas");
         sprite = atlas.createSprite(spriteSrc);
-        //sprite.set
     }
 
     /**
@@ -94,13 +101,37 @@ public abstract class Weapon extends Item {
         return d;
     }
 
-   // public boolean hasJoint(){
-    //    return (joint != null);
-   // }
+    public boolean hasJoint() {
+        return (joint != null);
+    }
+
+    public long getAmmo(){
+        return ammo;
+    }
+
+    public long getMaxAmmo(){
+        return maxAmmo;
+    }
+
+    public void setAmmo(long a){
+        ammo = a;
+    }
+
+    public void addAmmo(long a){
+        ammo += a;
+    }
+
+    //Get pool of ammo
+    public Pool<Ammo> getPool() {
+        return ammoPool;
+    }
+
+    public boolean usesAmmo(){
+        return (getPool() != null);
+    }
 
     //Initiate weapon attack motion
     protected abstract void attackMotion();
-
 
     @Override
     protected abstract void createBody(Vector2 pos);

@@ -34,22 +34,10 @@ public abstract class Item extends PhysicalBody{
 
     @Override
     public void render(SpriteBatch sb) {
-        if (body == null){
-            Gdx.app.debug("NO ITEM","EIT");
-            return;
-        }
         sprite.setRotation(MathUtils.radiansToDegrees * body.getAngle());
         sprite.setPosition((getX() * Constants.PTM) - (getWidth() / 2), (getY() * Constants.PTM) - (getHeight() / 2));
         sb.begin();
         sprite.draw(sb);
-      /*  if( resized != null ){
-
-            sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2), resized.width, resized.height); //Corregir
-        }else {*/
-            //sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2)); //Corregir
-        //sb.draw(sprite, getX() * Constants.PTM - (getWidth() / 2), getY() * Constants.PTM - (getHeight() / 2), sprite.getOriginX(), sprite.getOriginY(), getWidth(), getHeight(), 1, 1,sprite.getRotation()); //Corregir
-       /* }**/
-
         sb.end();
     }
 

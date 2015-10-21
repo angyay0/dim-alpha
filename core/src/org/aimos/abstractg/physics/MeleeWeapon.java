@@ -12,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJoint;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
+import com.badlogic.gdx.utils.Pool;
 
 import org.aimos.abstractg.character.*;
 import org.aimos.abstractg.character.Character;
@@ -32,8 +33,8 @@ public class MeleeWeapon extends Weapon {
      * @param w
      * @param spriteSrc
      */
-    public MeleeWeapon(long bd, float m, long v, World w, String spriteSrc) {
-        super(bd, m, v, w, spriteSrc);
+    public MeleeWeapon(long bd, float m, long v, long a, World w, String spriteSrc) {
+        super(bd, m, v, a, w, spriteSrc);
     }
 
     @Override
@@ -46,6 +47,11 @@ public class MeleeWeapon extends Weapon {
         body.setTransform( new Vector2(body.getWorldCenter().x , body.getWorldCenter().y), 1f * MathUtils.degreesToRadians );
         //body.setAngularVelocity(0.5f);//0.5f,0.5f,body.getWorldCenter().x,body.getWorldCenter().y,true);
         Gdx.app.debug("Si","LO HAGO");
+    }
+
+    @Override
+    public Pool<Ammo> getPool() {
+        return ammoPool;
     }
 
     @Override

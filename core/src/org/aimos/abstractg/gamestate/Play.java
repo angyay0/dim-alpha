@@ -1,7 +1,5 @@
 package org.aimos.abstractg.gamestate;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
@@ -11,21 +9,16 @@ import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
-import org.aimos.abstractg.core.SavePoint;
 import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.GameContactListener;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
 import org.aimos.abstractg.physics.Coin;
+import org.aimos.abstractg.physics.Item;
 import org.aimos.abstractg.physics.MeleeWeapon;
-import org.aimos.abstractg.physics.PickUp;
 import org.aimos.abstractg.physics.ShootWeapon;
 import org.aimos.abstractg.physics.ThrowWeapon;
 import org.aimos.abstractg.physics.Weapon;
-
-
-import com.badlogic.gdx.Files;
-import com.badlogic.gdx.files.FileHandle;
 
 /**
  * Created by EinarGretch on 17/09/2015.
@@ -66,12 +59,12 @@ public class Play extends GameState{
         //create player
         player = new Player("player","Hero", world, new Vector2(128,128));
         loader = new MapLoader(world, player);
-       // mw = new MeleeWeapon(10,10,10,world,"sword");
-        sw = new ShootWeapon(10,10,10,world,"gun");
-      //  tw = new ThrowWeapon(10,10,10,world,"steel");
-       // player.setWeapon(mw);
-        player.setWeapon(sw);
-      //  player.setWeapon(tw);
+        //mw = new MeleeWeapon(10,10,10,7,world,"sword");
+        //sw = new ShootWeapon(10,10,10,7,world,"gun");
+        tw = new ThrowWeapon(10,10,10,7,world,"steel");
+        //layer.setWeapon(mw);
+        //player.setWeapon(sw);
+        player.setWeapon(tw);
 
         addCoins(Coin.generateCoins(world, new Vector2(256, 512), 116));
 
@@ -91,22 +84,14 @@ public class Play extends GameState{
 
     @Override
     public void render() {
-
-
-            // clear the screen
-            Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
             loader.render();
 
             // draw player
             sb.setProjectionMatrix(loader.getFloorCamera().combined);
             for (Coin coin : coins) {
-                coin.render(sb);
+                coin.draw(sb);
             }
-            player.render(sb);
-          //  mw.render(sb);
-            sw.render(sb);
-           // tw.render(sb);
+            player.draw(sb);
             if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
 
                 if (!gameOver) {
@@ -140,12 +125,12 @@ public class Play extends GameState{
 
     }
 
-    public void removeBodies(Array<PickUp> pickUp){
-        for (PickUp p : pickUp) {
-            if(p instanceof Coin) coins.removeValue((Coin)p, false);
-            p.dispose();
+    public void removeBodies(Array<Item> items){
+        for (Item i : items) {
+            if(i instanceof Coin) coins.removeValue((Coin)i, false);
+            i.dispose();
         }
-        pickUp.clear();
+        items.clear();
     }
 
     public Player getPlayer() {

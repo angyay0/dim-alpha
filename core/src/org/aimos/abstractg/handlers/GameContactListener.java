@@ -9,13 +9,11 @@ import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.character.Character;
 import org.aimos.abstractg.character.Player;
+import org.aimos.abstractg.physics.Ammo;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.DroppedWeapon;
 import org.aimos.abstractg.physics.Interactive;
 import org.aimos.abstractg.physics.Item;
-import org.aimos.abstractg.physics.PickUp;
-import org.aimos.abstractg.physics.PickUp;
-import org.aimos.abstractg.physics.Weapon;
 
 /**
  * Created by EinarGretch on 25/09/2015.
@@ -26,7 +24,7 @@ public class GameContactListener implements ContactListener {
         super();
     }
 
-    private Array<PickUp> remove = new Array<PickUp>();
+    private Array<Item> remove = new Array<Item>();
 
     @Override
     public void beginContact(Contact contact) {
@@ -97,7 +95,7 @@ public class GameContactListener implements ContactListener {
         }
         //Pick-up
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.PICKUP)) {
-            PickUp pi = (PickUp) fa.getBody().getUserData();
+            Item pi = (Item) fa.getBody().getUserData();
             if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fb.getBody().getUserData();
                 if(pi instanceof Coin) {
@@ -109,7 +107,7 @@ public class GameContactListener implements ContactListener {
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.PICKUP)) {
-            PickUp pi = (PickUp) fb.getBody().getUserData();
+            Item pi = (Item) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
                 Player p = (Player) fa.getBody().getUserData();
                 if(pi instanceof Coin) {
@@ -120,23 +118,59 @@ public class GameContactListener implements ContactListener {
                 remove.add(pi);
             }
         }
-        //weapon
-        if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
-            Character c = (Character) fa.getBody().getUserData();
-            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.ATTACK)) {
-                Character attacker = (Character) fb.getBody().getUserData();
-                attacker.damage(c);
+        //Melee Weapon
+        if(fa.getUserData() !=  null && fa.getUserData().equals(Constants.DATA.ATTACK)){
+            Character attacker = (Character) fa.getBody().getUserData();
+            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
+                Character defender = (Character) fb.getBody().getUserData();
+                attacker.damage(defender);
             }
         }
-        if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
-            Character c = (Character) fb.getBody().getUserData();
-            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.ATTACK)) {
-                Character attacker = (Character) fb.getBody().getUserData();
-                attacker.damage(c);
+        if(fb.getUserData() !=  null && fb.getUserData().equals(Constants.DATA.ATTACK)){
+            Character attacker = (Character) fb.getBody().getUserData();
+            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
+                Character defender = (Character) fa.getBody().getUserData();
+                attacker.damage(defender);
             }
         }
-
-        //add explosion
+        //Shoot Weapon
+        if(fa.getUserData() !=  null && fa.getUserData().equals(Constants.DATA.BULLET)){
+            Ammo a = (Ammo) fa.getBody().getUserData();
+            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
+                Character attacker = a.getWeapon().getOwner();
+                Character defender = (Character) fb.getBody().getUserData();
+                attacker.damage(defender);
+            }
+            //remove.add(a);
+        }
+        if(fb.getUserData() !=  null && fb.getUserData().equals(Constants.DATA.BULLET)){
+            Ammo a = (Ammo) fb.getBody().getUserData();
+            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
+                Character attacker = a.getWeapon().getOwner();
+                Character defender = (Character) fa.getBody().getUserData();
+                attacker.damage(defender);
+            }
+            //remove.add(a);
+        }
+        //Throw Weapon
+        if(fa.getUserData() !=  null && fa.getUserData().equals(Constants.DATA.EXPLOSION)){
+            Ammo a = (Ammo) fa.getBody().getUserData();
+            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
+                Character attacker = a.getWeapon().getOwner();
+                Character defender = (Character) fb.getBody().getUserData();
+                attacker.damage(defender);
+            }
+            //remove.add(a);
+        }
+        if(fb.getUserData() !=  null && fb.getUserData().equals(Constants.DATA.EXPLOSION)){
+            Ammo a = (Ammo) fb.getBody().getUserData();
+            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
+                Character attacker = a.getWeapon().getOwner();
+                Character defender = (Character) fa.getBody().getUserData();
+                attacker.damage(defender);
+            }
+            //remove.add(a);
+        }
     }
 
     @Override
@@ -211,7 +245,7 @@ public class GameContactListener implements ContactListener {
         }
     }
 
-    public Array<PickUp> getRemovedBodies(){
+    public Array<Item> getRemovedBodies(){
         return remove;
     }
 

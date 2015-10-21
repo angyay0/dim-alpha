@@ -23,7 +23,7 @@ public class Constants {
 
     public static enum BIT{
         CHARACTER((short)2), FLOOR((short)4), WALL((short)8), DECO((short)16), GRANADE((short)32),
-        BULLET((short)64), ITEM((short)128), SWORD((short)256);
+        BULLET((short)64), ITEM((short)128), SWORD((short)256), COIN((short)512);
 
         private short bit;
 
@@ -37,7 +37,7 @@ public class Constants {
     }
 
     public static enum DATA {
-        BODY, FOOT, HEAD, ATTACK, CELL, INTERACTIVE, PICKUP, WEAPON, GRANADE, EXPLOSION, BULLET;
+        BODY, FOOT, HEAD, ATTACK, CELL, INTERACTIVE, PICKUP, GRANADE, EXPLOSION, BULLET;
     };
 
 
