@@ -2,6 +2,7 @@ package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 
 import java.util.Stack;
@@ -22,13 +23,12 @@ public class GameStateManager {
     public static final int WORLD_SELECT = 2;
     public static final int SOLO_PLAY = 3;
     public static final int LEVEL_SELECT =4;
-
     private boolean inPause = false;
 
     public GameStateManager(Launcher game) {
         this.game = game;
         gameStates = new Stack<GameState>();
-        pushState(SPLASH);
+        pushState(MENU);
     }
 
     public void update(float dt) {
@@ -58,7 +58,7 @@ public class GameStateManager {
             case SOLO_PLAY:
                 return new Play(this);
             case LEVEL_SELECT:
-                return new LevelSelectScreen(this);
+                return new LevelSelect(this);
             default:
                 return null;
         }
@@ -122,4 +122,16 @@ public class GameStateManager {
     public boolean isPause(){
         return inPause;
     }
+
+    public void reloadGame() {
+       if(tmp != null){
+           disposeTemp();
+       }
+        pushState(SOLO_PLAY);
+    }
+
+    public void gameOver(Player p){
+        gameStates.push(new GameOver(this,p));
+    }
+
 }

@@ -22,6 +22,8 @@ import org.aimos.abstractg.core.Launcher;
 
 public abstract class Weapon extends Item {
 
+    //Balas con las que cuenta
+    protected int tiros;
     //El dano extra que hace
     protected long bonusDamage;
     //El multiplicador de dano

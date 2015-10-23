@@ -120,4 +120,7 @@ public class Player extends Character {
     }
 
 
+    public int getScore() {
+        return 0;
+    }
 }

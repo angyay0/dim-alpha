@@ -6,13 +6,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.SplitPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
+import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.GameConfiguration;
 
@@ -24,8 +28,8 @@ public class Pause extends GameState {
 
     GameState actual;
 
-    private  Button [] btnPause = new Button[5];
-    private float imgCuad = 90f;
+    private  Button btnPause;
+    private float imgCuad = 10f;
     private boolean opt = false;
     private Skin skin;
 
@@ -58,9 +62,17 @@ public class Pause extends GameState {
 
     private void createWindowPause() {
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
+        skin.add("fx_on",  Launcher.res.getTexture("fxOnB"));
+        skin.add("fx_off", Launcher.res.getTexture("fxOffB"));
+        skin.add("so_on",  Launcher.res.getTexture("soundOnB"));
+        skin.add("so_off", Launcher.res.getTexture("soundOffB"));
+        skin.add("vi_on",  Launcher.res.getTexture("violenceOnB"));
+        skin.add("vi_off", Launcher.res.getTexture("violenceOffB"));
+
+
 
         //boton ocultar ventana
-        Button btnhide = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/hideWin.png"))));//Close
+        Button btnhide = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("hideW"))));//Close
         btnhide.setSize(imgCuad, imgCuad);
         btnhide.addListener(new ClickListener() {
             @Override
@@ -70,31 +82,33 @@ public class Pause extends GameState {
             }
         });
 
-        Button btnreload = new Button( new TextureRegionDrawable( new TextureRegion( new Texture("menu/violenceOn.png"))));//Close
-        btnreload.setSize(imgCuad, imgCuad);
-        btnreload.addListener(new ClickListener() {
+        TextureRegion reload =new TextureRegion( Launcher.res.getTexture("reload"));
+        Button reloadG = new Button(new TextureRegionDrawable( reload ));
+        reloadG.setWidth(80f);
+        reloadG.setHeight(80f);
+        reloadG.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //gsm.reloadGame();
-
+                gsm.reloadGame();
             }
         });
+
+
         //Btones para Opciones o Regresar a menu principal, depende de la pantalla
         if(opt){
-            btnPause[0] = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("menu/creditos.png")))); //options
-            btnPause[0].setWidth(200f);
-            btnPause[0].setHeight(80f);
-            btnPause[0].addListener(new ClickListener() {
+            btnPause = new Button(new TextureRegionDrawable(new TextureRegion( Launcher.res.getTexture("creditos")))); //options
+            btnPause.setWidth(200f);
+            btnPause.setHeight(80f);
+            btnPause.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    Gdx.app.debug("Evento", "Optiones");
+                    Gdx.app.debug("Evento", "Creditos");
                 }
             });
         }else {
-
-            btnPause[0] = new Button(new TextureRegionDrawable(new TextureRegion(new Texture("menu/home2.png")))); //Home
-            btnPause[0].setSize(imgCuad, imgCuad);
-            btnPause[0].addListener(new ClickListener() {
+            btnPause = new Button(new TextureRegionDrawable(new TextureRegion( Launcher.res.getTexture("home2")))); //Home
+            btnPause.setSize(imgCuad, imgCuad);
+            btnPause.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
                     gsm.backToMenu();
@@ -102,23 +116,32 @@ public class Pause extends GameState {
             });
         }
 
+        final ImageButton fxText = new ImageButton(skin.getDrawable("fx_on"),skin.getDrawable("fx_off"),skin.getDrawable("fx_off"));
+        final ImageButton msText = new ImageButton(skin.getDrawable("so_on"),skin.getDrawable("so_off"),skin.getDrawable("so_off"));
+        final ImageButton viText = new ImageButton(skin.getDrawable("vi_on"),skin.getDrawable("vi_off"),skin.getDrawable("vi_off"));
+
+
         //boton Violencia y check
         final CheckBox Violencia = new CheckBox("Violencia",skin);
         Violencia.setDisabled(true);
-        if(GameConfiguration.getInstance().getFx())
+        if(GameConfiguration.getInstance().getFx()) {
+            viText.setChecked(false);
             Violencia.setChecked(true);
-        else
+        }else {
+            viText.setChecked(true);
             Violencia.setChecked(false);
-        btnPause[1] = new Button(new TextureRegionDrawable( new TextureRegion( new Texture( "menu/violenceOff.png"))));//Violence
-        btnPause[1].setSize(imgCuad, imgCuad);
-        btnPause[1].addListener(new ClickListener() {
+        }
+        viText.setSize(imgCuad, imgCuad);
+        viText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.debug("Evento", "violencia");
                 if (Violencia.isChecked()) {
                     Violencia.setChecked(false);
+                    viText.setChecked(true);
                 } else {
                     Violencia.setChecked(true);
+                    viText.setChecked(false);
                 }
             }
         });
@@ -126,13 +149,15 @@ public class Pause extends GameState {
         //boton y check Musica
         final CheckBox Musica = new CheckBox("Musica", skin);
         Musica.setDisabled(true);
-        if(AudioManager.getInstance().isPlaying())
-            Musica.setChecked(true);
-        else
+        if(AudioManager.getInstance().isPlaying()){
+            msText.setChecked(false);
+            Musica.setChecked(true);}
+        else{
             Musica.setChecked(false);
-        btnPause[2] = new Button(new TextureRegionDrawable( new TextureRegion( new Texture( "menu/soundOff.png"))));//Musica
-        btnPause[2].setSize(imgCuad, imgCuad);
-        btnPause[2].addListener(new ClickListener() {
+            msText.setChecked(true);}
+
+        msText.setSize(imgCuad, imgCuad);
+        msText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (Musica.isChecked()) {
@@ -140,12 +165,14 @@ public class Pause extends GameState {
                         Musica.setChecked(false);
                         AudioManager.getInstance().stopAudio();
                         GameConfiguration.getInstance().saveMusic(false);
+                        msText.setChecked(true);
                     }
                 } else {
                     if (!AudioManager.getInstance().isPlaying()) {
                         AudioManager.getInstance().play();
                         Musica.setChecked(true);
                         GameConfiguration.getInstance().saveMusic(true);
+                        msText.setChecked(false);
                     }
                 }
             }
@@ -154,47 +181,58 @@ public class Pause extends GameState {
         // boton y check Efecto
         final CheckBox Efecto = new CheckBox("Efectos", skin);
         Efecto.setDisabled(true);
-        if(GameConfiguration.getInstance().getFx())
+        if(GameConfiguration.getInstance().getFx()) {
             Efecto.setChecked(true);
-        else
+            fxText.setChecked(false);
+        }else{
             Efecto.setChecked(false);
-        btnPause[3] = new Button(new TextureRegionDrawable( new TextureRegion( new Texture( "menu/fxOff.png"))));//Fx
-        btnPause[3].setSize(imgCuad, imgCuad);
-        btnPause[3].addListener(new ClickListener() {
+            fxText.setChecked(true);
+        }
+
+        fxText.setSize(imgCuad, imgCuad);
+        fxText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.debug("Evento", "Efecto");
-                if (Efecto.isChecked()) Efecto.setChecked(false);
-                else Efecto.setChecked(true);
+                if (Efecto.isChecked()) {
+                    Efecto.setChecked(false);
+                    fxText.setChecked(true);
+                }
+                else{
+                    Efecto.setChecked(true);
+                    fxText.setChecked(false);
+                }
             }
         });
 
-
-        //SplitPane botonesAxu = new SplitPane(btnhide,btnPause[0], false, skin, "default-horizontal");
+        SplitPane botonesAxu = new SplitPane(btnhide,btnPause, false, skin, "default-horizontal");
         //Ventana
         window = new Window(" ", skin);
         //window.setDebug(true);
         window.setMovable(false);
         window.setResizable(true);
-        window.setSize(300,350);
-        window.setPosition(270, 100);
+        window.setSize(500, 500);
+        window.setPosition(250, 150);
         window.defaults().spaceBottom(10);
-        window.row().fill().expandX();
-        window.add(btnPause[1]).padLeft(5);
-        window.add(btnPause[2]).padLeft(5);
-        window.add(btnPause[3]).padLeft(5).padRight(5);
+        window.row().fill().expandX().expandY();
+        window.add(viText).padLeft(5);
+        window.add(msText).padLeft(5);
+        window.add(fxText).padLeft(5).padRight(5);
+        //window.add(btnPause[3]).padLeft(5).padRight(5);
         window.row();
         window.add(Violencia);
         window.add(Musica);
         window.add(Efecto);
         window.row();
-        window.add(btnreload).padLeft(5);
-        window.add(btnhide).padLeft(5);
-        window.add(btnPause[0]).padLeft(5).padRight(5);
-        //window.add(botonesAxu).colspan(4);
+        if(opt){
+            window.add(botonesAxu).colspan(4);
+        }else {
+            window.add(btnhide).padLeft(5);
+            window.add(reloadG).padLeft(5);
+            window.add(btnPause).padLeft(5).padRight(5);
+        }
         window.pack();
         addActor(window);
-
     }
 
     @Override

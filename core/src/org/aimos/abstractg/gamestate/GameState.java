@@ -59,8 +59,8 @@ public abstract class GameState extends Stage{
 
     @Override
     public void dispose(){
-        disposeState();
         super.dispose();
+        disposeState();
     }
 
     public GameStateManager getManager(){

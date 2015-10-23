@@ -56,7 +56,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     // Score the character has or gives when killed
     protected long score;
     // Current money the character has or gives when killed
-    protected long money;
+    protected long money = 0;
 
     boolean chainShape = true;
 

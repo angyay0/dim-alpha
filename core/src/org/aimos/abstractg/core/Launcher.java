@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -52,12 +53,14 @@ public class Launcher extends Game {
         res.loadAtlas("control/control.atlas");
         res.loadAtlas("coins/coins.atlas");
         res.loadAtlas("armas/armas.atlas");
+        res.loadAtlas("data/uiskin.atlas");
         //------------------------
         res.loadTexture("menu/fondo.png");
         res.loadTexture("menu/mask.png");
         res.loadTexture("menu/play.png");
         res.loadTexture("menu/Opciones.png");
         res.loadTexture("menu/Salir.png");
+        res.loadTexture("menu/reload.png");
 
         res.loadTexture("splash/logo_base.png");
         res.loadTexture("splash/logo_hilo.png");
@@ -72,6 +75,22 @@ public class Launcher extends Game {
 
         res.loadTexture("menu/circle.png");
         res.loadTexture("menu/bar.png");
+
+
+        /*MENU*/
+        res.loadTexture("menu/fxOnB.png");
+        res.loadTexture("menu/fxOffB.png");
+        res.loadTexture("menu/soundOnB.png");
+        res.loadTexture("menu/soundOffB.png");
+        res.loadTexture("menu/violenceOnB.png");
+        res.loadTexture("menu/violenceOffB.png");
+        res.loadTexture("menu/hideW.png");
+        res.loadTexture("menu/home2.png");
+        res.loadTexture("menu/accion.png");
+        res.loadTexture("menu/creditos.png");
+        res.loadTexture("menu/share.png");
+
+
         //-------------------------
         res.loadMusic("music/arcade.mp3");
         res.loadMusic("music/field.mp3");
@@ -120,7 +139,9 @@ public class Launcher extends Game {
         params.size = 48;
         params.shadowOffsetX = 3;
         params.shadowOffsetY = 3;
-        params.color = Color.SKY;
+        params.magFilter = Texture.TextureFilter.Linear;
+        params.minFilter = Texture.TextureFilter.Linear;
+        params.color = Color.WHITE;
         font = generator.generateFont(params);
         generator.dispose();
     }

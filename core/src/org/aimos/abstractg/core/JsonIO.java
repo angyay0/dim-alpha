@@ -15,10 +15,18 @@ import org.aimos.abstractg.physics.Weapon;
  */
 public class JsonIO {
     private static Json json = new Json();
+
+    //sirve para lectura del json interno de la partida
     public static long coins = 0;
     public static long enemy = 0;
     public static Array<Weapon> weapons = null;
-    public static Array<String> level;
+    public static String chapter;
+    public static int world;
+    //Para leer el JSON de los niveles
+    public static Array<String> levelName;
+    public static Array<String> iconName;
+    public static Array<String> tmxName;
+    //
 
 
     public static void savePlay(Player player,String chapter, int world){
@@ -34,13 +42,13 @@ public class JsonIO {
     }
 
     public static void readPlay(String chapter,int world){
-        /*FileHandle[] files = Gdx.files.local("mylocaldir/").list();
+        FileHandle[] files = Gdx.files.local("dimensionsDir/").list();
         for(FileHandle file: files) {
-        }*/
+            Gdx.app.debug("EVENTOOOO!!!", file.name());
+        }
         FileHandle file = Gdx.files.local("dimensionsDir/"+chapter+"_"+world+".json");
         if(file.exists()) {
             SavePoint jsonR = json.fromJson(SavePoint.class, file.read());
-            Gdx.app.debug("Datos",json.prettyPrint(jsonR));
         }
     }
 
@@ -69,17 +77,22 @@ public class JsonIO {
 
     public static void ReadJSON(String world){
         JsonValue json = new JsonReader().parse(Gdx.files.internal("data/chapter.json"));
-        level = new Array<String>();
+        levelName = new Array<String>();
         JsonValue levelJson = json.get(world);
             for (JsonValue lvelJson : levelJson.iterator()) // iterator() returns a list of children
             {
-                //level.add();
-                //SavePoint.Level level = new SavePoint.Level();
-                //level.name = lvelJson.getString("name");
-                //level.icon = lvelJson.getString("icon");
-                //level.txm =  lvelJson.getString("tmx");
-                Gdx.app.debug("Mundo Tierra:::", lvelJson.getString("name"));
+                levelName.add(lvelJson.getString("name"));
+                //iconName.add(lvelJson.getString("icon"));
+                //tmxName.add(lvelJson.getString("tmx"));
             }
+    }
+
+    public static Array<String> setLevelName(){return levelName;}
+    public static Array<String> setIconName(){
+        return iconName;
+    }
+    public static Array<String> setTmxName(){
+        return tmxName;
     }
 
 

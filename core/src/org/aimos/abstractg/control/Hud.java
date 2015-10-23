@@ -1,6 +1,7 @@
 package org.aimos.abstractg.control;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.WidgetGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragListener;
@@ -26,6 +26,10 @@ import java.util.List;
  */
 public class Hud extends WidgetGroup {
 
+    private static final String ICON = "coina";
+    private static final String ARM = "gun";
+
+    private final float poyImg = 450f;//410
     //Default Buttons Name With Atlas file
     //Salto
     private static final String JUMP = "jump";
@@ -41,11 +45,12 @@ public class Hud extends WidgetGroup {
     private static final String PAD = "circle";
     //Tamaño de las imagenes
     private float SQUARE = 50f;
+    //Tamaño imagenes aciones
+    private final float SQBUTTON = 90f;
     //Margen para los botones
-    private static final float CTRL_MARGIN = 50f;
+    private static final float CTRL_MARGIN = 20f;
     //Square Size for circle pad
     private static final float CTRL_SIZE = 160f;
-
     //Lista con los botones del control
     private List<Button> buttons;
     //Coordenadas para eventos del control
@@ -70,20 +75,42 @@ public class Hud extends WidgetGroup {
         final Player p = player;
         final GameStateManager gsm = manager;
         TextureAtlas atlas = Launcher.res.getAtlas("control");
+
         AtlasRegion jumpRegion = atlas.findRegion(JUMP);
+        jumpRegion.getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         AtlasRegion bgpadRegion = atlas.findRegion(BGPAD);
         AtlasRegion padRegion = atlas.findRegion(PAD);
+        AtlasRegion meleeReg = atlas.findRegion(MELEE);
+        AtlasRegion shootReg = atlas.findRegion(SHOOT);
+
+        TextureAtlas txcoin= Launcher.res.getAtlas("coins");
+        AtlasRegion  coin  = txcoin.findRegion(ICON);
+
+        TextureAtlas arm = Launcher.res.getAtlas("armas");
+        AtlasRegion ar =  arm.findRegion(ARM);
+
+        Button acc = new Button( new TextureRegionDrawable( new  TextureRegion( Launcher.res.getTexture("accion"))));
+        acc.setSize(SQBUTTON, SQBUTTON);
+        acc.setPosition((800 / 2) - (acc.getWidth() / 2), 512 / 2);
+
+        Button meleeButton = new Button( new TextureRegionDrawable( meleeReg ) );
+        meleeButton.setSize(SQBUTTON,SQBUTTON);
+        meleeButton.setPosition(Launcher.WIDTH - (meleeReg.getRegionWidth() + CTRL_MARGIN * 2), CTRL_MARGIN);
+
+        Button shootButton = new Button( new TextureRegionDrawable( shootReg ) );
+        shootButton.setSize(SQBUTTON, SQBUTTON);
+        shootButton.setPosition(Launcher.WIDTH - CTRL_MARGIN - shootReg.getRegionWidth() / 2, CTRL_MARGIN + shootReg.getRegionWidth() / 2 + 15);
 
 
         Button jumpButton = new Button(new TextureRegionDrawable(jumpRegion));
-        jumpButton.setSize(90f, 90f);
-        jumpButton.setPosition(Launcher.WIDTH - jumpRegion.getRegionWidth(),
+        jumpButton.setSize(SQBUTTON, SQBUTTON);
+        jumpButton.setPosition(Launcher.WIDTH - CTRL_MARGIN - jumpRegion.getRegionWidth()/2,
                 CTRL_MARGIN);
         jumpButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-            //    p.jump();
-                p.attack();
+                p.jump();
+                //p.attack();
                 return super.touchDown(event, x, y, pointer, button);
             }
 
@@ -95,7 +122,6 @@ public class Hud extends WidgetGroup {
             @Override
             public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
                 super.touchUp(event, x, y, pointer, button);
-
             }
         });
 
@@ -172,15 +198,12 @@ public class Hud extends WidgetGroup {
                     //interactuar escaleras
                 }*/
 
-                //System.out.println("x " + posX2 + ", Angle " + angle + ", Radius " + radius + ", Cos " + (Math.cos(Math.toRadians(angle)))+", X " + (angle * Math.cos(Math.toRadians(angle))));
-                //System.out.println("y " + posY2 + ", Angle " + angle + ", Radius " + radius + ", Sen " + (Math.sin(Math.toRadians(angle)))+", Y " + (angle * Math.sin(Math.toRadians(angle))));
                 if ((CTRL_SIZE / 2) >= radius) {
                     pad.setPosition(x - (pad.getWidth() / 2), y - (pad.getHeight() / 2));
                 } else {
                     pad.setPosition((float) ((CTRL_SIZE / 2) * Math.cos(Math.toRadians(angle))) - (pad.getWidth() / 2) + posX1,
                             (float) ((CTRL_SIZE / 2) * Math.sin(Math.toRadians(angle))) - (pad.getHeight() / 2) + posY1);
                 }
-
             }
 
             @Override
@@ -195,7 +218,7 @@ public class Hud extends WidgetGroup {
 
         Button pause = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("pause"))));//pause
         pause.setSize(SQUARE, SQUARE);
-        pause.setPosition(375f, 410f);
+        pause.setPosition(375f, poyImg);
         pause.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -205,10 +228,21 @@ public class Hud extends WidgetGroup {
 
         Image cir = new Image(Launcher.res.getTexture("circle"));
         cir.setSize(SQUARE, SQUARE);
-        cir.setPosition(10f, 410f);
+        cir.setPosition(10f, poyImg);
         Image bar = new Image(Launcher.res.getTexture("bar"));
         bar.setSize(250, SQUARE);
-        bar.setPosition(35f, 410f);
+        bar.setPosition(35f, poyImg);
+
+        Image star = new Image( new  TextureRegionDrawable(coin));
+        star.setPosition(750f, poyImg + 10);
+        star.setSize(coin.getRegionWidth(), coin.getRegionWidth());
+
+        Image txBal = new Image( new  TextureRegionDrawable(ar));
+        txBal.setPosition(750f, poyImg - 38);
+        txBal.setSize(coin.getRegionWidth(), coin.getRegionWidth());
+
+
+
 
         addActor(bgPad);
         addActor(pad);
@@ -217,6 +251,11 @@ public class Hud extends WidgetGroup {
         addActor(pause);
         addActor(bar);
         addActor(cir);
+        addActor(star);
+        addActor(txBal);
+        addActor(acc);
+        addActor(meleeButton);
+        addActor(shootButton);
     }
 
 }

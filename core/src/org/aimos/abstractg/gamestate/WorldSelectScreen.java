@@ -27,11 +27,13 @@ public class WorldSelectScreen extends GameState {
     private Texture back;
     private float dCircular = 220f;
 
+    // Faltan cargar texturas en launcher
+
     protected WorldSelectScreen(GameStateManager gsm) {
         super(gsm);
         game.setFlag(false);
-        background = new Texture("menu/fondo.png");
-        back = new Texture("menu/back.png");
+        background = Launcher.res.getTexture("fondo");
+        back = Launcher.res.getTexture("back");
 
         initButtons();
         for (Button btn : btnWorld) addActor(btn);
@@ -45,73 +47,74 @@ public class WorldSelectScreen extends GameState {
         btnWorld[4] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("bgcpad")))); //Tierra
         btnWorld[5] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("back")))); //back
 
+        //Mundo Marte
         btnWorld[0].setSize(dCircular, dCircular);
         btnWorld[0].setPosition(30f, 175f);
         btnWorld[0].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.debug("Evento", "Ciudad");
+                setLevel("marte");
+
             }
         });
-
+        //Mundo TIERRA
         btnWorld[1].setSize(dCircular, dCircular);
         btnWorld[1].setPosition(290f, 175f);
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //Constants.botones =3;
-                gsm.setState(GameStateManager.LEVEL_SELECT);
+                setLevel("tierra");
             }
         });
 
+        //Mundo Espacio
         btnWorld[2].setSize(dCircular, dCircular);
         btnWorld[2].setPosition(550f, 175f);
         btnWorld[2].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.debug("Evento", "Espacio");
+                setLevel("espacio");
             }
         });
-
+        //Tutorial 2
         btnWorld[3].setSize(dCircular, dCircular);
         btnWorld[3].setPosition(165f, 10f);
         btnWorld[3].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.debug("Evento", "PCH1");
+                Gdx.app.debug("Evento", "Tuto 2");
             }
         });
-
+        //Tutorial 1
         btnWorld[4].setSize(dCircular, dCircular);
         btnWorld[4].setPosition(425f, 10f);
         btnWorld[4].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.debug("Evento", "Tierra");
+                Gdx.app.debug("Evento", "Tutorial 1");
             }
         });
-        // sb.draw(back, 0f, 410f, 135f, 95f);
+        //boton regresar vista
         btnWorld[5].setSize(140f, 95f);
-        btnWorld[5].setPosition(10f, 380f);
+        btnWorld[5].setPosition(10f, 410f);
         btnWorld[5].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 gsm.setState(GameStateManager.MENU);
             }
         });
+
         for (int i = 0; i < btnWorld.length; i++) {
             btnWorld[i].addAction(sequence(alpha(0.5f), delay(.5f), fadeIn(.5f)));
         }
-
-
-        //Label infoL = Factory.initInfoLabel(font,200,400,"Selecciona El Capitulo");
-        //addActor(infoL);
+    }
+    public void setLevel(String name){
+        LevelSelect.setWworld(name);
+        gsm.setState(GameStateManager.LEVEL_SELECT);
     }
 
     @Override
     public void disposeState() {
-        background.dispose();
-        back.dispose();
     }
 
     @Override
@@ -132,8 +135,7 @@ public class WorldSelectScreen extends GameState {
 
         sb.begin();
         sb.draw(background, 120f, 0f, 600f, 480f);
-
-        font.draw(sb, "Selecciona El Capitulo", 200, 440);
+        font.draw(sb, "Selecciona El Capitulo", 200, 490f);
         sb.end();
 
 

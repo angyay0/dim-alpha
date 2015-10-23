@@ -17,15 +17,6 @@ public class SavePoint {
 
     public SavePoint(){}
 
-    /*public SavePoint(String chapter,int world,Player player){
-        this.chapter = chapter;
-        this.world = world;
-        this.coins = player.getMoney();
-        this.weapons = player.getWeapons();
-        this.enemiesKilled= player.getEnemiesKilled();
-
-    }*/
-
     public void setChapter(String chapter) {
         this.chapter = chapter;
     }
@@ -46,9 +37,7 @@ public class SavePoint {
         this.weapons = weapons;
     }
 
-    public String getChapter() {
-        return chapter;
-    }
+    public String getChapter() {return chapter;}
 
     public int getWorld() {
         return world;
@@ -68,9 +57,7 @@ public class SavePoint {
         private long tEnemiesK;
         private Array<Weapon> weapons;
 
-        public Profile(){
-
-        }
+        public Profile(){}
 
         public long gettCoins() {
             return tCoins;
@@ -95,41 +82,6 @@ public class SavePoint {
         public void setWeapons(Array<Weapon> weapons) {
             this.weapons = weapons;
         }
-    }
-
-    static class Level{
-
-        private String nombre;
-        private String icon;
-        private String txm;
-
-        public Level(){}
-
-        public String getNombre() {
-            return nombre;
-        }
-
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
-
-        public String getIcon() {
-            return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
-        }
-
-        public String getTxm() {
-            return txm;
-        }
-
-        public void setTxm(String txm) {
-            this.txm = txm;
-        }
-        //setter and getter
-
     }
 }
 

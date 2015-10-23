@@ -38,6 +38,7 @@ public class Resources {
     }
     public void loadTexture(String path, String key) {
         Texture tex = new Texture(Gdx.files.internal(path));
+        tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
         textures.put(key, tex);
     }
     public Texture getTexture(String key) {
