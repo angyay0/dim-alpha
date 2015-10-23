@@ -2,7 +2,12 @@ package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
+
+import org.aimos.abstractg.character.*;
+import org.aimos.abstractg.character.Character;
+import org.aimos.abstractg.gamestate.Play;
 
 /**
  * Created by EinarGretch on 21/10/2015.
@@ -11,13 +16,16 @@ public abstract class Ammo extends Item implements Pool.Poolable, Runnable{
 
     private Weapon weapon;
 
-    public Ammo(World w, Weapon sw) {
-        super(w);
+    protected Array<Character> targets;
+
+    public Ammo(Play p, Weapon sw) {
+        super(p);
         weapon = sw;
-        setSprite();
+        targets = null;
+        extraInit();
     }
 
-    protected abstract void setSprite();
+    protected abstract void extraInit();
 
     protected abstract void extraDispose();
 
@@ -31,9 +39,14 @@ public abstract class Ammo extends Item implements Pool.Poolable, Runnable{
         return weapon;
     }
 
+    public Array<Character> getTargets(){
+        return targets;
+    }
+
     @Override
     public void reset() {
         super.dispose();
+        unsetBody();
         extraDispose();
     }
 

@@ -54,6 +54,7 @@ public class Launcher extends Game {
         res.loadAtlas("coins/coins.atlas");
         res.loadAtlas("armas/armas.atlas");
         res.loadAtlas("data/uiskin.atlas");
+        //res.loadAtlas("player/player1.atlas");
         //------------------------
         res.loadTexture("menu/fondo.png");
         res.loadTexture("menu/mask.png");
@@ -120,8 +121,10 @@ public class Launcher extends Game {
         super.render();
         manager.update(Gdx.graphics.getDeltaTime());
         // clear the screen
-        Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.graphics.getGL20().glClearColor(0.7f, 0.7f, 1.0f, 1);
+        Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         manager.render();
     }
 

@@ -3,19 +3,22 @@ package org.aimos.abstractg.physics;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
+
+import org.aimos.abstractg.gamestate.Play;
 
 /**
  * Created by EinarGretch on 06/10/2015.
  */
 public abstract class PhysicalBody {
 
-    protected World world = null;
-    protected Body body = null;
-    protected boolean visible = true;
+    private Play play = null;
+    private Body body = null;
+    private boolean visible = true;
 
-    public PhysicalBody(World w){
-        world = w;
+    public PhysicalBody(Play p){
+        play = p;
     }
 
     public Body getBody(){
@@ -26,17 +29,24 @@ public abstract class PhysicalBody {
         return (body != null);
     }
 
-    public boolean setBody(Body body){
-        if(body != null) {
-            this.body = body;
+    public Play getPlay() {
+        return play;
+    }
+
+    protected boolean createBody(BodyDef bdef){
+        if(body == null) {
+            body = play.getWorld().createBody(bdef);
             return true;
         }
         return false;
     }
 
     public void dispose(){
-        visible = false;
-        world.destroyBody(body);
+        if(hasBody()) {
+            visible = false;
+            play.getWorld().destroyBody(body);
+            body = null;
+        }
     }
 
     public void setVisibility(boolean visible){
@@ -84,6 +94,17 @@ public abstract class PhysicalBody {
 
     public void draw(SpriteBatch sb){
         if(isVisible()) render(sb);
+    }
+
+    protected void unsetBody() {
+        if(hasBody()) {
+            //body.setUserData(null);
+            body = null;
+        }
+    }
+
+    public World getWorld(){
+        return play.getWorld();
     }
 
     protected abstract void render(SpriteBatch sb);

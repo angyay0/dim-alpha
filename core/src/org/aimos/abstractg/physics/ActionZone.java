@@ -5,13 +5,16 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
+import org.aimos.abstractg.gamestate.Play;
+
 /**
  * Created by EinarGretch on 06/10/2015.
  */
 public class ActionZone extends PhysicalBody implements Interactive{
 
-    public ActionZone(World w) {
-        super(w);
+
+    public ActionZone(Play p) {
+        super(p);
     }
 
     @Override

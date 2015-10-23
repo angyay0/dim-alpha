@@ -10,6 +10,7 @@ import com.badlogic.gdx.utils.Pool;
 
 import org.aimos.abstractg.character.Character;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.gamestate.Play;
 
 /**
  * Clase generadora de las armas de las cuales puede ser utilizada por los jugadores y enemigos
@@ -47,8 +48,8 @@ public abstract class Weapon extends Item {
      * @param m multiplier
      * @param v value
      */
-    public Weapon(long bd, float m, long v, long a, World w, String spriteSrc){
-        super(w);
+    public Weapon(long bd, float m, long v, long a, Play p, String spriteSrc){
+        super(p);
         bonusDamage = bd;
         multiplier = m;
         value = v;
@@ -57,7 +58,7 @@ public abstract class Weapon extends Item {
         owner = null;
         ammoPool = null;
         TextureAtlas atlas = Launcher.res.getAtlas("armas");
-        sprite = atlas.createSprite(spriteSrc);
+        setSprite(atlas.createSprite(spriteSrc));
     }
 
     /**
@@ -101,6 +102,10 @@ public abstract class Weapon extends Item {
         long d = (long) ((owner.getAttack() + bonusDamage) * multiplier);
         c.damage(d);
         return d;
+    }
+
+    public boolean hasAmmo(){
+        return (ammo > 0);
     }
 
     public boolean hasJoint() {

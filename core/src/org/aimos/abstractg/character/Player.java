@@ -5,6 +5,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
+import org.aimos.abstractg.core.JsonIO;
+import org.aimos.abstractg.gamestate.Play;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.DroppedWeapon;
 import org.aimos.abstractg.physics.Weapon;
@@ -32,11 +35,11 @@ public class Player extends Character {
      *
      * @param spriteSrc
      * @param name
-     * @param world
+     * @param play
      * @param pos
      */
-    public Player(String spriteSrc, String name, World world, Vector2 pos) {
-        super(spriteSrc, name, world, pos);
+    public Player(String spriteSrc, String name, Play play, Vector2 pos) {
+        super(spriteSrc, name, play, pos);
         weapons = new Array<Weapon>();
      //   chainShape = true;
      //   loadScript();
@@ -57,8 +60,8 @@ public class Player extends Character {
     }
 
     @Override
-    public void setSelfToScript() {
-        iaChunk.setCharacter(this);
+    public void die() {
+        getPlay().remove(this);
     }
 
     @Override
@@ -81,17 +84,10 @@ public class Player extends Character {
     }
 
     public void addMoney(Coin c) {
-        money += c.getValue();
+        addMoney(c.getValue());
     }
 
     public void addWeapon(DroppedWeapon w) {
-        /*if(w.getWeapon() instanceof MeleeWeapon){
-
-        }else if(w.getWeapon() instanceof ThrowWeapon){
-
-        }else if(w.getWeapon() instanceof ShootWeapon){
-
-        }*/
         weapons.add(w.getWeapon());
         setWeapon(w.getWeapon());
     }
@@ -108,9 +104,6 @@ public class Player extends Character {
         weapons.add(w);
     }
 
-    public long getMoney(){
-        return money;
-    }
     public Array<Weapon> getWeapons(){
         return weapons;
     }

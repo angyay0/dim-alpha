@@ -1,11 +1,13 @@
 package org.aimos.abstractg.gamestate;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
+import org.aimos.abstractg.character.Enemy;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.JsonIO;
@@ -17,6 +19,7 @@ import org.aimos.abstractg.handlers.MapLoader;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.Item;
 import org.aimos.abstractg.physics.MeleeWeapon;
+import org.aimos.abstractg.physics.PhysicalBody;
 import org.aimos.abstractg.physics.ShootWeapon;
 import org.aimos.abstractg.physics.ThrowWeapon;
 import org.aimos.abstractg.physics.Weapon;
@@ -26,17 +29,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 /**
  * Created by EinarGretch on 17/09/2015.
  */
-public class Play extends GameState{
+public abstract class Play extends GameState{
 
     private World world;
     private GameContactListener contact;
 
     private Player player;
+    private Enemy ene;
     private Array<Coin> coins;
+    private Array<PhysicalBody> removed;
     private MapLoader loader;
-    private boolean gameOver = false;
     private Hud hud;
     MeleeWeapon mw;
+    ShootWeapon sw;
+    ThrowWeapon tw;
     Skin skin;
     Label labelInfo,labelInf;
 
@@ -55,20 +61,28 @@ public class Play extends GameState{
 
         //set up the world
         world = new World(new Vector2(0, -9.81f), true);
-        contact = new GameContactListener();
+        removed = new Array<PhysicalBody>();
+        contact = new GameContactListener(removed);
         world.setContactListener(contact);
 
         //create player
-        player = new Player("player","Hero", world, new Vector2(128,128));
+        player = new Player("player","Hero", this, new Vector2(128,128));
+        ene = new Enemy("player","Enemy", this, new Vector2(150, 128));
+
         loader = new MapLoader(world, player);
-      //  mw = new MeleeWeapon(10,10,10,world,"sword");
+        //mw = new MeleeWeapon(10,10,10,7,this,"sword");
+        //sw = new ShootWeapon(10,10,10,7,this,"gun");
+        tw = new ThrowWeapon(10,10,10,7,this,"steel");
+        //layer.setWeapon(mw);
+        //player.setWeapon(sw);
+        player.setWeapon(tw);
 
-         skin = new Skin();
-         skin.addRegions(Launcher.res.getAtlas("uiskin"));
-         skin.add("default-font", font);
-         skin.load(Gdx.files.internal("data/uiskin2.json"));
+        skin = new Skin();
+        skin.addRegions(Launcher.res.getAtlas("uiskin"));
+        skin.add("default-font", font);
+        skin.load(Gdx.files.internal("data/uiskin2.json"));
 
-        addCoins(Coin.generateCoins(world, new Vector2(256, 512), 100));
+        addCoins(Coin.generateCoins(this, new Vector2(256, 512), 100));
 
         //Create Hud
         hud = new Hud(player, gsm);
@@ -81,10 +95,27 @@ public class Play extends GameState{
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
-        removeBodies(contact.getRemovedBodies());
+        if(ene.isDead()) {
+            System.out.println("Enemy muerto");
+        }
+        ene.update(dt);
+        removeBodies();
+        if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
+            long money = 0;
+            long enem = 0;
+            Array<Weapon> weap = null;
+            JsonIO.savePlay(player, map, worldLvel);
+            if(JsonIO.readProfile()){
+                money = JsonIO.coins;
+                enem = JsonIO.enemy;
+                weap = JsonIO.weapons;
+            }
+            JsonIO.saveProfile(player.getWeapons(),money+player.getMoney(),enem+player.getEnemiesKilled());
+            gsm.gameOver(player);
+            disposeState();
+        }
         updLabel(String.valueOf(player.getMoney()));
-        updArm(String.valueOf(player.getMoney()));
-
+        updArm(String.valueOf(player.getMoney()));   
     }
 
     @Override
@@ -96,23 +127,7 @@ public class Play extends GameState{
                 coin.draw(sb);
             }
             player.draw(sb);
-            if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
-                if (!gameOver) {
-                    gameOver = true;
-                    long money = 0;
-                    long enem = 0;
-                   // Array<Weapon> weap = null;
-                    JsonIO.savePlay(player, map, worldLvel);
-                    if(JsonIO.readProfile()){
-                        money = JsonIO.coins;
-                        enem = JsonIO.enemy;
-                        //weap = JsonIO.weapons;
-                    }
-                    JsonIO.saveProfile(player.getWeapons(), money + player.getMoney(), enem + player.getEnemiesKilled());
-                    gsm.gameOver(player);
-                    disposeState();
-                }
-            }
+            ene.draw(sb);
             draw();
     }
 
@@ -129,12 +144,12 @@ public class Play extends GameState{
 
     }
 
-    public void removeBodies(Array<PickUp> pickUp){
-        for (PickUp p : pickUp) {
-            if(p instanceof Coin) coins.removeValue((Coin)p, false);
-            p.dispose();
+    public void removeBodies(){
+        for (PhysicalBody body : removed) {
+            if(body instanceof Coin) coins.removeValue((Coin)body, false);
+            body.dispose();
         }
-        items.clear();
+        removed.clear();
     }
 
     public Player getPlayer() {
@@ -174,4 +189,11 @@ public class Play extends GameState{
         labelInfo.setText(val);
     }
 
+    public World getWorld() {
+        return world;
+    }
+
+    public void remove(PhysicalBody body){
+        removed.add(body);
+    }
 }

@@ -23,12 +23,14 @@ public class GameStateManager {
     public static final int WORLD_SELECT = 2;
     public static final int SOLO_PLAY = 3;
     public static final int LEVEL_SELECT =4;
+    public static final int MULTI_PLAY = 5;
+
     private boolean inPause = false;
 
     public GameStateManager(Launcher game) {
         this.game = game;
         gameStates = new Stack<GameState>();
-        pushState(MENU);
+        pushState(SPLASH);
     }
 
     public void update(float dt) {
@@ -56,7 +58,9 @@ public class GameStateManager {
             case WORLD_SELECT:
                 return new WorldSelectScreen(this);
             case SOLO_PLAY:
-                return new Play(this);
+                return new SoloPlay(this);
+            case MULTI_PLAY:
+                return new MultiPlay(this);
             case LEVEL_SELECT:
                 return new LevelSelect(this);
             default:

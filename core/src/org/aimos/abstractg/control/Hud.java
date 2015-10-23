@@ -96,6 +96,13 @@ public class Hud extends WidgetGroup {
         Button meleeButton = new Button( new TextureRegionDrawable( meleeReg ) );
         meleeButton.setSize(SQBUTTON,SQBUTTON);
         meleeButton.setPosition(Launcher.WIDTH - (meleeReg.getRegionWidth() + CTRL_MARGIN * 2), CTRL_MARGIN);
+        meleeButton.addListener(new ClickListener(){
+            @Override
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+                p.attack();
+                return super.touchDown(event, x, y, pointer, button);
+            }
+        });
 
         Button shootButton = new Button( new TextureRegionDrawable( shootReg ) );
         shootButton.setSize(SQBUTTON, SQBUTTON);
@@ -110,7 +117,6 @@ public class Hud extends WidgetGroup {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 p.jump();
-                //p.attack();
                 return super.touchDown(event, x, y, pointer, button);
             }
 

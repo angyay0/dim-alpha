@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Pool;
 
 import org.aimos.abstractg.character.*;
 import org.aimos.abstractg.character.Character;
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Constants;
 
 /**
@@ -30,11 +31,11 @@ public class MeleeWeapon extends Weapon {
      * @param bd        bonus damage
      * @param m         multiplier
      * @param v         value
-     * @param w
+     * @param p
      * @param spriteSrc
      */
-    public MeleeWeapon(long bd, float m, long v, long a, World w, String spriteSrc) {
-        super(bd, m, v, a, w, spriteSrc);
+    public MeleeWeapon(long bd, float m, long v, long a, Play p, String spriteSrc) {
+        super(bd, m, v, a, p, spriteSrc);
     }
 
     @Override
@@ -42,9 +43,9 @@ public class MeleeWeapon extends Weapon {
         RevoluteJoint revj = (RevoluteJoint) joint;
         //body.applyTorque(5f,true);
        // body.setTransform( new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), -5f );
-        body.setAngularVelocity(0f);
+        getBody().setAngularVelocity(0f);
         //body.setTransform(new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), 45f * MathUtils.radiansToDegrees);
-        body.setTransform( new Vector2(body.getWorldCenter().x , body.getWorldCenter().y), 1f * MathUtils.degreesToRadians );
+        getBody().setTransform( new Vector2(getBody().getWorldCenter().x , getBody().getWorldCenter().y), 1f * MathUtils.degreesToRadians );
         //body.setAngularVelocity(0.5f);//0.5f,0.5f,body.getWorldCenter().x,body.getWorldCenter().y,true);
         Gdx.app.debug("Si","LO HAGO");
     }
@@ -63,30 +64,30 @@ public class MeleeWeapon extends Weapon {
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set(npos);
 
-        body = world.createBody(bdef);
+        createBody(bdef);
         FixtureDef fdef = new FixtureDef();
 
         PolygonShape shape = new PolygonShape();
         //shape.setAsBox(sprite.getRegionWidth() / 2 / Constants.PTM, sprite.getRegionHeight() / 2 / Constants.PTM);// mw.getWidth()/4,mw.getHeight()/4
-        shape.setAsBox(sprite.getRegionWidth() / (2f * Constants.PTM), sprite.getRegionHeight() / (2f * Constants.PTM) );
+        shape.setAsBox(getSprite().getRegionWidth() / (2f * Constants.PTM), getSprite().getRegionHeight() / (2f * Constants.PTM) );
         fdef.shape = shape;
         fdef.friction = 1;
         fdef.density = 1;
         fdef.filter.categoryBits = Constants.BIT.SWORD.BIT();
         fdef.filter.maskBits = (short) ( Constants.BIT.CHARACTER.BIT() );
         fdef.restitution = 0.5f;
-        body.createFixture(fdef).setUserData(Constants.DATA.ATTACK);
+        getBody().createFixture(fdef).setUserData(Constants.DATA.ATTACK);
 
         shape.dispose();
 
-        MassData mass = body.getMassData();
+        MassData mass = getBody().getMassData();
         mass.mass = 0.5f;
-        body.setMassData(mass);
+        getBody().setMassData(mass);
 
         RevoluteJointDef rjd = new RevoluteJointDef();
 
         rjd.bodyA = owner.getBody();
-        rjd.bodyB = body;
+        rjd.bodyB = getBody();
         rjd.localAnchorA .set(0.30f,0.23f);
        // rjd.localAnchorB.set(0f,-1f);
         rjd.referenceAngle = 0.49f * MathUtils.PI;
@@ -99,7 +100,7 @@ public class MeleeWeapon extends Weapon {
         rjd.enableMotor = false;
 
 
-        joint = world.createJoint(rjd);
+        joint = getWorld().createJoint(rjd);
     }
 
 }

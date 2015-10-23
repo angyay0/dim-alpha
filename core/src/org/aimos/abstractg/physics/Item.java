@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Constants;
 
 /**
@@ -22,19 +23,25 @@ import org.aimos.abstractg.handlers.Constants;
 
 public abstract class Item extends PhysicalBody{
 
-    protected Sprite sprite;
+    private Sprite sprite;
 
-    public Item(World w) {
-        super(w);
+    public Item(Play p) {
+        super(p);
+        sprite = null;
     }
+
 
     public Sprite getSprite() {
         return sprite;
     }
 
+    public void setSprite(Sprite sprite) {
+        this.sprite = sprite;
+    }
+
     @Override
     public void render(SpriteBatch sb) {
-        sprite.setRotation(MathUtils.radiansToDegrees * body.getAngle());
+        sprite.setRotation(MathUtils.radiansToDegrees * getBody().getAngle());
         sprite.setPosition((getX() * Constants.PTM) - (getWidth() / 2), (getY() * Constants.PTM) - (getHeight() / 2));
         sb.begin();
         sprite.draw(sb);

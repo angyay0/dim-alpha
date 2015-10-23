@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Pool;
 
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Constants;
 
 /**
@@ -18,7 +19,7 @@ import org.aimos.abstractg.handlers.Constants;
  */
 public class ShootWeapon extends Weapon {
 
-    private int RECOVERY = 2200;
+    private int COOLDOWN = 2200;
 
     /**
      * Default Constructor for Weapon
@@ -26,11 +27,11 @@ public class ShootWeapon extends Weapon {
      * @param bd        bonus damage
      * @param m         multiplier
      * @param v         value
-     * @param w
+     * @param p
      * @param spriteSrc
      */
-    public ShootWeapon(long bd, float m, long v, long a, World w, String spriteSrc) {
-        super(bd, m, v, a, w, spriteSrc);
+    public ShootWeapon(long bd, float m, long v, long a, Play p, String spriteSrc) {
+        super(bd, m, v, a, p, spriteSrc);
         /*ammoPool = new Pool<Bullet>((int)ammo, (int)ammo) {
             @Override
             protected Bullet newObject() {
@@ -42,9 +43,9 @@ public class ShootWeapon extends Weapon {
         ammoPool = new Pool<Ammo>((int)ammo, (int)maxAmmo) {
             @Override
             protected Ammo newObject() {
-                return new Ammo(world, tw) {
+                return new Ammo(getPlay(), tw) {
                     @Override
-                    protected void setSprite() {}
+                    protected void extraInit() {}
 
                     @Override
                     protected void extraDispose() {}
@@ -52,7 +53,7 @@ public class ShootWeapon extends Weapon {
                     @Override
                     public void run() {
                         try {
-                            Thread.sleep(RECOVERY);
+                            Thread.sleep(COOLDOWN);
                             getWeapon().setVisibility(true);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
@@ -66,7 +67,7 @@ public class ShootWeapon extends Weapon {
                         bdef.bullet = true;
                         bdef.position.set(pos.cpy());
 
-                        body = world.createBody(bdef);
+                        createBody(bdef);
                         FixtureDef fdef = new FixtureDef();
 
                         CircleShape shape = new CircleShape();
@@ -79,14 +80,14 @@ public class ShootWeapon extends Weapon {
                                 Constants.BIT.CHARACTER.BIT() | Constants.BIT.BULLET.BIT());
                         fdef.restitution = 0.1f;
 
-                        body.createFixture(fdef).setUserData(Constants.DATA.BULLET);
+                        getBody().createFixture(fdef).setUserData(Constants.DATA.BULLET);
                         shape.dispose();
 
-                        MassData mass = body.getMassData();
+                        MassData mass = getBody().getMassData();
                         mass.mass = 0.2f;
-                        body.setMassData(mass);
+                        getBody().setMassData(mass);
 
-                        body.setUserData(this);
+                        getBody().setUserData(this);
                     }
                 };
             }
@@ -128,7 +129,7 @@ public class ShootWeapon extends Weapon {
 
             //Bullet bullet = ammoPool.obtain();
             Ammo bullet = ammoPool.obtain();
-            bullet.createBody(getBody().getPosition());
+            bullet.initBody(getBody().getPosition());
             Gdx.app.debug("Amount free ammoPool", "" + ammoPool.peak + "-" + ammoPool.max);
             setVisibility(false);
             new Thread(bullet).start();
@@ -143,13 +144,13 @@ public class ShootWeapon extends Weapon {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set(pos.cpy());
-        body = world.createBody(bdef);
+        createBody(bdef);
 
         //Crear Joint
         RevoluteJointDef rjd = new RevoluteJointDef();
 
         rjd.bodyA = owner.getBody();
-        rjd.bodyB = body;
+        rjd.bodyB = getBody();
         rjd.localAnchorA.set(0.36f, 0.15f);
         // rjd.localAnchorB.set(0f,-1f);
         rjd.referenceAngle = 0.49f * MathUtils.PI;
@@ -162,7 +163,7 @@ public class ShootWeapon extends Weapon {
         rjd.enableMotor = false;
 
 
-        joint = world.createJoint(rjd);
+        joint = getWorld().createJoint(rjd);
     }
 
     /*public class Bullet extends Item implements Pool.Poolable {

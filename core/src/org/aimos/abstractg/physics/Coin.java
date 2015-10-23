@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Constants;
 
 /**
@@ -50,11 +51,11 @@ public class Coin extends Item implements PickUp{
 	//Tipo de moneda
 	public CTYPE type;
 
-	public Coin(CTYPE type, World world, Vector2 pos){
-        super(world);
+	public Coin(CTYPE type, Play play, Vector2 pos){
+        super(play);
 		this.type = type;
         TextureAtlas atlas = Launcher.res.getAtlas("coins");
-        sprite = atlas.createSprite(type.getSrc());
+        setSprite(atlas.createSprite(type.getSrc()));
         initBody(pos);
 	}
 
@@ -62,7 +63,7 @@ public class Coin extends Item implements PickUp{
 		return type.getValue();
 	}
 
-    public static Array<Coin> generateCoins(World w, Vector2 pos, long val){
+    public static Array<Coin> generateCoins(Play p, Vector2 pos, long val){
         Array<Coin> coins = new Array<Coin>();
         long res;
         for(CTYPE c : CTYPE.values()){
@@ -70,15 +71,11 @@ public class Coin extends Item implements PickUp{
             for(int i = 0; i < val / c.getValue(); i++){
                 Vector2 nPos = pos.cpy();
                 nPos.add(MathUtils.random(-2, 2),MathUtils.random(-2,2));
-                coins.add(new Coin(c, w, nPos));
+                coins.add(new Coin(c, p, nPos));
             }
             val = res;
         }
         return coins;
-    }
-
-    public static Coin generateCoin(World w, Vector2 pos, long val){
-        return new Coin(CTYPE.BLUE,w,pos);
     }
 
     public static Array<Coin> generateCoins(World w, Array<Vector2> points, long val){
@@ -92,7 +89,7 @@ public class Coin extends Item implements PickUp{
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(pos.x / Constants.PTM, pos.y / Constants.PTM);
         //bodyDef.fixedRotation = true;
-        body = world.createBody(bodyDef);
+        createBody(bodyDef);
 
         CircleShape shape = new CircleShape();
         shape.setRadius((getWidth() / 2) / Constants.PTM);
@@ -102,13 +99,13 @@ public class Coin extends Item implements PickUp{
         fdef.density = 1;
         fdef.friction = 1f;
         fdef.filter.categoryBits = (short) (Constants.BIT.ITEM.BIT() | Constants.BIT.COIN.BIT());
-        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.CHARACTER.BIT() | Constants.BIT.COIN.BIT());
+        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.CHARACTER.BIT() | Constants.BIT.COIN.BIT()); //cambiar por player
         fdef.restitution = 0.4f;
 
         // create character collision box fixture
-        body.createFixture(fdef).setUserData(Constants.DATA.PICKUP);
+        getBody().createFixture(fdef).setUserData(Constants.DATA.PICKUP);
         shape.dispose();
 
-        body.setUserData(this);
+        getBody().setUserData(this);
     }
 }

@@ -4,6 +4,7 @@ package org.aimos.abstractg.character;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.physics.Interactive;
 
 /**
@@ -20,14 +21,16 @@ import org.aimos.abstractg.physics.Interactive;
 
  public class NPC extends Character implements Interactive{
 
- 	/**
- 	 * @param name del personaje Type String
-	 * @param spriteSrc del personaje Type String
-	 * @param world del personaje Type String
- 	 **/
- 	 public NPC(String spriteSrc, String name, World world, Vector2 pos) {
-		 super(spriteSrc, name, world, pos);
-	 }
+
+	/**
+	 * @param spriteSrc
+	 * @param name
+	 * @param play
+	 * @param pos
+	 */
+	public NPC(String spriteSrc, String name, Play play, Vector2 pos) {
+		super(spriteSrc, name, play, pos);
+	}
 
 	@Override
 	protected final void createBodyExtra(Vector2 pos) {
@@ -40,8 +43,8 @@ import org.aimos.abstractg.physics.Interactive;
 	}
 
 	@Override
-	public void setSelfToScript() {
-
+	public void die() {
+		dispose();
 	}
 
 	@Override

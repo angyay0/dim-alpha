@@ -4,6 +4,7 @@ package org.aimos.abstractg.character;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.physics.Hazard.EFFECT_TYPE;
 
 /**
@@ -32,14 +33,14 @@ import org.aimos.abstractg.physics.Hazard.EFFECT_TYPE;
 	//Multiplicador de dano
 	public float multiplier;
 
+
 	/**
-	 * Creates a new character
-	 *
 	 * @param spriteSrc
 	 * @param name
-	 * @param world
+	 * @param play
+	 * @param pos
 	 */
-	protected Unique(String spriteSrc, String name, World world, Vector2 pos) {
-		super(spriteSrc, name, world, pos);
+	public Unique(String spriteSrc, String name, Play play, Vector2 pos) {
+		super(spriteSrc, name, play, pos);
 	}
 }

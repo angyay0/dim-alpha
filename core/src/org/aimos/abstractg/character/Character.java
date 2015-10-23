@@ -18,6 +18,7 @@ import org.aimos.abstractg.control.script.BehaviorListener;
 import org.aimos.abstractg.control.script.lua.LuaChunk;
 import org.aimos.abstractg.control.script.lua.LuaLoader;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Animation;
 import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.physics.Interactive;
@@ -37,28 +38,28 @@ import org.aimos.abstractg.physics.Weapon;
 
 public abstract class Character extends PhysicalBody implements BehaviorListener, Runnable {
 
-    protected String name;
-    protected int animationIndex = 0;
-    protected Array<Animation> animations;
-    protected boolean crouch = false;
-    protected boolean keepCrouched = false;
-    protected boolean walking = false;
-    protected TextureAtlas atlas;
-    protected int jumps = 1;
-    protected int maxJumps = 1;
-    protected boolean direction = true;
-    protected Weapon weapon;
-    protected Interactive interactive;
+    private String name;
+    private int animationIndex = 0;
+    private Array<Animation> animations;
+    private boolean crouch = false;
+    private boolean keepCrouched = false;
+    private boolean walking = false;
+    private TextureAtlas atlas;
+    private int jumps = 1;
+    private int maxJumps = 1;
+    private boolean direction = true;
+    private Weapon weapon;
+    private Interactive interactive;
+    // MaxHp value of the character
+    private long maxHp = 10;
     // Hp value of the character
-    protected long hp;
+    private long hp = 10;
     // Base Attack value of the character
-    protected long atk;
+    private long atk = 1;
     // Score the character has or gives when killed
-    protected long score;
+    private long score = 0;
     // Current money the character has or gives when killed
     protected long money = 0;
-
-    boolean chainShape = true;
 
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
@@ -77,17 +78,19 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected long attack;
     protected boolean transition;
     protected LuaChunk iaChunk;
+    protected Character killer;
 
     /**
      * @param spriteSrc
      * @param name
-     * @param world
+     * @param play
      * @param pos
      */
-    protected Character(String spriteSrc, String name, World world, Vector2 pos) {
-        super(world);
+    protected Character(String spriteSrc, String name, Play play, Vector2 pos) {
+        super(play);
         this.name = name;
         atlas = Launcher.res.getAtlas(spriteSrc);
+        killer = null;
         animations = new Array<Animation>();
         animations.add(new Animation(atlas.findRegions(STAND_SEQ), ANIMATION_DELTA));
         animations.add(new Animation(atlas.findRegions(WALK_SEQ), ANIMATION_DELTA));
@@ -114,6 +117,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     public boolean getDirection() {
         return direction;
+    }
+
+    public boolean isDead(){
+        return (hp <= 0);
     }
 
     public void setWalking(boolean w) {
@@ -188,17 +195,20 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public void update(float dt) {
-        animations.get(animationIndex).update(dt);
+        if (isDead()) die();
+        else animations.get(animationIndex).update(dt);
     }
 
     @Override
-    public void render(SpriteBatch sb) {
-        float x = (getX() * Constants.PTM) - (getWidth() / 2);
-        float y = (getY() * Constants.PTM) - (getHeight() / 2);
-        if(hasWeapon()) weapon.draw(sb);
-        sb.begin();
-        sb.draw(getFrame(), getDirection() ? x : x + getWidth(), y, getDirection() ? getWidth() : -getWidth(), getHeight());
-        sb.end();
+    protected void render(SpriteBatch sb) {
+        if( !isDead()){
+            float x = (getX() * Constants.PTM) - (getWidth() / 2);
+            float y = (getY() * Constants.PTM) - (getHeight() / 2);
+            if(hasWeapon()) weapon.draw(sb);
+            sb.begin();
+            sb.draw(getFrame(), getDirection() ? x : x + getWidth(), y, getDirection() ? getWidth() : -getWidth(), getHeight());
+            sb.end();
+        }
     }
 
     public boolean jump() {
@@ -289,7 +299,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         bodyDef.position.set(pos.x / Constants.PTM, pos.y / Constants.PTM);
 
         // create body from bodydef
-        body = world.createBody(bodyDef);
+        createBody(bodyDef);
 
         // create box shape for character collision box
         PolygonShape shape = new PolygonShape();
@@ -328,7 +338,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         fdef.restitution = 0f;
 
         // create character collision box fixture
-        body.createFixture(fdef).setUserData(Constants.DATA.BODY);
+        getBody().createFixture(fdef).setUserData(Constants.DATA.BODY);
 
         // create fixturedef for player foot
         shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
@@ -336,7 +346,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = Constants.BIT.FLOOR.BIT();
-        body.createFixture(fdef).setUserData(Constants.DATA.FOOT);
+        getBody().createFixture(fdef).setUserData(Constants.DATA.FOOT);
 
         //create fixturedef for player head
         shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
@@ -344,7 +354,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = (short) (Constants.BIT.WALL.BIT() | Constants.BIT.FLOOR.BIT() | Constants.BIT.ITEM.BIT());
-        body.createFixture(fdef).setUserData(Constants.DATA.HEAD);
+        getBody().createFixture(fdef).setUserData(Constants.DATA.HEAD);
 
         //create fixturedef for player attack zone
         shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
@@ -352,21 +362,21 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = Constants.BIT.CHARACTER.BIT();
-        body.createFixture(fdef).setUserData(Constants.DATA.ATTACK);
+        getBody().createFixture(fdef).setUserData(Constants.DATA.ATTACK);
 
         //dispose shape
         shape.dispose();
         //set character extra fixtures
         createBodyExtra(pos);
-        //sets body's userData as this player
-        body.setUserData(this);
+        //sets getBody()'s userData as this player
+        getBody().setUserData(this);
 
         // sets the character body mass to 1 kg
-        MassData md = body.getMassData();
+        MassData md = getBody().getMassData();
         md.mass = 1;
-        body.setMassData(md);
+        getBody().setMassData(md);
 
-        body.setFixedRotation(true);
+        getBody().setFixedRotation(true);
     }
 
     protected void updateBody() {
@@ -423,7 +433,16 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
             c.damage(getAttack());
             dam = getAttack();
         }
+        if(c.isDead()) c.killer = this;
         return dam;
+    }
+
+    public void addMoney(long l){
+        money += l;
+    }
+
+    public long getMoney(){
+        return money;
     }
 
     /**
@@ -493,6 +512,13 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         return transition;
     }
 
+    public abstract void die();
+
+    @Override
+    public void setSelfToScript() {
+        iaChunk.setCharacter(this);
+    }
+
     @Override
     public void act() {
         if (iaChunk.isCharacterSet()) {
@@ -511,9 +537,6 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     public void loadScript(String file) {
         iaChunk = LuaLoader.getInstance().loadIAScript("basic_enemy.lua");
     }
-
-    @Override
-    public abstract void setSelfToScript();
 
     @Override
     public abstract void run();

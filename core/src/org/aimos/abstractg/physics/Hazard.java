@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.character.Player;
+import org.aimos.abstractg.gamestate.Play;
 
 /**
  * Clase que representa objetos de peligro
@@ -34,10 +35,9 @@ import org.aimos.abstractg.character.Player;
 	//Indica el score ganado al superarlo(SI aplica)
 	public long score;
 
-	public Hazard(World w, Vector2 pos){
-		super(w);
+	public Hazard(Play p) {
+		super(p);
 	}
-
 	/**
 	 * Usado para calcular el dano del peligro al jugador
 	 *

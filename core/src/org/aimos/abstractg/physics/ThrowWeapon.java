@@ -13,7 +13,9 @@ import com.badlogic.gdx.physics.box2d.joints.RevoluteJointDef;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
 
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Constants;
+import org.aimos.abstractg.character.Character;
 
 /**
  * Created by EinarGretch on 02/10/2015.
@@ -34,20 +36,21 @@ public class ThrowWeapon extends Weapon {
      * @param bd        bonus damage
      * @param m         multiplier
      * @param v         value
-     * @param w
+     * @param p
      * @param spriteSrc
      */
-    public ThrowWeapon(long bd, float m, long v, long a, World w, String spriteSrc) {
-        super(bd, m, v, a, w, spriteSrc);
+    public ThrowWeapon(long bd, float m, long v, long a, Play p, String spriteSrc) {
+        super(bd, m, v, a, p, spriteSrc);
         thrown = new Array<Ammo>();
         final Weapon tw = this;
         ammoPool = new Pool<Ammo>((int)ammo, (int)maxAmmo) {
             @Override
             protected Ammo newObject() {
-                return new Ammo(world, tw) {
+                return new Ammo(getPlay(), tw) {
                     @Override
-                    protected void setSprite() {
-                        sprite = tw.getSprite();
+                    protected void extraInit() {
+                        setSprite(tw.getSprite());
+                        targets = new Array<Character>();
                     }
 
                     @Override
@@ -61,11 +64,16 @@ public class ThrowWeapon extends Weapon {
                             if(i == RECOVERY) getWeapon().setVisibility(true);
                             try {
                                 Thread.sleep(SLEEP);
-                                getWeapon().setVisibility(true);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                         }
+                        System.out.println("Explosión");
+                        for (Character character : getTargets()) {
+                            tw.getOwner().damage(character);
+                        }
+                        getTargets().clear();
+                        getPlay().remove(this);
                     }
 
                     @Override
@@ -74,7 +82,7 @@ public class ThrowWeapon extends Weapon {
                         bdef.type = BodyDef.BodyType.DynamicBody;
                         bdef.position.set(pos.cpy());
 
-                        body = world.createBody(bdef);
+                        createBody(bdef);
                         FixtureDef fdef = new FixtureDef();
 
                         CircleShape shape = new CircleShape();
@@ -86,21 +94,21 @@ public class ThrowWeapon extends Weapon {
                         fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.GRANADE.BIT() |
                                 Constants.BIT.BULLET.BIT());
                         fdef.restitution = 0.5f;
-                        body.createFixture(fdef).setUserData(Constants.DATA.GRANADE);
+                        getBody().createFixture(fdef).setUserData(Constants.DATA.GRANADE);
 
                         shape.setRadius(100f / Constants.PTM);
                         fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() | Constants.BIT.GRANADE.BIT() |
                                 Constants.BIT.CHARACTER.BIT() | Constants.BIT.BULLET.BIT());
                         fdef.isSensor = true;
-                        body.createFixture(fdef).setUserData(Constants.DATA.EXPLOSION);
+                        getBody().createFixture(fdef).setUserData(Constants.DATA.EXPLOSION);
 
                         shape.dispose();
 
-                        MassData mass = body.getMassData();
+                        MassData mass = getBody().getMassData();
                         mass.mass = 0.5f;
-                        body.setMassData(mass);
+                        getBody().setMassData(mass);
 
-                        body.setUserData(this);
+                        getBody().setUserData(this);
                     }
                 };
             }
@@ -123,10 +131,11 @@ public class ThrowWeapon extends Weapon {
         if(isVisible() && ammo > 0) {
             Ammo granade = ammoPool.obtain();
             thrown.add(granade);
-            granade.createBody(getBody().getPosition());
+            granade.initBody(getBody().getPosition());
             Gdx.app.debug("Amount free ammoPool", "" + ammoPool.peak + "-" + ammoPool.max);
             setVisibility(false);
             new Thread(granade).start();
+            //Gdx.app.postRunnable(granade);
             granade.getBody().applyForce(new Vector2((granade.getBody().getMass() * (granade.getBody().getLinearVelocity().x + 3.5f) / (1 / 60.0f)),
                     (granade.getBody().getMass() * (granade.getBody().getLinearVelocity().y + 3.0f) / (1 / 60.0f))), granade.getBody().getWorldCenter(), true);
             ammo--;
@@ -139,13 +148,13 @@ public class ThrowWeapon extends Weapon {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;
         bdef.position.set(pos.cpy());
-        body = world.createBody(bdef);
+        createBody(bdef);
 
         //Crear Joint
         RevoluteJointDef rjd = new RevoluteJointDef();
 
         rjd.bodyA = owner.getBody();
-        rjd.bodyB = body;
+        rjd.bodyB = getBody();
         rjd.localAnchorA .set(0.36f,0.15f);
         // rjd.localAnchorB.set(0f,-1f);
         rjd.referenceAngle = 0.49f * MathUtils.PI;
@@ -158,12 +167,12 @@ public class ThrowWeapon extends Weapon {
         rjd.enableMotor = false;
 
 
-        joint = world.createJoint(rjd);
+        joint = getWorld().createJoint(rjd);
     }
 
     @Override
     public void draw(SpriteBatch sb) {
-        super.draw(sb);
+        if(hasAmmo()) super.draw(sb);
         for (Ammo granade : thrown) {
             granade.draw(sb);
         }
