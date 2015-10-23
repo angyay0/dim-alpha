@@ -46,7 +46,7 @@ public abstract class Ammo extends Item implements Pool.Poolable, Runnable{
     @Override
     public void reset() {
         super.dispose();
-        unsetBody();
+        //unsetBody();
         extraDispose();
     }
 

@@ -41,7 +41,7 @@ public class GameContactListener implements ContactListener {
         //Jump
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
-            if (c != null) {
+            if (c != null ) {
                 c.onGround();
             }
 

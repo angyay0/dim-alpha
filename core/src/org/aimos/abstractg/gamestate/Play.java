@@ -127,6 +127,7 @@ public abstract class Play extends GameState{
                 coin.draw(sb);
             }
             player.draw(sb);
+            System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
             ene.draw(sb);
             draw();
     }
