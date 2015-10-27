@@ -36,13 +36,16 @@ public class LevelSelect extends GameState {
         background = Launcher.res.getTexture("fondo");
         JsonIO.ReadJSON(wworld);
         levels = JsonIO.setLevelName();
+        tmx = JsonIO.setTmxName();
 
         btn = new Button[levels.size];
         initButtons();
     }
 
     private void initButtons() {
+
         for (int i=0; i < btn.length;i++){
+            final int fi = i;
            // btn[i] = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture(JsonIO.iconName.get(i)))));
             btn[i] = new Button( new TextureRegionDrawable( new TextureRegion( Launcher.res.getTexture("bgcpad"))));
             btn[i].setSize(diametro, diametro);
@@ -66,11 +69,12 @@ public class LevelSelect extends GameState {
                     db +=(diametro+20);
                 }
             }
+
             btn[i].addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    setLevel("tutorial");
-                    //setLevel(txm.get(i));
+                    //setLevel("tutorial");
+                    setLevel(tmx.get(fi));
                 }
             });
             addActor(btn[i]);

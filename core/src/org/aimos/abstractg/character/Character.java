@@ -215,7 +215,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         if (isCrouching()) {
             return false;
         } else {
-            float forceY = (getBody().getMass() * (5f / (1 / 60.0f))); // f = mv/t
+            float forceY = (getMass() * (5f / (1 / 60.0f))); // f = mv/t
             if (canJump()) {
                 jumping = true;
                 setAnimation(2);
@@ -498,6 +498,10 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     public boolean hasWeapon(){
         return (weapon != null);
+    }
+
+    public float getMass(){
+         return (hasWeapon()) ? getBody().getMass() + weapon.getBody().getMass() : getBody().getMass();
     }
 
     public AtlasRegion getFrame(){

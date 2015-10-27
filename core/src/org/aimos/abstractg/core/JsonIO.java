@@ -78,12 +78,13 @@ public class JsonIO {
     public static void ReadJSON(String world){
         JsonValue json = new JsonReader().parse(Gdx.files.internal("data/chapter.json"));
         levelName = new Array<String>();
+        tmxName = new Array<String>();
         JsonValue levelJson = json.get(world);
             for (JsonValue lvelJson : levelJson.iterator()) // iterator() returns a list of children
             {
                 levelName.add(lvelJson.getString("name"));
                 //iconName.add(lvelJson.getString("icon"));
-                //tmxName.add(lvelJson.getString("tmx"));
+                tmxName.add(lvelJson.getString("tmx"));
             }
     }
 

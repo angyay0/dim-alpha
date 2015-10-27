@@ -1,21 +1,21 @@
 {
 	tierra:[
-		{name:"ciudad_1"},
-		{name:"ciudad_2"},
-		{name:"ciudad_3"}
+		{name:"ciudad_1",tmx:"cityla"},
+		{name:"ciudad_2",tmx:"citylb"},
+		{name:"ciudad_3",tmx:"cityla"}
 	],
 	espacio:[
-		{name:"espacio_1"},
-		{name:"espacio_2"},
-		{name:"espacio_3"},
-		{name:"espacio_4"}
+		{name:"espacio_1",tmx:"cityla"},
+		{name:"espacio_2",tmx:"cityla"},
+		{name:"espacio_3",tmx:"cityla"},
+		{name:"espacio_4",tmx:"cityla"}
 
 	],
 	marte:[
-		{name:"bosque_1"},
-		{name:"bosque_2"},
-		{name:"bosque_3"},
-		{name:"bosque_4"},
-		{name:"bosque_5"}
+		{name:"bosque_1",tmx:"cityla"},
+		{name:"bosque_2",tmx:"cityla"},
+		{name:"bosque_3",tmx:"cityla"},
+		{name:"bosque_4",tmx:"cityla"},
+		{name:"bosque_5",tmx:"cityla"}
 	]
 }

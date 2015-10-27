@@ -151,9 +151,9 @@ public class ThrowWeapon extends Weapon {
         createBody(bdef);
 
         MassData m = getBody().getMassData();
-        m.mass = -1;
+        m.mass = 0;
         getBody().setMassData(m);
-        getBody().setGravityScale(0);
+        //getBody().setGravityScale(0);
 
         //Crear Joint
         RevoluteJointDef rjd = new RevoluteJointDef();
