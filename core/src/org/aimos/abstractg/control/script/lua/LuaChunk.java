@@ -53,7 +53,7 @@ public class LuaChunk extends Chunk {
     @Override
     public void inflate() {
         if( behavior.isnil() ){
-           behavior = LuaLoader.GLOBALS.loadfile("basic.lua").get(0);
+        //   behavior = LuaLoader.GLOBALS.loadfile("basic.lua").get(0);
         }
     }
 
@@ -73,6 +73,11 @@ public class LuaChunk extends Chunk {
     }
 
     @Override
+    public void disposeExt() {
+
+    }
+
+    // @Override
     public Object getBehavior() {
         return behavior;
     }

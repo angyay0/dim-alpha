@@ -31,6 +31,8 @@ public abstract class GameState extends Stage{
 
     private Viewport viewport;
 
+    public int id;
+
     protected GameState(GameStateManager gsm) {
 
         //super(new FillViewport(800,512, gsm.game().getHUDCamera()));
@@ -55,6 +57,7 @@ public abstract class GameState extends Stage{
     }
 
     public abstract void update(float dt);
+
     public abstract void render();
 
     @Override
@@ -70,5 +73,9 @@ public abstract class GameState extends Stage{
     protected abstract void disposeState();
 
     public abstract void back();
+
+    public int getID(){    return id;  }
+
+    public GameState setID(int id){ this.id = id; return this;}
 
 }

@@ -16,6 +16,8 @@ public interface ScriptLoader {
 
     public Chunk loadScript();
 
+    public Object loadFunction(final String file, final String function);
+
     public void destroy();
 
     public void destroyChildren();

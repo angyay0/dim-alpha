@@ -154,6 +154,7 @@ public class Hud extends WidgetGroup {
                 bgPad.setVisible(true);
                 pad.setVisible(true);
                 //p.setWalking(true);
+
             }
 
             @Override

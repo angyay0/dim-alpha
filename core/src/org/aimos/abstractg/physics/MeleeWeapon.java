@@ -45,9 +45,24 @@ public class MeleeWeapon extends Weapon {
        // body.setTransform( new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), -5f );
         getBody().setAngularVelocity(0f);
         //body.setTransform(new Vector2(body.getWorldCenter().x, body.getWorldCenter().y), 45f * MathUtils.radiansToDegrees);
-        getBody().setTransform( new Vector2(getBody().getWorldCenter().x , getBody().getWorldCenter().y), 1f * MathUtils.degreesToRadians );
+        if(owner.getDirection()) getBody().setTransform( new Vector2(getBody().getWorldCenter().x , getBody().getWorldCenter().y), 1f * MathUtils.degreesToRadians );
+        else getBody().setTransform(new Vector2(getBody().getWorldCenter().x, getBody().getWorldCenter().y), -1f * MathUtils.degreesToRadians);
         //body.setAngularVelocity(0.5f);//0.5f,0.5f,body.getWorldCenter().x,body.getWorldCenter().y,true);
         Gdx.app.debug("Si","LO HAGO");
+    }
+
+    @Override
+    public void updateBody() {
+        if( owner != null ){
+            RevoluteJoint revj = (RevoluteJoint) joint;
+            if( owner.getDirection() ){
+                revj.getLocalAnchorA().set(0.30f,0.23f);
+            }else {
+                revj.getLocalAnchorA().set(-0.30f,0.30f);
+            }
+        }
+
+
     }
 
     @Override
@@ -88,7 +103,8 @@ public class MeleeWeapon extends Weapon {
 
         rjd.bodyA = owner.getBody();
         rjd.bodyB = getBody();
-        rjd.localAnchorA .set(0.30f,0.23f);
+        if(getOwner().getDirection()) rjd.localAnchorA.set(0.30f,0.23f);
+        else rjd.localAnchorA.set(0.30f,0.23f);
        // rjd.localAnchorB.set(0f,-1f);
         rjd.referenceAngle = 0.49f * MathUtils.PI;
         rjd.upperAngle = 0.50f * MathUtils.PI;

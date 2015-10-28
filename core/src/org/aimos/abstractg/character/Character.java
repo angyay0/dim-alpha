@@ -75,7 +75,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     protected boolean jumping;
     protected boolean invencible = false;
-    protected long attack;
     protected boolean transition;
     protected LuaChunk iaChunk;
     protected Character killer;
@@ -113,6 +112,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void setDirection(boolean dir) {
         if (direction == dir) return;
         direction = dir;
+
+        if ( hasWeapon() ) {
+            weapon.updateBody();
+        }
     }
 
     public boolean getDirection() {
@@ -212,6 +215,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public boolean jump() {
+    //    act();
         if (isCrouching()) {
             return false;
         } else {
@@ -509,12 +513,23 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     }
 
     public long getAttack() {
-        return attack;
+        return atk;
     }
 
     public boolean isInTransition() {
         return transition;
     }
+
+    public long getHP(){ return hp;  }
+
+
+    public long getScore(){ return score; }
+
+    public void setHP(int h){  hp  = h;    }
+
+    public void setScore(long score){   this.score = score; }
+
+    public void setAttack(int a){   atk = a;    }
 
     public abstract void die();
 
@@ -539,7 +554,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     @Override
     public void loadScript(String file) {
-        iaChunk = LuaLoader.getInstance().loadIAScript("basic_enemy.lua");
+        iaChunk = LuaLoader.getInstance().loadIAScript(file);
     }
 
     @Override

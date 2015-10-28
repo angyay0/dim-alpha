@@ -32,6 +32,8 @@ import org.aimos.abstractg.physics.DroppedWeapon;
      */
     public Enemy(String spriteSrc, String name, Play play, Vector2 pos) {
         super(spriteSrc, name, play, pos);
+		loadScript("minion.lua");
+		setSelfToScript();
     }
 
     @Override

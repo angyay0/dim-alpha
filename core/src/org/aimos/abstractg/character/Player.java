@@ -42,8 +42,9 @@ public class Player extends Character {
         super(spriteSrc, name, play, pos);
         weapons = new Array<Weapon>();
      //   chainShape = true;
-     //   loadScript();
-      //  setSelfToScript();
+    //    loadScript("ia_agents.lua");
+       // loadScript();
+    //    setSelfToScript();
 
       //  Thread t = new Thread(this);
     //    t.start();
@@ -112,8 +113,4 @@ public class Player extends Character {
         return enemiesKilled;
     }
 
-
-    public int getScore() {
-        return 0;
-    }
 }

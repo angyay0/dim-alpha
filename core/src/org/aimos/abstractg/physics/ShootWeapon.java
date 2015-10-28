@@ -140,6 +140,11 @@ public class ShootWeapon extends Weapon {
     }
 
     @Override
+    public void updateBody() {
+
+    }
+
+    @Override
     protected final void createBody(Vector2 pos) {
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.DynamicBody;

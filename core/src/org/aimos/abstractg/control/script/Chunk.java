@@ -11,7 +11,7 @@ public abstract class Chunk {
 
     private String script_type;
     private String script_language;
-    public long parent;
+    protected long parent;
     protected Character character;
 
     public Chunk(String type, String language,long parent){
@@ -35,7 +35,7 @@ public abstract class Chunk {
 
     public abstract void exec();
 
-    public abstract Object getBehavior();
+    public abstract void disposeExt();
 
     public String getType(){    return script_type; }
 
@@ -43,5 +43,6 @@ public abstract class Chunk {
 
     public void dispose(){
 
+        disposeExt();
     }
 }
