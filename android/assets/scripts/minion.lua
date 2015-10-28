@@ -9,6 +9,15 @@
 require("basic")
 
 function behavior(chrtr)
-    evaluateDir(chrtr)
-    chrtr:jump()
+    p = chrtr:getPlay():getPlayer()
+    --chrtr:move(true)
+    if not evaluateDir(chrtr) then
+     --   if p:getX()+32 < chrtr:getX() then
+            chrtr:move(true)
+    --    end
+    else
+   --    if p:getX()-32 > chrtr:getX() then
+            chrtr:move(false)
+   --     end
+    end
 end

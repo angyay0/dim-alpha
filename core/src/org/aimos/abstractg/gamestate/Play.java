@@ -74,7 +74,7 @@ public abstract class Play extends GameState{
                 while(true){
                     act();
                     try{
-                        Thread.sleep(1200);
+                        Thread.sleep(50);
                     }catch(Exception e){
                         Gdx.app.error("Fatal Thread Failure", e.getMessage());
                         Gdx.app.exit();

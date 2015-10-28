@@ -65,5 +65,5 @@ function canPlay(gamestate)
 end
 
 function playerInRange(player)
-
+    return true
 end
