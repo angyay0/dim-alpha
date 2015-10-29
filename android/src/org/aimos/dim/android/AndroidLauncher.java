@@ -66,11 +66,11 @@ public class AndroidLauncher extends  AndroidApplication {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
         if( keyCode == KeyEvent.KEYCODE_BACK ){
-			Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
+			//Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
 			return true;
 		}
 		if( keyCode == KeyEvent.KEYCODE_MENU){
-			Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
+			//Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
 			return true;
 		}
 		return super.onKeyDown(keyCode, event);

@@ -57,6 +57,7 @@ public abstract class Play extends GameState{
         //Load music
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
         AudioManager.getInstance().play(0.5f, true);
+        Enemy.running = true;
 
         coins = new Array<Coin>();
 
@@ -71,12 +72,20 @@ public abstract class Play extends GameState{
         ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
             @Override
             public void run(){
-                while(true){
+                while( running /*(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )*/ ){
+                    try{
+
+
                     act();
+
                     try{
                         Thread.sleep(50);
                     }catch(Exception e){
                         Gdx.app.error("Fatal Thread Failure", e.getMessage());
+                        Gdx.app.exit();
+                    }
+                }catch(Exception e){
+                        e.printStackTrace();
                         Gdx.app.exit();
                     }
                 }

@@ -137,6 +137,17 @@ public abstract class Weapon extends Item {
         return (getPool() != null);
     }
 
+    public int getWeaponType(){
+        if( this instanceof ShootWeapon ) {
+            return 1;
+        }else if( this instanceof ThrowWeapon ){
+            return 2;
+        }else if( this instanceof MeleeWeapon ){
+            return 3;
+        }
+        return 5; //GENERIC WEAPON
+    }
+
     //Initiate weapon attack motion
     protected abstract void attackMotion();
 

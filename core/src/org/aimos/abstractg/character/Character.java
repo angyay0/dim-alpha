@@ -512,12 +512,35 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     }
 
     public long getAttack() {
-        return attack;
+        return atk;
+    }
+
+    public long getHP() {
+        return hp;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public long getMaxHP() {
+        return maxHp;
     }
 
     public boolean isInTransition() {
         return transition;
     }
+
+    public void setStats(long hp, long at){
+        atk = at;
+        this.hp = hp;
+    }
+
+    public void setMaxHp(long mhp){ maxHp = mhp;    }
+
+    public void setScore(long score){   this.score = score; }
+
+    public void addScore(long ad){  score += ad;    }
 
     public abstract void die();
 

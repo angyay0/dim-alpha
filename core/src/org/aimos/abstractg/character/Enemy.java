@@ -23,6 +23,7 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 
  public class Enemy extends Character {
 
+	public static volatile boolean running = true;
 
     /**
      * @param spriteSrc
@@ -32,8 +33,9 @@ import org.aimos.abstractg.physics.DroppedWeapon;
      */
     public Enemy(String spriteSrc, String name, Play play, Vector2 pos) {
         super(spriteSrc, name, play, pos);
-		loadScript("minion.lua");
+		loadScript("officer.lua");
 		setSelfToScript();
+		setStats(8,1);
     }
 
     @Override
