@@ -41,7 +41,14 @@ public class Constants {
     }
 
     public enum STATE{
-        SPLASH,MENU,WORLD_SELECT,SOLO_PLAY,LEVEL_SELECT,MULTI_PLAY,PAUSE,GAME_OVER
+        SPLASH(0),MENU(1),WORLD_SELECT(2),SOLO_PLAY(3),LEVEL_SELECT(4),MULTI_PLAY(5),PAUSE(6),GAME_OVER(7);
+
+        private int id = -1;
+
+        STATE(int id){ this.id = id; }
+
+        public int getID(){ return id;  }
+        public void setID(int id){  this.id = id;   }
     }
 
 }

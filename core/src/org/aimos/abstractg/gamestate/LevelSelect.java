@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Constants;
 
 /**
  * Created by DiegoArmando on 19/10/2015.
@@ -85,7 +86,7 @@ public class LevelSelect extends GameState {
         btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(GameStateManager.WORLD_SELECT);
+                gsm.setState(Constants.STATE.WORLD_SELECT);
             }
         });
         addActor(btn);
@@ -94,7 +95,7 @@ public class LevelSelect extends GameState {
 
     public void setLevel(String mapLevel){
         Play.levelSelect(mapLevel);
-        gsm.setState(GameStateManager.SOLO_PLAY);
+        gsm.setState(Constants.STATE.SOLO_PLAY);
     }
     public static void setWworld(String ww) {
         wworld = ww;
@@ -127,6 +128,6 @@ public class LevelSelect extends GameState {
 
     @Override
     public void back() {
-        gsm.setState(GameStateManager.WORLD_SELECT);
+        gsm.setState(Constants.STATE.WORLD_SELECT);
     }
 }

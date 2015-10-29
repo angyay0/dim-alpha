@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Constants;
 
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
@@ -85,7 +86,7 @@ GameStateManager gsm;
         homeb.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.pushState(GameStateManager.MENU);
+                gsm.pushState(Constants.STATE.MENU);
             }
         });
 
@@ -97,7 +98,7 @@ GameStateManager gsm;
         shareB.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.pushState(GameStateManager.MENU);
+                gsm.pushState(Constants.STATE.MENU);
             }
         });
             addActor(reloadG);

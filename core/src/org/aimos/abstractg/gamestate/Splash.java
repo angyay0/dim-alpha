@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Constants;
 
 
 /**
@@ -129,7 +130,7 @@ public class Splash extends GameState{
         sb.end();
 
         if( elapsed > 7 ){
-            gsm.setState(GameStateManager.MENU);
+            gsm.setState(Constants.STATE.MENU);
         }
     }
 

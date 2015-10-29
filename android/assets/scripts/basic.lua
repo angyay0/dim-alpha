@@ -35,6 +35,8 @@ function selectStrategy(me,player)
 
 end
 
+-- This function is used to setup the enemy direction
+-- According to Player vision
 function behavior(chrtr)
     evaluateDir(chrtr)
     chrtr:jump()
@@ -66,4 +68,8 @@ end
 
 function playerInRange(player)
     return true
+end
+
+function getPTM()
+    return 100.0
 end

@@ -215,6 +215,6 @@ public abstract class Play extends GameState{
         removed.add(body);
     }
 
-    public int getGameState(){ return gsm.getState().getID(); }
+    public Constants.STATE getGameState(){ return gsm.getState().getID(); }
 
 }

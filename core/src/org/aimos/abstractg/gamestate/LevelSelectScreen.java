@@ -113,7 +113,7 @@ public class LevelSelectScreen extends GameState{
         btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(GameStateManager.MENU);
+                gsm.setState(Constants.STATE.MENU);
             }
         });
         addActor(btn);
@@ -122,6 +122,6 @@ public class LevelSelectScreen extends GameState{
 
     public void setLevel(String mapLevel){
         Play.levelSelect(mapLevel);
-        gsm.setState(GameStateManager.SOLO_PLAY);
+        gsm.setState(Constants.STATE.SOLO_PLAY);
     }
 }

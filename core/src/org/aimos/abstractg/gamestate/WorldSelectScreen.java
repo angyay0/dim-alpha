@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Constants;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
@@ -100,7 +101,7 @@ public class WorldSelectScreen extends GameState {
         btnWorld[5].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(GameStateManager.MENU);
+                gsm.setState(Constants.STATE.MENU);
             }
         });
 
@@ -110,7 +111,7 @@ public class WorldSelectScreen extends GameState {
     }
     public void setLevel(String name){
         LevelSelect.setWworld(name);
-        gsm.setState(GameStateManager.LEVEL_SELECT);
+        gsm.setState(Constants.STATE.LEVEL_SELECT);
     }
 
     @Override

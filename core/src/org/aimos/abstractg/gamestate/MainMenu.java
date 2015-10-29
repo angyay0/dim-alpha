@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.AudioManager;
+import org.aimos.abstractg.handlers.Constants;
 
 
 /**
@@ -99,7 +100,7 @@ public class MainMenu extends GameState{
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsmFinal.setState(GameStateManager.WORLD_SELECT);
+                gsmFinal.setState(Constants.STATE.WORLD_SELECT);
             }
         });
 
