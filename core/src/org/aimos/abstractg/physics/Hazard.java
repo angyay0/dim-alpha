@@ -25,7 +25,7 @@ import org.aimos.abstractg.gamestate.Play;
 		POISON,
 		PARALYSIS,
 		NONE
-	};
+	}
 
 	//Indica el tipo de efecto del peligro
 	public TYPE type;

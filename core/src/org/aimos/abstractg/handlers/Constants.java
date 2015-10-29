@@ -21,7 +21,7 @@ public class Constants {
     public static final short BIT_GRANADE = 32;
     public static final short BIT_BULLET = 64;*/
 
-    public static enum BIT{
+    public enum BIT{
         CHARACTER((short)2), FLOOR((short)4), WALL((short)8), DECO((short)16), GRANADE((short)32),
         BULLET((short)64), ITEM((short)128), SWORD((short)256), COIN((short)512), PLAYER((short)1024);
 
@@ -36,9 +36,12 @@ public class Constants {
         }
     }
 
-    public static enum DATA {
-        BODY, FOOT, HEAD, ATTACK, CELL, INTERACTIVE, PICKUP, GRANADE, EXPLOSION, BULLET;
-    };
+    public enum DATA {
+        BODY, FOOT, HEAD, ATTACK, CELL, INTERACTIVE, PICKUP, GRANADE, EXPLOSION, BULLET
+    }
 
+    public enum STATE{
+        SPLASH,MENU,WORLD_SELECT,SOLO_PLAY,LEVEL_SELECT,MULTI_PLAY,PAUSE,GAME_OVER
+    }
 
 }

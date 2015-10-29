@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.Constants;
 
 import java.util.Stack;
 
@@ -18,21 +19,12 @@ public class GameStateManager {
 
     private GameState tmp;
 
-    public static final int SPLASH = 0;
-    public static final int MENU = 1;
-    public static final int WORLD_SELECT = 2;
-    public static final int SOLO_PLAY = 3;
-    public static final int LEVEL_SELECT =4;
-    public static final int MULTI_PLAY = 5;
-    public static final int PAUSE = 6;
-    public static final int GAME_OVER = 7;
-
-    private boolean inPause = false;
+    private boolean paused = false;
 
     public GameStateManager(Launcher game) {
-        this.game = game;7
+        this.game = game;
         gameStates = new Stack<GameState>();
-        pushState(SPLASH);
+        pushState(Constants.STATE.SPLASH);
     }
 
     public void update(float dt) {
@@ -51,7 +43,7 @@ public class GameStateManager {
         return game.getSpriteBatch();
     }
 
-    private GameState getState(int state) {
+    private GameState getState(Constants.STATE state) {
         switch(state){
             case SPLASH:
                 return new Splash(this).setID(state);
@@ -70,12 +62,12 @@ public class GameStateManager {
         }
     }
 
-    public void setState(int state) {
+    public void setState(Constants.STATE state) {
         popState();
         pushState(state);
     }
 
-    public void pushState(int state) {
+    public void pushState(Constants.STATE state) {
         gameStates.push(getState(state));
     }
 
@@ -91,16 +83,16 @@ public class GameStateManager {
     }
 
     public void setTempState(){
-        isPaused = true;
+        paused = true;
         tmp = new Pause(this, gameStates.peek());
     }
 
     public void setTemOpt(){
-        tmp = new Pause(this, gameStates.peek(), true).setID(PAUSE_MODE);
+        tmp = new Pause(this, gameStates.peek(), true).setID(Constants.STATE.PAUSE);
     }
 
     public void disposeTemp(){
-        isPaused = false;
+        paused = false;
         tmp.dispose();
         tmp = null;
     }
@@ -117,7 +109,7 @@ public class GameStateManager {
     public void backToMenu(){
         if(tmp != null) {
             disposeTemp();
-            pushState(MENU);
+            pushState(Constants.STATE.MENU);
         }
     }
 
@@ -126,21 +118,21 @@ public class GameStateManager {
     }
 
     public boolean isPause(){
-        return isPaused;
+        return paused;
     }
 
     public void reloadGame() {
        if(tmp != null){
            disposeTemp();
        }
-        pushState(SOLO_PLAY);
+        pushState(Constants.STATE.SOLO_PLAY);
     }
 
     public void gameOver(Player p){
-        gameStates.push(new GameOver(this, p).setID(GAME_OVER));
+        gameStates.push(new GameOver(this, p).setID(Constants.STATE.GAME_OVER));
     }
 
-    public int getStateID() {
+    public Constants.STATE getStateID() {
         return getState().getID();
     }
 

@@ -18,8 +18,8 @@ public class Node extends Item {
 
     public enum TYPE{
         BLANK, PLATFORM, ENEMY_GENERATOR, ITEM_GENERATOR, COIN_GENERATOR,
-        INTERACTIVE_SPOT, INTEREST_SPOT, PICKUP;
-    };
+        INTERACTIVE_SPOT, INTEREST_SPOT, PICKUP
+    }
 
     private TYPE type;
 

@@ -1,19 +1,16 @@
 package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.viewport.FillViewport;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.aimos.abstractg.core.Launcher;
-
 import org.aimos.abstractg.handlers.BoundedCamera;
+import org.aimos.abstractg.handlers.Constants;
 
 /**
  * Created by EinarGretch on 17/09/2015.
@@ -31,7 +28,7 @@ public abstract class GameState extends Stage{
 
     private Viewport viewport;
 
-    public int id;
+    public Constants.STATE id;
 
     protected GameState(GameStateManager gsm) {
 
@@ -74,8 +71,8 @@ public abstract class GameState extends Stage{
 
     public abstract void back();
 
-    public int getID(){    return id;  }
+    public Constants.STATE getID(){    return id;  }
 
-    public GameState setID(int id){ this.id = id; return this;}
+    public GameState setID(Constants.STATE id){ this.id = id; return this;}
 
 }
