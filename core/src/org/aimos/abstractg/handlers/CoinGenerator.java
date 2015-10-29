@@ -43,7 +43,7 @@ public class CoinGenerator implements Generator<Coin> {
     public Array<Coin> generateObjectBox2D(Play p, Vector2 pos, long val) {
         Array<Coin> coins = new Array<Coin>();
         long res;
-        for(Coin.CTYPE c : Coin.CTYPE.values()){
+        for(Coin.TYPE c : Coin.TYPE.values()){
             res = val % c.getValue();
             for(int i = 0; i < val / c.getValue(); i++){
                 coins.add(new Coin(c, p, pos));

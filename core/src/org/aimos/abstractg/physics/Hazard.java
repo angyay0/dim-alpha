@@ -2,7 +2,6 @@
 package org.aimos.abstractg.physics;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.gamestate.Play;
@@ -21,7 +20,7 @@ import org.aimos.abstractg.gamestate.Play;
  public class Hazard extends Item implements Interactive{
 
 	//Lista para especificar el tipo de efectos
-	public enum EFFECT_TYPE {
+	public enum TYPE {
 		EXPLOSION,
 		POISON,
 		PARALYSIS,
@@ -29,7 +28,7 @@ import org.aimos.abstractg.gamestate.Play;
 	};
 
 	//Indica el tipo de efecto del peligro
-	public EFFECT_TYPE type;
+	public TYPE type;
 	//Indica el dano que hara al jugador
 	private long damage;
 	//Indica el score ganado al superarlo(SI aplica)

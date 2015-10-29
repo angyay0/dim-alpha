@@ -59,10 +59,13 @@ public class Hud extends WidgetGroup {
     private Player player;
     //Instancia del GameStateManager
     private GameStateManager manager;
+    //
+    private Movement mov;
 
     public Hud(Player player, GameStateManager gsm) {
         this.player = player;
         manager = gsm;
+        mov = new Movement();
     }
 
     @Override
@@ -96,7 +99,7 @@ public class Hud extends WidgetGroup {
         Button meleeButton = new Button( new TextureRegionDrawable( meleeReg ) );
         meleeButton.setSize(SQBUTTON,SQBUTTON);
         meleeButton.setPosition(Launcher.WIDTH - (meleeReg.getRegionWidth() + CTRL_MARGIN * 2), CTRL_MARGIN);
-        meleeButton.addListener(new ClickListener(){
+        meleeButton.addListener(new ClickListener() {
             @Override
             public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
                 p.attack();
@@ -111,7 +114,7 @@ public class Hud extends WidgetGroup {
 
         Button jumpButton = new Button(new TextureRegionDrawable(jumpRegion));
         jumpButton.setSize(SQBUTTON, SQBUTTON);
-        jumpButton.setPosition(Launcher.WIDTH - CTRL_MARGIN - jumpRegion.getRegionWidth()/2,
+        jumpButton.setPosition(Launcher.WIDTH - CTRL_MARGIN - jumpRegion.getRegionWidth() / 2,
                 CTRL_MARGIN);
         jumpButton.addListener(new ClickListener() {
             @Override
@@ -172,7 +175,8 @@ public class Hud extends WidgetGroup {
                 switch (cuad) {
                     case 0:
                     case 7://Derecha
-                        p.move(true);
+                        //p.move(true);
+                        mov.start(true);
                         break;
                     case 1://Arriba
                     case 2:
@@ -182,7 +186,8 @@ public class Hud extends WidgetGroup {
                         break;
                     case 3://Izquierda
                     case 4:
-                        p.move(false);
+                        //p.move(false);
+                        mov.start(false);
                         break;
                     case 5://Abajo
                     case 6:
@@ -219,6 +224,7 @@ public class Hud extends WidgetGroup {
                 bgPad.setPosition(0, 0);
                 pad.setPosition(0, 0);
                 p.setWalking(false);
+                mov.die();
             }
         });
 
@@ -262,6 +268,54 @@ public class Hud extends WidgetGroup {
         addActor(acc);
         addActor(meleeButton);
         addActor(shootButton);
+    }
+
+    public class Movement implements Runnable{
+
+        private boolean alive;
+
+        private boolean direction;
+
+        private static final int SLEEP = 10;
+
+        public Movement(){
+            alive = false;
+            direction = true;
+        }
+
+        @Override
+        public void run() {
+            alive = true;
+            while (alive){
+                try {
+                    player.move(direction);
+                    Thread.sleep(SLEEP);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        public void setDirection(boolean d){
+            direction = d;
+        }
+
+        public boolean getDirection(){
+            return direction;
+        }
+
+        public void start(boolean dir){
+            direction = dir;
+            if(!alive) new Thread(this).start();
+        }
+
+        public boolean isAlive() {
+            return alive;
+        }
+
+        public void die() {
+            alive = false;
+        }
     }
 
 }

@@ -2,10 +2,9 @@
 package org.aimos.abstractg.character;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.World;
 
 import org.aimos.abstractg.gamestate.Play;
-import org.aimos.abstractg.physics.Hazard.EFFECT_TYPE;
+import org.aimos.abstractg.physics.Hazard.TYPE;
 
 /**
  * Representa el personaje especial
@@ -28,7 +27,7 @@ import org.aimos.abstractg.physics.Hazard.EFFECT_TYPE;
 	public String title;
 
 	//Tipo de Efecto sobre el personaje si aplica
-	public EFFECT_TYPE type;
+	public TYPE type;
 
 	//Multiplicador de dano
 	public float multiplier;

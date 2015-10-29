@@ -1,4 +1,4 @@
-package org.aimos.abstractg.handlers.director;
+package org.aimos.abstractg.director;
 
 import java.util.ArrayList;
 import java.util.List;

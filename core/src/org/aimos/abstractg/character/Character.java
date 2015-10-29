@@ -119,7 +119,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         return direction;
     }
 
-    public boolean isDead(){
+    public boolean isDead() {
         return (hp <= 0);
     }
 
@@ -201,10 +201,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     @Override
     protected void render(SpriteBatch sb) {
-        if( !isDead()){
+        if (!isDead()) {
             float x = (getX() * Constants.PTM) - (getWidth() / 2);
             float y = (getY() * Constants.PTM) - (getHeight() / 2);
-            if(hasWeapon()) weapon.draw(sb);
+            if (hasWeapon()) weapon.draw(sb);
             sb.begin();
             sb.draw(getFrame(), getDirection() ? x : x + getWidth(), y, getDirection() ? getWidth() : -getWidth(), getHeight());
             sb.end();
@@ -212,20 +212,20 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public boolean jump() {
-        if (isCrouching()) {
-            return false;
-        } else {
-            float forceY = (getMass() * (5f / (1 / 60.0f))); // f = mv/t
-            if (canJump()) {
-                jumping = true;
-                setAnimation(2);
-                getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
-                jumps--;
-                return true;
-            } else {
-                return false;
-            }
+        if (isCrouching() && !isForceCrouched()) {
+            setCrouching(false);
         }
+        float forceY = (getMass() * (5f / (1 / 60.0f))); // f = mv/t
+        if (canJump()) {
+            jumping = true;
+            setAnimation(2);
+            getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
+            jumps--;
+            return true;
+        } else {
+            return false;
+        }
+
         //return  true;
     }
 
@@ -304,8 +304,8 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         // create box shape for character collision box
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
-   //     ChainShape shape = new ChainShape();
-    //    Vector2 points[] = new Vector2[11];
+        //     ChainShape shape = new ChainShape();
+        //    Vector2 points[] = new Vector2[11];
 /*
         points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         points[1] = new Vector2(15 / Constants.PTM, 20 / Constants.PTM);
@@ -324,8 +324,8 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         points[2] = new Vector2(62 / Constants.PTM, 95 / Constants.PTM);
         points[3] = new Vector2(62 / Constants.PTM, 0 / Constants.PTM);
  */
-  //      shape.createChain(points);
-       // shape.createLoop(points);
+        //      shape.createChain(points);
+        // shape.createLoop(points);
 
         // create fixturedef for character collision box
         FixtureDef fdef = new FixtureDef();
@@ -426,22 +426,22 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     public long damage(Character c) {
         long dam;
-        if(hasWeapon()){
+        if (hasWeapon()) {
             dam = weapon.damage(c);
 
-        }else{
+        } else {
             c.damage(getAttack());
             dam = getAttack();
         }
-        if(c.isDead()) c.killer = this;
+        if (c.isDead()) c.killer = this;
         return dam;
     }
 
-    public void addMoney(long l){
+    public void addMoney(long l) {
         money += l;
     }
 
-    public long getMoney(){
+    public long getMoney() {
         return money;
     }
 
@@ -467,7 +467,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         return w;
     }
 
-    public Weapon getWeapon(){
+    public Weapon getWeapon() {
         return weapon;
     }
 
@@ -496,15 +496,15 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         }
     }
 
-    public boolean hasWeapon(){
+    public boolean hasWeapon() {
         return (weapon != null);
     }
 
-    public float getMass(){
-         return (hasWeapon()) ? getBody().getMass() + weapon.getBody().getMass() : getBody().getMass();
+    public float getMass() {
+        return (hasWeapon()) ? getBody().getMass() + weapon.getBody().getMass() : getBody().getMass();
     }
 
-    public AtlasRegion getFrame(){
+    public AtlasRegion getFrame() {
         return getAnimation().getFrame();
     }
 

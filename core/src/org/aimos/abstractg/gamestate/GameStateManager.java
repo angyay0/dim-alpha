@@ -24,6 +24,7 @@ public class GameStateManager {
     public static final int SOLO_PLAY = 3;
     public static final int LEVEL_SELECT =4;
     public static final int MULTI_PLAY = 5;
+    public static final int GAMEOVER = 6;
 
     private boolean inPause = false;
 
