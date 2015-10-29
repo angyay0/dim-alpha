@@ -24,12 +24,13 @@ public class GameStateManager {
     public static final int SOLO_PLAY = 3;
     public static final int LEVEL_SELECT =4;
     public static final int MULTI_PLAY = 5;
-    public static final int GAMEOVER = 6;
+    public static final int PAUSE = 6;
+    public static final int GAME_OVER = 7;
 
     private boolean inPause = false;
 
     public GameStateManager(Launcher game) {
-        this.game = game;
+        this.game = game;7
         gameStates = new Stack<GameState>();
         pushState(SPLASH);
     }
@@ -53,17 +54,17 @@ public class GameStateManager {
     private GameState getState(int state) {
         switch(state){
             case SPLASH:
-                return new Splash(this);
+                return new Splash(this).setID(state);
             case MENU:
-                return new MainMenu(this);
+                return new MainMenu(this).setID(state);
             case WORLD_SELECT:
-                return new WorldSelectScreen(this);
+                return new WorldSelectScreen(this).setID(state);
             case SOLO_PLAY:
-                return new SoloPlay(this);
+                return new SoloPlay(this).setID(state);
             case MULTI_PLAY:
-                return new MultiPlay(this);
+                return new MultiPlay(this).setID(state);
             case LEVEL_SELECT:
-                return new LevelSelect(this);
+                return new LevelSelect(this).setID(state);
             default:
                 return null;
         }
@@ -90,16 +91,16 @@ public class GameStateManager {
     }
 
     public void setTempState(){
-        inPause = true;
+        isPaused = true;
         tmp = new Pause(this, gameStates.peek());
     }
 
     public void setTemOpt(){
-        tmp = new Pause(this, gameStates.peek(), true);
+        tmp = new Pause(this, gameStates.peek(), true).setID(PAUSE_MODE);
     }
 
     public void disposeTemp(){
-        inPause = false;
+        isPaused = false;
         tmp.dispose();
         tmp = null;
     }
@@ -125,7 +126,7 @@ public class GameStateManager {
     }
 
     public boolean isPause(){
-        return inPause;
+        return isPaused;
     }
 
     public void reloadGame() {
@@ -136,7 +137,11 @@ public class GameStateManager {
     }
 
     public void gameOver(Player p){
-        gameStates.push(new GameOver(this,p));
+        gameStates.push(new GameOver(this, p).setID(GAME_OVER));
+    }
+
+    public int getStateID() {
+        return getState().getID();
     }
 
 }

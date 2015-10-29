@@ -140,6 +140,8 @@ public abstract class Weapon extends Item {
     //Initiate weapon attack motion
     protected abstract void attackMotion();
 
+    public abstract void updateBody();
+
     @Override
     protected abstract void createBody(Vector2 pos);
 }

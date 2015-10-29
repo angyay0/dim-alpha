@@ -44,6 +44,7 @@ public abstract class Play extends GameState{
     ShootWeapon sw;
     ThrowWeapon tw;
     Skin skin;
+    Thread t;
     Label labelInfo,labelInf;
 
     private static String map = "tutorial";
@@ -67,15 +68,28 @@ public abstract class Play extends GameState{
 
         //create player
         player = new Player("player","Hero", this, new Vector2(128,128));
-        ene = new Enemy("player","Enemy", this, new Vector2(150, 128));
+        ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
+            @Override
+            public void run(){
+                while(true){
+                    act();
+                    try{
+                        Thread.sleep(50);
+                    }catch(Exception e){
+                        Gdx.app.error("Fatal Thread Failure", e.getMessage());
+                        Gdx.app.exit();
+                    }
+                }
+            }
+        };
 
         loader = new MapLoader(world, player);
-        //mw = new MeleeWeapon(10,10,10,7,this,"sword");
+        mw = new MeleeWeapon(10,10,10,7,this,"sword");
         //sw = new ShootWeapon(10,10,10,7,this,"gun");
-        tw = new ThrowWeapon(10,10,10,7,this,"steel");
-        //layer.setWeapon(mw);
+       // tw = new ThrowWeapon(10,10,10,7,this,"steel");
+        player.setWeapon(mw);
         //player.setWeapon(sw);
-        player.setWeapon(tw);
+      //  player.setWeapon(tw);
 
         skin = new Skin();
         skin.addRegions(Launcher.res.getAtlas("uiskin"));
@@ -88,6 +102,9 @@ public abstract class Play extends GameState{
         hud = new Hud(player, gsm);
         addActor(hud);
         initLabel();
+
+        t = new Thread(ene);
+        t.start();
     }
 
     @Override
@@ -197,4 +214,7 @@ public abstract class Play extends GameState{
     public void remove(PhysicalBody body){
         removed.add(body);
     }
+
+    public int getGameState(){ return gsm.getState().getID(); }
+
 }

@@ -143,6 +143,11 @@ public class ThrowWeapon extends Weapon {
     }
 
     @Override
+    public void updateBody() {
+
+    }
+
+    @Override
     protected final void createBody(Vector2 pos) {
 
         BodyDef bdef = new BodyDef();

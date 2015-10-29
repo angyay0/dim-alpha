@@ -113,6 +113,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void setDirection(boolean dir) {
         if (direction == dir) return;
         direction = dir;
+
+        if ( hasWeapon() ) {
+            weapon.updateBody();
+        }
     }
 
     public boolean getDirection() {
@@ -225,7 +229,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         } else {
             return false;
         }
-
         //return  true;
     }
 
@@ -539,7 +542,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     @Override
     public void loadScript(String file) {
-        iaChunk = LuaLoader.getInstance().loadIAScript("basic_enemy.lua");
+        iaChunk = LuaLoader.getInstance().loadIAScript(file);
     }
 
     @Override
