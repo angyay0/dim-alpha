@@ -129,6 +129,8 @@ public abstract class Play extends GameState{
 
         float y1 = (player.getY() +((player.getHeight() / player.BODY_SCALE) / Constants.PTM));
         if(y1 < 0) {
+
+
             System.out.println("Entro  " + y1);
         }
         float y3 = ((player.getHeight() / player.BODY_SCALE) / Constants.PTM);
