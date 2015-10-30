@@ -14,13 +14,6 @@ public class Constants {
     //CONCURRENTMAP CAPACITY
     public static final int CCAPACITY = 100;
 
-    /*public static final short BIT_CHARACTER = 2;
-    public static final short BIT_FLOOR = 4;
-    public static final short BIT_WALL = 8;
-    public static final short BIT_DECO = 16;
-    public static final short BIT_GRANADE = 32;
-    public static final short BIT_BULLET = 64;*/
-
     public enum BIT{
         CHARACTER((short)2), FLOOR((short)4), WALL((short)8), DECO((short)16), GRANADE((short)32),
         BULLET((short)64), ITEM((short)128), SWORD((short)256), COIN((short)512), PLAYER((short)1024);
@@ -41,7 +34,8 @@ public class Constants {
     }
 
     public enum STATE{
-        SPLASH(0),MENU(1),WORLD_SELECT(2),SOLO_PLAY(3),LEVEL_SELECT(4),MULTI_PLAY(5),PAUSE(6),GAME_OVER(7);
+        SPLASH(0),MENU(1),WORLD_SELECT(2),SOLO_PLAY(3),LEVEL_SELECT(4),MULTI_PLAY(5),PAUSE(6),
+        GAME_OVER(7),OPTIONS(8);
 
         private int id = -1;
 

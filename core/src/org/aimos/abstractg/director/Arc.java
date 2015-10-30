@@ -6,18 +6,18 @@ package org.aimos.abstractg.director;
 public class Arc {
 
     private Node origin, destination;
-    private int distance;
+    //private int distance;
 
-    public Arc(Node o, Node d, int dis){
+    public Arc(Node o, Node d/*, int dis*/){
         origin = o;
         destination = d;
-        distance = dis;
+        //distance = dis;
         destination.addArc(this);
     }
 
-    public int getDistance(){
+    /*public int getDistance(){
         return distance;
-    }
+    }*/
 
     public Node getDestination(){
         return destination;

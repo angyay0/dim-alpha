@@ -1,6 +1,7 @@
 package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -29,13 +30,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 /**
  * Created by EinarGretch on 17/09/2015.
  */
-public abstract class Play extends GameState{
+public abstract class Play extends GameState {
 
     private World world;
     private GameContactListener contact;
 
     private Player player;
-    private Enemy ene;
+    //private Enemy ene;
     private Array<Coin> coins;
     private Array<PhysicalBody> removed;
     private MapLoader loader;
@@ -44,8 +45,8 @@ public abstract class Play extends GameState{
     ShootWeapon sw;
     ThrowWeapon tw;
     Skin skin;
-    Thread t;
-    Label labelInfo,labelInf;
+    //Thread t;
+    Label labelInfo, labelInf;
 
     private static String map = "tutorial";
     private static int worldLvel = 1;
@@ -53,7 +54,6 @@ public abstract class Play extends GameState{
 
     protected Play(GameStateManager gsm) {
         super(gsm);
-        game.setFlag(true);
         //Load music
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
         AudioManager.getInstance().play(0.5f, true);
@@ -67,29 +67,29 @@ public abstract class Play extends GameState{
         world.setContactListener(contact);
 
         //create player
-        player = new Player("player","Hero", this, new Vector2(128,128));
-        ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
+        player = new Player("player", "Hero", this, new Vector2(128, 128));
+        /*ene = new Enemy("player", "Enemy", this, new Vector2(200, 128)) {
             @Override
-            public void run(){
-                while(true){
+            public void run() {
+                while (true) {
                     act();
-                    try{
+                    try {
                         Thread.sleep(50);
-                    }catch(Exception e){
+                    } catch (Exception e) {
                         Gdx.app.error("Fatal Thread Failure", e.getMessage());
                         Gdx.app.exit();
                     }
                 }
             }
-        };
+        };*/
 
         loader = new MapLoader(world, player);
-        mw = new MeleeWeapon(10,10,10,7,this,"sword");
+        mw = new MeleeWeapon(10, 10, 10, 7, this, "sword");
         //sw = new ShootWeapon(10,10,10,7,this,"gun");
-       // tw = new ThrowWeapon(10,10,10,7,this,"steel");
+        // tw = new ThrowWeapon(10,10,10,7,this,"steel");
         player.setWeapon(mw);
         //player.setWeapon(sw);
-      //  player.setWeapon(tw);
+        //  player.setWeapon(tw);
 
         skin = new Skin();
         skin.addRegions(Launcher.res.getAtlas("uiskin"));
@@ -103,8 +103,8 @@ public abstract class Play extends GameState{
         addActor(hud);
         initLabel();
 
-        t = new Thread(ene);
-        t.start();
+        //t = new Thread(ene);
+        //t.start();
     }
 
     @Override
@@ -112,46 +112,45 @@ public abstract class Play extends GameState{
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
-        if(ene.isDead()) {
-            System.out.println("Enemy muerto");
-        }
-        ene.update(dt);
+        //ene.update(dt);
         removeBodies();
         if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
             long money = 0;
             long enem = 0;
             Array<Weapon> weap = null;
             JsonIO.savePlay(player, map, worldLvel);
-            if(JsonIO.readProfile()){
+            if (JsonIO.readProfile()) {
                 money = JsonIO.coins;
                 enem = JsonIO.enemy;
                 weap = JsonIO.weapons;
             }
-            JsonIO.saveProfile(player.getWeapons(),money+player.getMoney(),enem+player.getEnemiesKilled());
-            gsm.gameOver(player);
+            JsonIO.saveProfile(player.getWeapons(), money + player.getMoney(), enem + player.getEnemiesKilled());
+            gsm.pushState(Constants.STATE.GAME_OVER);
             disposeState();
         }
         updLabel(String.valueOf(player.getMoney()));
-        updArm(String.valueOf(player.getMoney()));   
+        updArm(String.valueOf(player.getMoney()));
     }
 
     @Override
     public void render() {
-            loader.render();
-            // draw player
-            sb.setProjectionMatrix(loader.getFloorCamera().combined);
-            for (Coin coin : coins) {
-                coin.draw(sb);
-            }
-            player.draw(sb);
-            System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
-            ene.draw(sb);
-            draw();
+        Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        loader.render();
+        // draw player
+        sb.setProjectionMatrix(loader.getFloorCamera().combined);
+        for (Coin coin : coins) {
+            coin.draw(sb);
+        }
+        player.draw(sb);
+        System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
+        //ene.draw(sb);
+        draw();
     }
 
     @Override
     public void disposeState() {
-        if(AudioManager.getInstance().isPlaying()){
+        if (AudioManager.getInstance().isPlaying()) {
             AudioManager.getInstance().stopAudio();
         }
 
@@ -159,12 +158,12 @@ public abstract class Play extends GameState{
 
     @Override
     public void back() {
-
+        gsm.pushState(Constants.STATE.PAUSE);
     }
 
-    public void removeBodies(){
+    public void removeBodies() {
         for (PhysicalBody body : removed) {
-            if(body instanceof Coin) coins.removeValue((Coin)body, false);
+            if (body instanceof Coin) coins.removeValue((Coin) body, false);
             body.dispose();
         }
         removed.clear();
@@ -174,19 +173,19 @@ public abstract class Play extends GameState{
         return player;
     }
 
-    public void addCoins(Array<Coin> c){
+    public void addCoins(Array<Coin> c) {
         coins.addAll(c);
     }
 
-    public static void levelSelect(String m){
+    public static void levelSelect(String m) {
         map = m;
     }
 
-    public static String getMap(){
+    public static String getMap() {
         return map;
     }
 
-    public void initLabel(){
+    public void initLabel() {
         labelInfo = new Label("0", skin, "default");
         labelInfo.setPosition(690f, 450f);
         labelInfo.setAlignment(Align.right);
@@ -199,11 +198,11 @@ public abstract class Play extends GameState{
         addActor(labelInfo);
     }
 
-    public void updArm(String val){
+    public void updArm(String val) {
         labelInf.setText(val);
     }
 
-    public void updLabel(String val){
+    public void updLabel(String val) {
         labelInfo.setText(val);
     }
 
@@ -211,10 +210,12 @@ public abstract class Play extends GameState{
         return world;
     }
 
-    public void remove(PhysicalBody body){
+    public void remove(PhysicalBody body) {
         removed.add(body);
     }
 
-    public Constants.STATE getGameState(){ return gsm.getState().getID(); }
+    public Constants.STATE getGameState() {
+        return gsm.getState().getID();
+    }
 
 }
