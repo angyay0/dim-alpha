@@ -52,6 +52,7 @@ public class GameContactListener implements ContactListener {
                  {
                      System.out.println("Entro");
                     c.onGround();
+
                 }
 
 

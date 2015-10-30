@@ -54,7 +54,6 @@ public abstract class Play extends GameState {
 
     protected Play(GameStateManager gsm) {
         super(gsm);
-        game.setFlag(true);
         //Load music
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
         AudioManager.getInstance().play(0.5f, true);
@@ -133,6 +132,9 @@ public abstract class Play extends GameState {
 
             System.out.println("Entro  " + y1);
         }
+
+
+
         float y3 = ((player.getHeight() / player.BODY_SCALE) / Constants.PTM);
         if (y1 < 0 && loader.getFloorCamera().position.y == (Launcher.HEIGHT/2)) {
            System.out.println("Entro a morir " + y1);
@@ -150,7 +152,8 @@ public abstract class Play extends GameState {
             }
             JsonIO.saveProfile(player.getWeapons(),money+player.getMoney(),enem+player.getEnemiesKilled());
             */
-            gsm.gameOver(player.getMoney());
+
+            gsm.pushState(Constants.STATE.GAME_OVER);
             disposeState();
         }
         updLabel(String.valueOf(player.getMoney()));
@@ -168,8 +171,8 @@ public abstract class Play extends GameState {
             coin.draw(sb);
         }
         player.draw(sb);
-        System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
-        ene.draw(sb);
+        //System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
+ //       ene.draw(sb);
         draw();
     }
 
