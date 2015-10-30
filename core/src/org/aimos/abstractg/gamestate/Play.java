@@ -69,10 +69,10 @@ public abstract class Play extends GameState{
 
         //create player
         player = new Player("player","Hero", this, new Vector2(128,128));
-        ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
+        /*ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
             @Override
             public void run(){
-                while( running /*(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )*/ ){
+                while( running(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )){
                     try{
 
 
@@ -90,13 +90,13 @@ public abstract class Play extends GameState{
                     }
                 }
             }
-        };
+        };*/
 
         loader = new MapLoader(world, player);
-        mw = new MeleeWeapon(10,10,10,7,this,"sword");
+       // mw = new MeleeWeapon(10,10,10,7,this,"sword");
         //sw = new ShootWeapon(10,10,10,7,this,"gun");
        // tw = new ThrowWeapon(10,10,10,7,this,"steel");
-        player.setWeapon(mw);
+        //player.setWeapon(mw);
         //player.setWeapon(sw);
       //  player.setWeapon(tw);
 
@@ -112,8 +112,8 @@ public abstract class Play extends GameState{
         addActor(hud);
         initLabel();
 
-        t = new Thread(ene);
-        t.start();
+        //t = new Thread(ene);
+        //t.start();
     }
 
     @Override
@@ -121,13 +121,23 @@ public abstract class Play extends GameState{
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
-        if(ene.isDead()) {
+        /*if(ene.isDead()) {
             System.out.println("Enemy muerto");
-        }
-        ene.update(dt);
+        }*/
+        //ene.update(dt);
         removeBodies();
-        if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
-            long money = 0;
+
+        float y1 = (player.getY() +((player.getHeight() / player.BODY_SCALE) / Constants.PTM));
+        if(y1 < 0) {
+            System.out.println("Entro  " + y1);
+        }
+        float y3 = ((player.getHeight() / player.BODY_SCALE) / Constants.PTM);
+        if (y1 < 0 && loader.getFloorCamera().position.y == (Launcher.HEIGHT/2)) {
+           System.out.println("Entro a morir " + y1);
+          //  System.out.println("Entro a morir " + y1);
+            System.out.println("Entro a morir " + y3);
+
+            /*long money = 0;
             long enem = 0;
             Array<Weapon> weap = null;
             JsonIO.savePlay(player, map, worldLvel);
@@ -137,7 +147,7 @@ public abstract class Play extends GameState{
                 weap = JsonIO.weapons;
             }
             JsonIO.saveProfile(player.getWeapons(),money+player.getMoney(),enem+player.getEnemiesKilled());
-            gsm.gameOver(player);
+            */gsm.gameOver(player.getMoney());
             disposeState();
         }
         updLabel(String.valueOf(player.getMoney()));
@@ -152,9 +162,10 @@ public abstract class Play extends GameState{
             for (Coin coin : coins) {
                 coin.draw(sb);
             }
+            //System.out.println(player.getBody().getLinearVelocityFromLocalPoint(new Vector2(0,0)));
             player.draw(sb);
-            System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
-            ene.draw(sb);
+            //System.out.println(player.getBody().getLinearVelocity().y);
+            //ene.draw(sb);
             draw();
     }
 

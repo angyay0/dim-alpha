@@ -155,9 +155,9 @@ public class ThrowWeapon extends Weapon {
         bdef.position.set(pos.cpy());
         createBody(bdef);
 
-        MassData m = getBody().getMassData();
+        /*MassData m = getBody().getMassData();
         m.mass = 0;
-        getBody().setMassData(m);
+        getBody().setMassData(m);*/
         //getBody().setGravityScale(0);
 
         //Crear Joint

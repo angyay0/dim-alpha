@@ -50,6 +50,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     private boolean direction = true;
     private Weapon weapon;
     private Interactive interactive;
+    private  static final float MAXVELOCITY = 3;
     // MaxHp value of the character
     private long maxHp = 10;
     // Hp value of the character
@@ -223,7 +224,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         if (canJump()) {
             jumping = true;
             setAnimation(2);
-            getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
+            getBody().setLinearVelocity(0, 7);
+            //getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
+            System.out.println(getBody().getLinearVelocity().y);
             jumps--;
             return true;
         } else {
@@ -281,7 +284,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             }
         }
         float forceX = (float) (getBody().getMass() * desiredVelX / (1 / 60.0)); // f = mv/t
-        getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
+        if(Math.abs(getBody().getLinearVelocity().x) <= MAXVELOCITY) {
+            getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
+            getBody().getLinearVelocity().y = 0;
+        }
         return true;
     }
 
@@ -362,7 +368,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         //create fixturedef for player attack zone
         shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
         fdef.shape = shape;
-        fdef.isSensor = true;
+        //fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = Constants.BIT.CHARACTER.BIT();
         getBody().createFixture(fdef).setUserData(Constants.DATA.ATTACK);
@@ -378,7 +384,6 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         MassData md = getBody().getMassData();
         md.mass = 1;
         getBody().setMassData(md);
-
         getBody().setFixedRotation(true);
     }
 
@@ -409,7 +414,8 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
                 shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 break;
         }
-        getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
+        //getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
+        getBody().applyForceToCenter(new Vector2(0, 0), true);
     }
 
     public boolean isForceCrouched() {

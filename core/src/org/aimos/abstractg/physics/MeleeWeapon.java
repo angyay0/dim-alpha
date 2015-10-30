@@ -98,7 +98,7 @@ public class MeleeWeapon extends Weapon {
         MassData mass = getBody().getMassData();
         mass.mass = 0.5f;
         getBody().setMassData(mass);
-
+        //getBody().setGravityScale(0);
         RevoluteJointDef rjd = new RevoluteJointDef();
 
         rjd.bodyA = owner.getBody();

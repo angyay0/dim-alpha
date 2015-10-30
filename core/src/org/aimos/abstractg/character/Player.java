@@ -26,6 +26,7 @@ public class Player extends Character {
 
     private Array<Weapon> weapons;
     private long enemiesKilled = 0;
+    public boolean checkVelocityY = false;
 
     public volatile boolean running = true;
     int count = 0;
@@ -41,7 +42,7 @@ public class Player extends Character {
     public Player(String spriteSrc, String name, Play play, Vector2 pos) {
         super(spriteSrc, name, play, pos);
         weapons = new Array<Weapon>();
-        setStats(200,1);
+        //setStats(200,1);
      //   chainShape = true;
     //    loadScript("ia_agents.lua");
        // loadScript();
@@ -69,19 +70,7 @@ public class Player extends Character {
     @Override
     public void run() {
         while(running){
-            act();
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            if(count < 100){
-                count++;
-            }else{
-                running = false;
-            }
-
+           // body.getLinearVelocity()
         }
     }
 
@@ -97,6 +86,7 @@ public class Player extends Character {
     public void setWeapon(int i){
         setWeapon(weapons.get(i));
     }
+
 
     public void setWeapons(Array<Weapon> w){
         weapons = w;

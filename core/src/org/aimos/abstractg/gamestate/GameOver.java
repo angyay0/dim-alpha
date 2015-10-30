@@ -27,8 +27,8 @@ public class GameOver extends GameState{
 
 GameStateManager gsm;
     BitmapFont go;
-    Player p;
-    protected GameOver(GameStateManager gsm,Player p) {
+    long p;
+    protected GameOver(GameStateManager gsm,long p) {
         super(gsm);
         this.gsm = gsm;
         this.p = p;
@@ -47,7 +47,7 @@ GameStateManager gsm;
         sb.setProjectionMatrix(hudCam.combined);
         sb.begin();
         font.draw(sb, "Game Over", 280, 400);
-        font.draw(sb,"Score: " + p.getMoney(),310,300);
+        font.draw(sb,"Score: " + p,310,300);
         font.draw(sb,"Share ",310,80);
         sb.end();
         super.draw();

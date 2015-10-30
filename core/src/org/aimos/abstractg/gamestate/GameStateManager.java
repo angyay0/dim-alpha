@@ -128,7 +128,7 @@ public class GameStateManager {
         pushState(Constants.STATE.SOLO_PLAY);
     }
 
-    public void gameOver(Player p){
+    public void gameOver(long p){
         gameStates.push(new GameOver(this, p).setID(Constants.STATE.GAME_OVER));
     }
 

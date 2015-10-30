@@ -33,6 +33,7 @@ public abstract class PhysicalBody {
         return play;
     }
 
+
     protected boolean createBody(BodyDef bdef){
         if(body == null) {
             body = play.getWorld().createBody(bdef);

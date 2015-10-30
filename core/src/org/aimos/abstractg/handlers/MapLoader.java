@@ -160,6 +160,13 @@ public class MapLoader {
         layers[3] = (TiledMapTileLayer) tileMap.getLayers().get("floor");
         //Building
         layers[4] = (TiledMapTileLayer) tileMap.getLayers().get("building");
+
+       // TiledMapTileLayer objects = (TiledMapTileLayer) tileMap.getLayers().get()
+        /*MapObjects objects = tileMap.getLayers().get("ways").getObjects();
+
+        for (MapObject obj : objects){
+            System.out.println(obj.getProperties().get("camino"));
+        }*/
         createBlocks(layers[3], Constants.BIT.FLOOR.BIT());
 
     }
@@ -271,6 +278,7 @@ public class MapLoader {
                                 Constants.BIT.GRANADE.BIT() | Constants.BIT.ITEM.BIT());
             b = world.createBody(bdef);
             b.createFixture(fd).setUserData(Constants.DATA.CELL);
+            b.setUserData(new Vector2((((size.get(i).x * ts) / 2) / Constants.PTM), (((size.get(i).y * ts) / 2) / Constants.PTM)));
             shape.dispose();
         }
         size.clear();

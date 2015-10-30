@@ -1,5 +1,6 @@
 package org.aimos.abstractg.handlers;
 
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -41,9 +42,18 @@ public class GameContactListener implements ContactListener {
         //Jump
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
-            if (c != null ) {
-                c.onGround();
-            }
+            Vector2 s = (Vector2) fb.getBody().getUserData();
+
+            if(((((fb.getBody().getPosition().x -s.x) < c.getX() -((c.getWidth() / 2.2) / Constants.PTM))
+                    && (((fb.getBody().getPosition().x +s.x) > c.getX() -((c.getWidth() / 2.2) / Constants.PTM)))) ||
+                    ((fb.getBody().getPosition().x + s.x) > c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) &&
+                    ((fb.getBody().getPosition().x - s.x) < c.getX() +((c.getWidth() / 2.2) / Constants.PTM))
+                    && (fb.getBody().getPosition().y + s.y) < c.getY() - ((c.getHeight() / 2.2) / Constants.PTM))
+                 {
+                     System.out.println("Entro");
+                    c.onGround();
+                }
+
 
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
@@ -186,9 +196,20 @@ public class GameContactListener implements ContactListener {
         //Fall
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
-            if(!(c.isJumping() || c.isInTransition())){
-                c.fall(); //needs fixing
+            Vector2 s = (Vector2) fb.getBody().getUserData();
+            if(((((fb.getBody().getPosition().x -s.x) < c.getX() -((c.getWidth() / 2.2) / Constants.PTM))
+                    && (((fb.getBody().getPosition().x +s.x) > c.getX() -((c.getWidth() / 2.2) / Constants.PTM)))) ||
+                    ((fb.getBody().getPosition().x + s.x) > c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) &&
+                    ((fb.getBody().getPosition().x - s.x) < c.getX() +((c.getWidth() / 2.2) / Constants.PTM))
+                    && (fb.getBody().getPosition().y + s.y) < c.getY() - ((c.getHeight() / 2.2) / Constants.PTM)){
+
+                c.fall();
             }
+            //System.out.println((c.getY() -(((c.getHeight() / 2)) / Constants.PTM)));
+            /*if((c.getY() -(((c.getHeight() / 2)) / Constants.PTM))> fb.getBody().getPosition().y &&
+                    !(c.isJumping() || c.isInTransition())){
+                c.fall(); //needs fixing
+            }*/
         }
         if(fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fb.getBody().getUserData();
