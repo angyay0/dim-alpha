@@ -29,7 +29,7 @@ import org.aimos.abstractg.physics.Weapon;
  * Clase que representa el modelo abstracto
  * del personaje para los escenarios
  *
- * @author Angyay0, EinarGretch
+ * @author EinarGretch, Angyay0
  * @version 1.0.3
  * @date 07/09/2015
  * @updated 14/09/2015
@@ -517,17 +517,6 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     public boolean isInTransition() {
         return transition;
     }
-
-    public long getHP(){ return hp;  }
-
-
-    public long getScore(){ return score; }
-
-    public void setHP(int h){  hp  = h;    }
-
-    public void setScore(long score){   this.score = score; }
-
-    public void setAttack(int a){   atk = a;    }
 
     public abstract void die();
 

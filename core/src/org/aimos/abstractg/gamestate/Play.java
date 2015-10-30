@@ -36,7 +36,7 @@ public abstract class Play extends GameState {
     private GameContactListener contact;
 
     private Player player;
-    //private Enemy ene;
+    private Enemy ene;
     private Array<Coin> coins;
     private Array<PhysicalBody> removed;
     private MapLoader loader;
@@ -45,8 +45,8 @@ public abstract class Play extends GameState {
     ShootWeapon sw;
     ThrowWeapon tw;
     Skin skin;
-    //Thread t;
-    Label labelInfo, labelInf;
+    Thread t;
+    Label labelInfo,labelInf;
 
     private static String map = "tutorial";
     private static int worldLvel = 1;
@@ -57,6 +57,7 @@ public abstract class Play extends GameState {
         //Load music
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
         AudioManager.getInstance().play(0.5f, true);
+        Enemy.running = true;
 
         coins = new Array<Coin>();
 
@@ -67,21 +68,28 @@ public abstract class Play extends GameState {
         world.setContactListener(contact);
 
         //create player
-        player = new Player("player", "Hero", this, new Vector2(128, 128));
-        /*ene = new Enemy("player", "Enemy", this, new Vector2(200, 128)) {
+        player = new Player("player","Hero", this, new Vector2(128,128));
+        ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
             @Override
-            public void run() {
-                while (true) {
+            public void run(){
+                while( running /*(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )*/ ){
+                    try{
+
+
                     act();
-                    try {
+                    try{
                         Thread.sleep(50);
-                    } catch (Exception e) {
+                    }catch(Exception e){
                         Gdx.app.error("Fatal Thread Failure", e.getMessage());
+                        Gdx.app.exit();
+                    }
+                }catch(Exception e){
+                        e.printStackTrace();
                         Gdx.app.exit();
                     }
                 }
             }
-        };*/
+        };
 
         loader = new MapLoader(world, player);
         mw = new MeleeWeapon(10, 10, 10, 7, this, "sword");
@@ -103,8 +111,8 @@ public abstract class Play extends GameState {
         addActor(hud);
         initLabel();
 
-        //t = new Thread(ene);
-        //t.start();
+        t = new Thread(ene);
+        t.start();
     }
 
     @Override
@@ -112,7 +120,7 @@ public abstract class Play extends GameState {
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
-        //ene.update(dt);
+        ene.update(dt);
         removeBodies();
         if ((player.getY() + ((player.getHeight() / player.BODY_SCALE) / Constants.PTM)) < 0) {
             long money = 0;

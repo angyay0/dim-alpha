@@ -1,6 +1,6 @@
 --
--- Created by IntelliJ IDEA.
--- User: Angyay0
+-- Created by AIMOS STUDIO
+-- User: Angel
 -- Date: 12/10/2015
 -- Time: 03:10 PM
 -- To change this template use File | Settings | File Templates.

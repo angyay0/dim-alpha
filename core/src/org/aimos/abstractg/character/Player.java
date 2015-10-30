@@ -41,6 +41,7 @@ public class Player extends Character {
     public Player(String spriteSrc, String name, Play play, Vector2 pos) {
         super(spriteSrc, name, play, pos);
         weapons = new Array<Weapon>();
+        setStats(200,1);
      //   chainShape = true;
     //    loadScript("ia_agents.lua");
        // loadScript();
