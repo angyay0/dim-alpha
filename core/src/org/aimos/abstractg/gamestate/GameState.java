@@ -1,9 +1,12 @@
 package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -50,7 +53,16 @@ public abstract class GameState extends Stage{
 
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
-
+        addListener(new InputListener(){
+            @Override
+            public boolean keyDown(InputEvent event, int keycode) {
+                if(keycode == Input.Keys.BACK) {
+                    back();
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     public abstract void update(float dt);

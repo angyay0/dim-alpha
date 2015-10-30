@@ -9,7 +9,6 @@
 -- Consideraciones ia
 -- ->Si hay vida ataca, si no cubre
 -- ->Behavior dependiente del arma
--- ->LowHealth=Cubre
 --        ->Bosses atacan a lo verga inteligente
 -- ->Bosses spawnean en checks
 -- ->Spawneados en checks shielded
@@ -62,7 +61,7 @@ function runLikeBitch(chrtr,p)
     return 0
 end
 
--- Coward statement to know if go or hide like a little pussy
+-- Coward statement to know if go or hide
 function hideMe(chrtr,val)
     if chrtr:getHP() < val then
         return true
@@ -93,4 +92,39 @@ function senseWeapon(chrtr)
     else
         return 0
     end
+end
+
+-- This section of functions is pretended to be used for detect cheating
+-- and unlegal use of this game
+
+-- This function is used to validate the status if the game in our database
+function validateGameStatus(device,game)
+end
+
+-- This function is used to secure data transfering in any layer
+function cryptData(data,key,method)
+end
+
+-- This function is used to decrypt data
+function decryptData(data,key,method)
+end
+
+-- This function validate is the transaction is in a valid status
+-- or if it is cheated
+function checkTransaction(trans,user)
+end
+
+-- This function generates a token to be used in our server to check items
+function generateToken()
+end
+
+-- This function validates a token and generates one to be returned
+function validateToken(token)
+end
+
+
+-- End of detecting functions
+
+-- This function check cheating
+function markovRandomField(network)
 end

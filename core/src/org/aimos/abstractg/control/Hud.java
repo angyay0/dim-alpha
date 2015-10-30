@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.gamestate.GameStateManager;
+import org.aimos.abstractg.handlers.Constants;
 
 import java.util.List;
 
@@ -235,7 +236,7 @@ public class Hud extends WidgetGroup {
         pause.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                manager.setTempState();
+                manager.pushState(Constants.STATE.PAUSE);
             }
         });
 

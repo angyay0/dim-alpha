@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
+import org.aimos.abstractg.director.Arc;
 import org.aimos.abstractg.gamestate.Play;
 
 /**
@@ -12,9 +13,15 @@ import org.aimos.abstractg.gamestate.Play;
  */
 public class ActionZone extends PhysicalBody implements Interactive{
 
+    private Arc arc;
 
     public ActionZone(Play p) {
         super(p);
+        arc = null;
+    }
+
+    public void setArc(Arc a){
+        arc = a;
     }
 
     @Override

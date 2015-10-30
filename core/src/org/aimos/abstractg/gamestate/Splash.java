@@ -14,7 +14,7 @@ import org.aimos.abstractg.handlers.Constants;
  */
 public class Splash extends GameState{
 
-    private Array<Sprite> imgs;
+    private Sprite[] imgs;
     private float x,y;
     private float w,h;
     private float pw,ph,px,py;
@@ -26,14 +26,15 @@ public class Splash extends GameState{
 
     protected Splash(GameStateManager gsm) {
         super(gsm);
-        imgs = new Array<Sprite>();
-        imgs.add( new Sprite( Launcher.res.getTexture("logo_base") ) );  //1-1=0
-        imgs.add( new Sprite( Launcher.res.getTexture("logo_hilo") ) ); //2-1=1
-        imgs.add( new Sprite( Launcher.res.getTexture("pluma") ) ); //3-1=2
-        imgs.add( new Sprite( Launcher.res.getTexture("pluma") ) ); //4-1=3
-        imgs.add( new Sprite( Launcher.res.getTexture("pluma") ) ); //5-1=4
-        imgs.add( new Sprite( Launcher.res.getTexture("aimos") ) ); //6-1=5
-        imgs.add( new Sprite( Launcher.res.getTexture("studio") ) ); //7-1=6
+        imgs = new Sprite[]{
+        new Sprite(Launcher.res.getTexture("logo_base")), //1-1=0
+        new Sprite(Launcher.res.getTexture("logo_hilo")), //2-1=1
+        new Sprite(Launcher.res.getTexture("pluma")), //3-1=2
+        new Sprite(Launcher.res.getTexture("pluma")), //4-1=3
+        new Sprite(Launcher.res.getTexture("pluma")), //5-1=4
+        new Sprite(Launcher.res.getTexture("aimos")), //6-1=5
+        new Sprite(Launcher.res.getTexture("studio")) //7-1=6
+    };
 
 
         x = 308;
@@ -48,34 +49,34 @@ public class Splash extends GameState{
         aPx = 290;
         aPy = 0;
 
-        imgs.get(0).setPosition(x, y);
-        imgs.get(0).setSize(w, h);
-        imgs.get(0).setOriginCenter();
+        imgs[0].setPosition(x, y);
+        imgs[0].setSize(w, h);
+        imgs[0].setOriginCenter();
 
-        imgs.get(1).setPosition(x, y);
-        imgs.get(1).setSize(w, h);
-        imgs.get(1).setOriginCenter();
+        imgs[1].setPosition(x, y);
+        imgs[1].setSize(w, h);
+        imgs[1].setOriginCenter();
 
-        imgs.get(2).setSize(pw, ph);
-        imgs.get(2).setPosition(px, py);
-        imgs.get(2).setOriginCenter();
-        imgs.get(2).setOrigin(imgs.get(2).getOriginX(), imgs.get(2).getOriginY() + (ph / 2));
+        imgs[2].setSize(pw, ph);
+        imgs[2].setPosition(px, py);
+        imgs[2].setOriginCenter();
+        imgs[2].setOrigin(imgs[2].getOriginX(), imgs[2].getOriginY() + (ph / 2));
 
-        imgs.get(3).setSize(pw, ph);
-        imgs.get(3).setPosition(-10 + px + w / 2, py - (h / 2) + 10);
-        imgs.get(3).setOriginCenter();
-        imgs.get(3).setOrigin(imgs.get(3).getOriginX() + 3, imgs.get(3).getOriginY() + (ph / 2));
+        imgs[3].setSize(pw, ph);
+        imgs[3].setPosition(-10 + px + w / 2, py - (h / 2) + 10);
+        imgs[3].setOriginCenter();
+        imgs[3].setOrigin(imgs[3].getOriginX() + 3, imgs[3].getOriginY() + (ph / 2));
 
-        imgs.get(4).setSize(pw, ph);
-        imgs.get(4).setPosition(px + 180, py);
-        imgs.get(4).setOriginCenter();
-        imgs.get(4).setOrigin(imgs.get(4).getOriginX() - 3, imgs.get(4).getOriginY() + (ph / 2));
+        imgs[4].setSize(pw, ph);
+        imgs[4].setPosition(px + 180, py);
+        imgs[4].setOriginCenter();
+        imgs[4].setOrigin(imgs[4].getOriginX() - 3, imgs[4].getOriginY() + (ph / 2));
 
-        imgs.get(5).setSize(250f, 80f);
-        imgs.get(5).setPosition(0, 80);
+        imgs[5].setSize(250f, 80f);
+        imgs[5].setPosition(0, 80);
 
-        imgs.get(6).setSize(250f, 80f);
-        imgs.get(6).setPosition(546, 80);
+        imgs[6].setSize(250f, 80f);
+        imgs[6].setPosition(546, 80);
 
     }
 
@@ -95,37 +96,37 @@ public class Splash extends GameState{
 
         if( elapsed < 3 ){
             if (elapsed > 1 ) {
-                sb.draw(imgs.get(2), aPx, aPy, pw, ph);
-                sb.draw(imgs.get(4), aPx + 180, aPy, pw, ph);
-                sb.draw(imgs.get(3), -10 + px + w / 2, aPy - (h / 2) + 10, pw, ph);
+                sb.draw(imgs[2], aPx, aPy, pw, ph);
+                sb.draw(imgs[4], aPx + 180, aPy, pw, ph);
+                sb.draw(imgs[3], -10 + px + w / 2, aPy - (h / 2) + 10, pw, ph);
                 if (aPy <=  py +5) {
                     aPy +=2;
                 }else{
                     aPy = py;
                 }
             }
-            imgs.get(0).rotate(2);
-            imgs.get(1).rotate(2);
+            imgs[0].rotate(2);
+            imgs[1].rotate(2);
 
         }
 
-        imgs.get(0).draw(sb);
-        imgs.get(1).draw(sb);
+        imgs[0].draw(sb);
+        imgs[1].draw(sb);
         if (elapsed > 3) {
-            imgs.get(2).rotate(velRot);
-            imgs.get(3).rotate(velRot);
-            imgs.get(4).rotate(velRot);
+            imgs[2].rotate(velRot);
+            imgs[3].rotate(velRot);
+            imgs[4].rotate(velRot);
 
-            if (imgs.get(2).getRotation() > 25)
+            if (imgs[2].getRotation() > 25)
                 velRot *= -1;
-            else if (imgs.get(2).getRotation() < -24.9)
+            else if (imgs[2].getRotation() < -24.9)
                 velRot *= -1;
 
-            imgs.get(2).draw(sb);
-            imgs.get(3).draw(sb);
-            imgs.get(4).draw(sb);
-            imgs.get(5).draw(sb);
-            imgs.get(6).draw(sb);
+            imgs[2].draw(sb);
+            imgs[3].draw(sb);
+            imgs[4].draw(sb);
+            imgs[5].draw(sb);
+            imgs[6].draw(sb);
         }
         sb.end();
 
@@ -136,12 +137,16 @@ public class Splash extends GameState{
 
     @Override
     public void disposeState() {
-        for(int i=0;i<imgs.size;i++)
-            imgs.pop().getTexture().dispose();
+        Launcher.res.removeTexture("logo_base");
+        Launcher.res.removeTexture("logo_hilo");
+        Launcher.res.removeTexture("pluma");
+        Launcher.res.removeTexture("pluma");
+        Launcher.res.removeTexture("pluma");
+        Launcher.res.removeTexture("aimos");
+        Launcher.res.removeTexture("studio");
     }
 
     @Override
     public void back() {
-
     }
 }

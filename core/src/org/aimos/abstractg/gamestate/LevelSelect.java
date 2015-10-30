@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
@@ -21,7 +20,7 @@ import org.aimos.abstractg.handlers.Constants;
 public class LevelSelect extends GameState {
 
     private Button [] btn;
-    private static String wworld;
+    private static String world;
     private Texture background;
     private final float diametro = 220f,lh = 175f, lm = 130f, lb = 10,ld = 220;
     float db2, dm = 800/3 -220, db = db2 =800/2 -220;
@@ -33,9 +32,8 @@ public class LevelSelect extends GameState {
 
     protected LevelSelect(GameStateManager gsm){
         super(gsm);
-        game.setFlag(false);
         background = Launcher.res.getTexture("fondo");
-        JsonIO.ReadJSON(wworld);
+        JsonIO.ReadJSON(world);
         levels = JsonIO.setLevelName();
         tmx = JsonIO.setTmxName();
 
@@ -74,7 +72,6 @@ public class LevelSelect extends GameState {
             btn[i].addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    //setLevel("tutorial");
                     setLevel(tmx.get(fi));
                 }
             });
@@ -86,7 +83,7 @@ public class LevelSelect extends GameState {
         btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(Constants.STATE.WORLD_SELECT);
+                back();
             }
         });
         addActor(btn);
@@ -97,8 +94,8 @@ public class LevelSelect extends GameState {
         Play.levelSelect(mapLevel);
         gsm.setState(Constants.STATE.SOLO_PLAY);
     }
-    public static void setWworld(String ww) {
-        wworld = ww;
+    public static void setWorld(String w) {
+        world = w;
     }
 
 

@@ -1,6 +1,7 @@
 package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -29,7 +30,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 /**
  * Created by EinarGretch on 17/09/2015.
  */
-public abstract class Play extends GameState{
+public abstract class Play extends GameState {
 
     private World world;
     private GameContactListener contact;
@@ -77,7 +78,6 @@ public abstract class Play extends GameState{
 
 
                     act();
-
                     try{
                         Thread.sleep(50);
                     }catch(Exception e){
@@ -149,7 +149,8 @@ public abstract class Play extends GameState{
                 weap = JsonIO.weapons;
             }
             JsonIO.saveProfile(player.getWeapons(),money+player.getMoney(),enem+player.getEnemiesKilled());
-            */gsm.gameOver(player.getMoney());
+            */
+            gsm.gameOver(player.getMoney());
             disposeState();
         }
         updLabel(String.valueOf(player.getMoney()));
@@ -158,22 +159,23 @@ public abstract class Play extends GameState{
 
     @Override
     public void render() {
-            loader.render();
-            // draw player
-            sb.setProjectionMatrix(loader.getFloorCamera().combined);
-            for (Coin coin : coins) {
-                coin.draw(sb);
-            }
-            //System.out.println(player.getBody().getLinearVelocityFromLocalPoint(new Vector2(0,0)));
-            player.draw(sb);
-            //System.out.println(player.getBody().getLinearVelocity().y);
-            //ene.draw(sb);
-            draw();
+        Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        loader.render();
+        // draw player
+        sb.setProjectionMatrix(loader.getFloorCamera().combined);
+        for (Coin coin : coins) {
+            coin.draw(sb);
+        }
+        player.draw(sb);
+        System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
+        ene.draw(sb);
+        draw();
     }
 
     @Override
     public void disposeState() {
-        if(AudioManager.getInstance().isPlaying()){
+        if (AudioManager.getInstance().isPlaying()) {
             AudioManager.getInstance().stopAudio();
         }
 
@@ -181,12 +183,12 @@ public abstract class Play extends GameState{
 
     @Override
     public void back() {
-
+        gsm.pushState(Constants.STATE.PAUSE);
     }
 
-    public void removeBodies(){
+    public void removeBodies() {
         for (PhysicalBody body : removed) {
-            if(body instanceof Coin) coins.removeValue((Coin)body, false);
+            if (body instanceof Coin) coins.removeValue((Coin) body, false);
             body.dispose();
         }
         removed.clear();
@@ -196,19 +198,19 @@ public abstract class Play extends GameState{
         return player;
     }
 
-    public void addCoins(Array<Coin> c){
+    public void addCoins(Array<Coin> c) {
         coins.addAll(c);
     }
 
-    public static void levelSelect(String m){
+    public static void levelSelect(String m) {
         map = m;
     }
 
-    public static String getMap(){
+    public static String getMap() {
         return map;
     }
 
-    public void initLabel(){
+    public void initLabel() {
         labelInfo = new Label("0", skin, "default");
         labelInfo.setPosition(690f, 450f);
         labelInfo.setAlignment(Align.right);
@@ -221,11 +223,11 @@ public abstract class Play extends GameState{
         addActor(labelInfo);
     }
 
-    public void updArm(String val){
+    public void updArm(String val) {
         labelInf.setText(val);
     }
 
-    public void updLabel(String val){
+    public void updLabel(String val) {
         labelInfo.setText(val);
     }
 
@@ -233,10 +235,12 @@ public abstract class Play extends GameState{
         return world;
     }
 
-    public void remove(PhysicalBody body){
+    public void remove(PhysicalBody body) {
         removed.add(body);
     }
 
-    public Constants.STATE getGameState(){ return gsm.getState().getID(); }
+    public Constants.STATE getGameState() {
+        return gsm.getState().getID();
+    }
 
 }

@@ -32,7 +32,6 @@ public class MainMenu extends GameState{
 
     protected MainMenu(final GameStateManager gsm) {
         super(gsm);
-        game.setFlag(false);
         background = new Texture("menu/fondo.png");
         initButtons();
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("field"));
@@ -71,7 +70,7 @@ public class MainMenu extends GameState{
 
     @Override
     public void back() {
-
+        Gdx.app.exit();
     }
 
     public void initButtons(){
@@ -111,7 +110,7 @@ public class MainMenu extends GameState{
         optButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsmFinal.setTemOpt();
+                gsmFinal.pushState(Constants.STATE.OPTIONS);
             }
         });
 
@@ -122,7 +121,7 @@ public class MainMenu extends GameState{
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
+                back();
             }
         });
 

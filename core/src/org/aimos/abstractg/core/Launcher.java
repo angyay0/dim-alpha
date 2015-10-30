@@ -16,7 +16,9 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import org.aimos.abstractg.gamestate.GameStateManager;
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.BoundedCamera;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.Resources;
 
 
@@ -38,7 +40,6 @@ public class Launcher extends Game {
 
     public GameStateManager manager;
     private BitmapFont font;
-    public static boolean flag;
     private Viewport viewport;
 
     @Override
@@ -121,10 +122,9 @@ public class Launcher extends Game {
         super.render();
         manager.update(Gdx.graphics.getDeltaTime());
         // clear the screen
-        //Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        Gdx.graphics.getGL20().glClearColor(0.7f, 0.7f, 1.0f, 1);
-        Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        //Gdx.graphics.getGL20().glClearColor(0.7f, 0.7f, 1.0f, 1);
+        //Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         manager.render();
     }
 
@@ -167,20 +167,14 @@ public class Launcher extends Game {
     @Override
     public void pause() {
         super.pause();
-        //gsm.back();
-        if(flag){
-            if(!manager.isPause()) {
-                manager.setTempState();
-            }
+        if(manager.getState() instanceof Play){
+            manager.pushState(Constants.STATE.PAUSE);
         }
-    }
-    public void setFlag(boolean flagP){
-        flag = flagP;
     }
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width,height);
+        viewport.update(width, height);
         hudCam.position.set(hudCam.viewportWidth/2,hudCam.viewportHeight/2,0);
     }
 

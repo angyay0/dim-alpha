@@ -2,7 +2,6 @@ package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
 
@@ -50,13 +49,22 @@ public class GameStateManager {
             case MENU:
                 return new MainMenu(this).setID(state);
             case WORLD_SELECT:
-                return new WorldSelectScreen(this).setID(state);
+                return new WorldSelect(this).setID(state);
             case SOLO_PLAY:
                 return new SoloPlay(this).setID(state);
             case MULTI_PLAY:
                 return new MultiPlay(this).setID(state);
             case LEVEL_SELECT:
                 return new LevelSelect(this).setID(state);
+            case PAUSE:
+                if(getState() instanceof Play) return new Pause(this, (Play)getState()).setID(state);
+                else return getState();
+            case OPTIONS:
+                if(getState() instanceof Play) return new Pause(this, (Play)getState(),true).setID(state);
+                else return getState();
+            case GAME_OVER:
+                if(getState() instanceof Play) return new GameOver(this, (Play)getState()).setID(state);
+                else return getState();
             default:
                 return null;
         }
@@ -82,34 +90,11 @@ public class GameStateManager {
         }
     }
 
-    public void setTempState(){
-        paused = true;
-        tmp = new Pause(this, gameStates.peek());
-    }
-
-    public void setTemOpt(){
-        tmp = new Pause(this, gameStates.peek(), true).setID(Constants.STATE.PAUSE);
-    }
-
-    public void disposeTemp(){
-        paused = false;
-        tmp.dispose();
-        tmp = null;
-    }
-
     public GameState getState(){
         if(tmp == null){
             return gameStates.peek();
         }else{
             return tmp;
-        }
-    }
-
-
-    public void backToMenu(){
-        if(tmp != null) {
-            disposeTemp();
-            pushState(Constants.STATE.MENU);
         }
     }
 
@@ -119,17 +104,6 @@ public class GameStateManager {
 
     public boolean isPause(){
         return paused;
-    }
-
-    public void reloadGame() {
-       if(tmp != null){
-           disposeTemp();
-       }
-        pushState(Constants.STATE.SOLO_PLAY);
-    }
-
-    public void gameOver(long p){
-        gameStates.push(new GameOver(this, p).setID(Constants.STATE.GAME_OVER));
     }
 
     public Constants.STATE getStateID() {

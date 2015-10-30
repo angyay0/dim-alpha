@@ -18,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.AudioManager;
+import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.GameConfiguration;
 
 /**
@@ -44,7 +45,6 @@ public class Pause extends GameState {
         super(gsm);
         actual = act;
         createWindowPause();
-
     }
 
     /**
@@ -77,8 +77,7 @@ public class Pause extends GameState {
         btnhide.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.disposeTemp();
-
+                back();
             }
         });
 
@@ -89,7 +88,7 @@ public class Pause extends GameState {
         reloadG.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.reloadGame();
+                gsm.setState(Constants.STATE.SOLO_PLAY);
             }
         });
 
@@ -111,7 +110,8 @@ public class Pause extends GameState {
             btnPause.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    gsm.backToMenu();
+                    gsm.popState();
+                    gsm.setState(Constants.STATE.MENU);
                 }
             });
         }
@@ -242,7 +242,7 @@ public class Pause extends GameState {
 
     @Override
     public void back() {
-
+        gsm.popState();
     }
 
     @Override

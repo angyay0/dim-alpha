@@ -29,7 +29,7 @@ import org.aimos.abstractg.physics.Weapon;
  * Clase que representa el modelo abstracto
  * del personaje para los escenarios
  *
- * @author Angyay0, EinarGretch
+ * @author EinarGretch, Angyay0,Diego,Herialvaro
  * @version 1.0.3
  * @date 07/09/2015
  * @updated 14/09/2015
@@ -50,7 +50,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     private boolean direction = true;
     private Weapon weapon;
     private Interactive interactive;
-    private  static final float MAXVELOCITY = 3;
+   
     // MaxHp value of the character
     private long maxHp = 10;
     // Hp value of the character
@@ -61,7 +61,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     private long score = 0;
     // Current money the character has or gives when killed
     protected long money = 0;
-
+    private float MAXVELOCITY;
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
     public final float BODY_SCALE = 2.2f;
@@ -76,10 +76,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     protected boolean jumping;
     protected boolean invencible = false;
-    protected long attack;
     protected boolean transition;
     protected LuaChunk iaChunk;
     protected Character killer;
+    private Indicators indicators;
 
     /**
      * @param spriteSrc
@@ -224,9 +224,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         if (canJump()) {
             jumping = true;
             setAnimation(2);
-            getBody().setLinearVelocity(0, 7);
-            //getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
-            System.out.println(getBody().getLinearVelocity().y);
+            getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
             jumps--;
             return true;
         } else {
@@ -265,9 +263,11 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         if (direction) {
             if (isOnGround()) {
                 if (isCrouching()) {
+                    MAXVELOCITY = 2;
                     desiredVelX = 0.5f;
                 } else {
                     desiredVelX = 0.7f;
+                    MAXVELOCITY = 3;
                 }
             } else {
                 desiredVelX = 0.1f;//*
@@ -275,8 +275,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         } else {
             if (isOnGround()) {
                 if (isCrouching()) {
+                    MAXVELOCITY = 2;
                     desiredVelX = -0.5f;
                 } else {
+                    MAXVELOCITY = 3;
                     desiredVelX = -0.7f;
                 }
             } else {
@@ -284,9 +286,8 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             }
         }
         float forceX = (float) (getBody().getMass() * desiredVelX / (1 / 60.0)); // f = mv/t
-        if(Math.abs(getBody().getLinearVelocity().x) <= MAXVELOCITY) {
+        if(Math.abs(getBody().getLinearVelocity().x) < MAXVELOCITY) {
             getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
-            getBody().getLinearVelocity().y = 0;
         }
         return true;
     }
@@ -368,7 +369,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         //create fixturedef for player attack zone
         shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
         fdef.shape = shape;
-        //fdef.isSensor = true;
+        fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
         fdef.filter.maskBits = Constants.BIT.CHARACTER.BIT();
         getBody().createFixture(fdef).setUserData(Constants.DATA.ATTACK);
@@ -414,8 +415,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
                 shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 break;
         }
-        //getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
-        getBody().applyForceToCenter(new Vector2(0, 0), true);
+        getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
     }
 
     public boolean isForceCrouched() {
@@ -548,6 +548,10 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     public void addScore(long ad){  score += ad;    }
 
+    public Indicators getIndicators(){ return indicators;   }
+
+    public void setIndicators(Indicators indi){ indicators = indi;  }
+
     public abstract void die();
 
     @Override
@@ -576,4 +580,26 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     @Override
     public abstract void run();
+
+
+    public class Indicators{
+        public int min_health = 8;
+        public int change_health = 80;
+        public int final_change = 20;
+        public int hp_per_tic = 4;
+        public int behavior = 2;
+        public int shieldHP = 0;
+        public float spawnRate = 0.25f; //1/4 per sec
+        public int enemyToSpawn = 1; //minions
+        public int limitSpawn = 3;
+        public int spawnTimes = 0;
+
+        public boolean shielded = false;
+        public boolean recover = true;
+        public boolean spawner = true;
+
+        public void addSpawn(){
+            spawnTimes++;
+        }
+    }
 }

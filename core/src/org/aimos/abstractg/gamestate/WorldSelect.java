@@ -20,7 +20,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 /**
  * Created by DiegoArmando on 28/09/2015.
  */
-public class WorldSelectScreen extends GameState {
+public class WorldSelect extends GameState {
 
     private Button[] btnWorld = new Button[6];
     private float delta = 0;
@@ -30,9 +30,8 @@ public class WorldSelectScreen extends GameState {
 
     // Faltan cargar texturas en launcher
 
-    protected WorldSelectScreen(GameStateManager gsm) {
+    protected WorldSelect(GameStateManager gsm) {
         super(gsm);
-        game.setFlag(false);
         background = Launcher.res.getTexture("fondo");
         back = Launcher.res.getTexture("back");
 
@@ -101,7 +100,7 @@ public class WorldSelectScreen extends GameState {
         btnWorld[5].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(Constants.STATE.MENU);
+                back();
             }
         });
 
@@ -110,7 +109,7 @@ public class WorldSelectScreen extends GameState {
         }
     }
     public void setLevel(String name){
-        LevelSelect.setWworld(name);
+        LevelSelect.setWorld(name);
         gsm.setState(Constants.STATE.LEVEL_SELECT);
     }
 
@@ -120,7 +119,7 @@ public class WorldSelectScreen extends GameState {
 
     @Override
     public void back() {
-
+        gsm.setState(Constants.STATE.MENU);
     }
 
     @Override
