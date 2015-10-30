@@ -111,3 +111,32 @@ function annoyingBehavior(chrtr)
     end
     -- Attack Section
 end
+
+-- This function use a coward statement to decide if keep on fight or cover up
+-- could be implemented with some ai that require ingenious behavior
+function commonSenseFunction(chrtr,indi)
+    inRange = false
+    evaluateDir(chrtr)
+
+    if hideMe(chrtr,indi.min_health) then
+        if runLikeBitch(chrtr,p) == 1 then
+            chrtr:move(false)
+        elseif runLikeBitch(chrtr,p) == 2 then
+            chrtr:move(true)
+        end
+    else
+        if chrtr:getHP() > indi.change_health and indi.behavior == 2 then --berseker
+            bersekerBehavior(chrtr)
+        elseif chrtr:getHP() < indi.change_health and indi.behavior == 2 then
+            harBehavior(chrtr)
+        elseif chrtr:getHP() > indi.min_helth and chrtr:getHP() < indi.final_change and indi.behavior == 2 then
+            cowardBehavior(chrtr)
+        end
+    end
+
+    if indi.recover then
+        cowardBehavior(chrtr)
+        chrtr:recover(indi.hp_per_tic)
+    end
+
+end

@@ -152,7 +152,7 @@ public abstract class Play extends GameState {
         }
         player.draw(sb);
         System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
-        //ene.draw(sb);
+        ene.draw(sb);
         draw();
     }
 

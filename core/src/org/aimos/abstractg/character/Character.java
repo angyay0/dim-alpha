@@ -60,7 +60,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     private long score = 0;
     // Current money the character has or gives when killed
     protected long money = 0;
-
+    private float MAXVELOCITY;
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
     public final float BODY_SCALE = 2.2f;
@@ -78,6 +78,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected boolean transition;
     protected LuaChunk iaChunk;
     protected Character killer;
+    private Indicators indicators;
 
     /**
      * @param spriteSrc
@@ -261,9 +262,11 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         if (direction) {
             if (isOnGround()) {
                 if (isCrouching()) {
+                    MAXVELOCITY = 2;
                     desiredVelX = 0.5f;
                 } else {
                     desiredVelX = 0.7f;
+                    MAXVELOCITY = 3;
                 }
             } else {
                 desiredVelX = 0.1f;//*
@@ -271,8 +274,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         } else {
             if (isOnGround()) {
                 if (isCrouching()) {
+                    MAXVELOCITY = 2;
                     desiredVelX = -0.5f;
                 } else {
+                    MAXVELOCITY = 3;
                     desiredVelX = -0.7f;
                 }
             } else {
@@ -280,7 +285,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             }
         }
         float forceX = (float) (getBody().getMass() * desiredVelX / (1 / 60.0)); // f = mv/t
-        getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
+        if(Math.abs(getBody().getLinearVelocity().x) < MAXVELOCITY) {
+            getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
+        }
         return true;
     }
 
@@ -514,9 +521,36 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         return atk;
     }
 
+    public long getHP() {
+        return hp;
+    }
+
+    public long getScore() {
+        return score;
+    }
+
+    public long getMaxHP() {
+        return maxHp;
+    }
+
     public boolean isInTransition() {
         return transition;
     }
+
+    public void setStats(long hp, long at){
+        atk = at;
+        this.hp = hp;
+    }
+
+    public void setMaxHp(long mhp){ maxHp = mhp;    }
+
+    public void setScore(long score){   this.score = score; }
+
+    public void addScore(long ad){  score += ad;    }
+
+    public Indicators getIndicators(){ return indicators;   }
+
+    public void setIndicators(Indicators indi){ indicators = indi;  }
 
     public abstract void die();
 
@@ -546,4 +580,26 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
 
     @Override
     public abstract void run();
+
+
+    public class Indicators{
+        public int min_health = 8;
+        public int change_health = 80;
+        public int final_change = 20;
+        public int hp_per_tic = 4;
+        public int behavior = 2;
+        public int shieldHP = 0;
+        public float spawnRate = 0.25f; //1/4 per sec
+        public int enemyToSpawn = 1; //minions
+        public int limitSpawn = 3;
+        public int spawnTimes = 0;
+
+        public boolean shielded = false;
+        public boolean recover = true;
+        public boolean spawner = true;
+
+        public void addSpawn(){
+            spawnTimes++;
+        }
+    }
 }
