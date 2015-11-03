@@ -172,6 +172,8 @@ public class MapLoader {
 
 
         if(objects != null){
+
+
             createBlocks(objects);
         }else {
 
