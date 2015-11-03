@@ -174,6 +174,7 @@ public class MapLoader {
         if(objects != null){
             createBlocks(objects);
         }else {
+
             createBlocks(layers[3], Constants.BIT.FLOOR.BIT());
         }
 
