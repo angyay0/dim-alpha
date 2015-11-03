@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,6 +16,14 @@ import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.Constants;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
 
 
 /**
@@ -96,6 +105,7 @@ public class MainMenu extends GameState{
         startButton.setWidth(200f);
         startButton.setHeight(80f);
         startButton.setPosition(300f, 100f);
+        startButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, 1.5f, Interpolation.swing))));
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -107,6 +117,7 @@ public class MainMenu extends GameState{
         optButton.setWidth(90f);
         optButton.setHeight(90f);
         optButton.setPosition(5f, 15f);
+        optButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(+50, 0, 1.5f, Interpolation.pow5Out))));
         optButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -118,6 +129,7 @@ public class MainMenu extends GameState{
         exitButton.setWidth(120f);
         exitButton.setHeight(120f);
         exitButton.setPosition(680f, 15f);
+        exitButton.addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(-50, 0, 1.5f, Interpolation.pow5Out))));
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
