@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="150" tilewidth="32" tileheight="32" nextobjectid="81">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="150" tilewidth="32" tileheight="32" nextobjectid="89">
  <tileset firstgid="1" name="blockBuilding04" tilewidth="32" tileheight="32" tilecount="210">
   <image source="blockBuilding04.png" width="480" height="448"/>
  </tileset>
@@ -49,7 +49,7 @@
  </layer>
  <layer name="floor" width="25" height="150">
   <data encoding="base64" compression="zlib">
-   eJztmtsOwiAMhknMHtOzXumVPoCH+SA+qiXGuDA2cNBCa7/kz5JlUloqNIAxisKTSxOna+R3vt8pSpcpOedrg6Kf2O1T+FEDPl+HxrX7/p9ihIXEGPpyhNpHd75SpqEx7OOugbXXUZj/hVAtUBtS81miTy3482i+T2lI9k1RJJKy3xK7/+LWFqmSCIVv2DYoxijVhuZaGTSmdcMp7yn7KWFeprJBZYcyR6WvCTX4Ji1nclN6fLgTil0ovhr/cbjHxe1/bn/G8kqpD4zzBcyzCgw47r9T1bc1kTpGJc77Yu5rlTyHpKhFlWE4nEFzI+c+/9Cco/v8fijWUmj/aUVhA9tOoA/FapNUu9zqKa5wrF0x4Xa/y4J5p99dCznEg4KccRiKa0sQa2uj1D2kWu54Ydq/NW/dO0+J6Dri5zPmpXM8lm5/sdv/NR7zmTEL0BK0Aq1BG9AWtAPtZ/32rQ7w/gg6gc4BUfACAri00w==
+   eJztmusOgjAMhUkMj+ldf+kvfQAv+CA+qiXGOGG4CfRsrf2SExKC63pWYdlWFIYhk1MZp3Pkc77fGYZLn5rztYHoJ3f7iDxywJdr17i69//JIy40euirEXSOzfeV0Q/zsE3zG5j7PIrzvxCaC+SG1nrWmFNF+dzK91UbmnMzDI0MWW+JXX9pzi2GSiOI3LhjIMZoaAyrtTSYp3kjqe6R/dTwXkbFQMVB1qj2b0IOuWmrmbFJPT7SCXkX8tf8/44mXzStO2rKBQnH/gLnXgUHEmsHNb/NiaFjlGK/L+a8Vsp9SMRcVDoS3w8u0vvPTWitP2W/pO0lIDyj9u+1EDG44wT6kLwG+xLTZ6m55YR5+Im08101nGf6m3veEvxAMKYPXb5WAK/rGKnOIeVyxosz/qV86upcNWLfET+vMU9d47G4/eVu/1c/ppOimJHmpAVpSVqR1qQNaTtpt19rR/f3pAPpGBCCB1SMr6U=
   </data>
  </layer>
  <layer name="fx" width="25" height="150" visible="0">
@@ -93,7 +93,7 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="12" x="704" y="4512" width="96" height="32">
+  <object id="12" x="704" y="4512" width="64" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -129,13 +129,12 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="21" x="416" y="4096" width="160" height="32"/>
   <object id="22" x="640" y="4000" width="64" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="23" x="448" y="3872" width="64" height="32">
+  <object id="23" x="449" y="3905" width="64" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -160,12 +159,12 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="28" x="160" y="3616" width="640" height="64">
+  <object id="28" x="161" y="3681" width="637" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="29" x="640" y="3488" width="64" height="32">
+  <object id="29" x="641" y="3522" width="64" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -225,7 +224,7 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="41" x="480" y="2912" width="64" height="32">
+  <object id="41" x="480" y="2944" width="64" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -416,6 +415,31 @@
    </properties>
   </object>
   <object id="80" x="504" y="4736" width="291" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="82" x="257.333" y="4158.67" width="95.3333" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="83" x="417.333" y="4096.67" width="160" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="85" x="383.333" y="576" width="31.3333" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="86" x="704" y="3457" width="64" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="88" x="544" y="3615" width="255.5" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>

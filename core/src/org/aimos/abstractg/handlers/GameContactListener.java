@@ -43,19 +43,20 @@ public class GameContactListener implements ContactListener {
         if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
             Vector2 s = (Vector2) fb.getBody().getUserData();
-            System.out.println((fb.getBody().getPosition().x + s.x));
+            //System.out.println((fb.getBody().getPosition().x + s.x));
             c.addFixtureCollide(fb);
-            System.out.println((c.getX() +((c.getWidth() / 2.2) / Constants.PTM)));
-            if(((((fb.getBody().getPosition().x -s.x) <= c.getX() -((c.getWidth() / 2.2) / Constants.PTM))
+            //System.out.println((c.getX() -((c.getWidth() / 2.2) / Constants.PTM)));
+            /*if(((((fb.getBody().getPosition().x -s.x) <= c.getX() -((c.getWidth() / 2.2) / Constants.PTM))
                     && (((fb.getBody().getPosition().x +s.x) >= c.getX() -((c.getWidth() / 2.2) / Constants.PTM)))) ||
-                    ((fb.getBody().getPosition().x + s.x) >= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) &&
-                    ((fb.getBody().getPosition().x - s.x) <= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))
+                    ((((fb.getBody().getPosition().x + s.x) >= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) &&
+                    ((fb.getBody().getPosition().x - s.x) <= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) ||
+                    (fb.getBody().getPosition().x + s.x >=  c.getX() && fb.getBody().getPosition().x - s.x <= c.getX()))
                     && (fb.getBody().getPosition().y + s.y) <= c.getY() - ((c.getHeight() / 2.2) / Constants.PTM))
                  {
                      System.out.println("Entro");
                     c.onGround();
 
-                }
+                }*/
 
 
         }
@@ -199,12 +200,13 @@ public class GameContactListener implements ContactListener {
         //Fall
         if(fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.FOOT)) {
             Character c = (Character) fa.getBody().getUserData();
-            Vector2 s = (Vector2) fb.getBody().getUserData();
+            //Vector2 s = (Vector2) fb.getBody().getUserData();
             c.removeFixtureCollide(fb);
-            if(((((fb.getBody().getPosition().x -s.x) <= c.getX() -((c.getWidth() / 2.2) / Constants.PTM))
+            /*if(((((fb.getBody().getPosition().x -s.x) <= c.getX() -((c.getWidth() / 2.2) / Constants.PTM))
                     && (((fb.getBody().getPosition().x +s.x) >= c.getX() -((c.getWidth() / 2.2) / Constants.PTM)))) ||
-                    ((fb.getBody().getPosition().x + s.x) >= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) &&
-                    ((fb.getBody().getPosition().x - s.x) <= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))
+                    ((((fb.getBody().getPosition().x + s.x) >= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) &&
+                            ((fb.getBody().getPosition().x - s.x) <= c.getX() +((c.getWidth() / 2.2) / Constants.PTM))) ||
+                    (fb.getBody().getPosition().x + s.x >=  c.getX() && fb.getBody().getPosition().x - s.x <= c.getX()))
                     && (fb.getBody().getPosition().y + s.y) <= c.getY() - ((c.getHeight() / 2.2) / Constants.PTM)){
                 System.out.println("Entro para salir");
                 System.out.println((fb.getBody().getPosition().x -s.x));
@@ -213,7 +215,7 @@ public class GameContactListener implements ContactListener {
                 System.out.println((c.getX() +((c.getWidth() / 2.2) / Constants.PTM)));
 
                 c.fall();
-            }
+            }*/
             //System.out.println((c.getY() -(((c.getHeight() / 2)) / Constants.PTM)));
             /*if((c.getY() -(((c.getHeight() / 2)) / Constants.PTM))> fb.getBody().getPosition().y &&
                     !(c.isJumping() || c.isInTransition())){

@@ -76,6 +76,8 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected static final String CROUCH_MOVE_SEQ = "crouch"; // 4
     protected static final String FALL_SEQ = "jump"; // 5
 
+    protected boolean onGround = false;
+    protected  boolean alive = true;
     protected boolean jumping;
     protected boolean invencible = false;
     protected boolean transition;
@@ -140,7 +142,6 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
                 setAnimation(1);
             }
         } else {
-
             float velX = -getBody().getLinearVelocity().x * .96f;
             float velY = -getBody().getLinearVelocity().y * .96f;
             float forceX = (float) (getBody().getMass() * velX / (1 / 60.0)); // f = mv/t
@@ -229,31 +230,34 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
             jumps--;
             return true;
+
         } else {
             return false;
         }
+
         //return  true;
     }
 
     public boolean isOnGround() {
-        /*for (Fixture f : fixFoot){
+        for (Fixture f : fixFoot){
             Vector2 s = (Vector2) f.getBody().getUserData();
-            if(((((f.getBody().getPosition().x -s.x) < getX() -((getWidth() / 2.2) / Constants.PTM))
-                    && (((f.getBody().getPosition().x +s.x) > getX() -((getWidth() / 2.2) / Constants.PTM)))) ||
-                    ((f.getBody().getPosition().x + s.x) > getX() +((getWidth() / 2.2) / Constants.PTM))) &&
-                    ((f.getBody().getPosition().x - s.x) < getX() +((getWidth() / 2.2) / Constants.PTM))
-                    && (f.getBody().getPosition().y + s.y) < getY() - ((getHeight() / 2.2) / Constants.PTM)){
-                    jumps = maxJumps;
-                    return true;
+            if(((((f.getBody().getPosition().x -s.x) <= getX() -((getWidth() / 2.2) / Constants.PTM))
+                    && (((f.getBody().getPosition().x +s.x) >= getX() -((getWidth() / 2.2) / Constants.PTM)))) ||
+                    ((((f.getBody().getPosition().x + s.x) >= getX() +((getWidth() / 2.2) / Constants.PTM))) &&
+                            ((f.getBody().getPosition().x - s.x) <= getX() +((getWidth() / 2.2) / Constants.PTM))) ||
+                    (f.getBody().getPosition().x + s.x >=  getX() && f.getBody().getPosition().x - s.x <= getX()))
+                    && (f.getBody().getPosition().y + s.y) <= getY() - ((getHeight() / 2.2) / Constants.PTM)){
+                onGround();
+                return true;
+
             }
         }
+        return  false;
 
-        return false;*/
-        return jumps == maxJumps;
     }
 
     public void onGround() {
-        if (isOnGround()) return;
+        //if (isOnGround()) return;
         jumps = maxJumps;
         jumping = false;
         if (isWalking()) {
@@ -302,7 +306,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
         float forceX = (float) (getBody().getMass() * desiredVelX / (1 / 60.0)); // f = mv/t
         if(Math.abs(getBody().getLinearVelocity().x) < MAXVELOCITY) {
-            getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
+
+                getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
+
         }
         return true;
     }
@@ -606,6 +612,9 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     public abstract void run();
 
 
+    /*public boolean checkFixtureC(){
+
+    }*/
     public class Indicators{
         public int min_health = 8;
         public int change_health = 80;

@@ -54,7 +54,7 @@ public class MapLoader {
     private Box2DDebugRenderer b2dRenderer;
     private boolean debug = true;
     SpriteBatch batch;
-    Texture bg;
+    static Texture  bg = new Texture("data/bck.png");
     private Player player;
 
     private ShapeRenderer sr;
@@ -66,7 +66,6 @@ public class MapLoader {
         b2dRenderer = new Box2DDebugRenderer();
         batch = new SpriteBatch();
         sr = new ShapeRenderer();
-        bg = new Texture(Play.getMap() + "/bck.png");
         createMap();
         //Camera to Fx
         fx = new BoundedCamera();
@@ -86,9 +85,11 @@ public class MapLoader {
     }
 
     public void render() {
-        batch.begin();
-        batch.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        batch.end();
+        if(bg != null) {
+            batch.begin();
+            batch.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            batch.end();
+        }
 
         tmRenderer.getBatch().begin();
 

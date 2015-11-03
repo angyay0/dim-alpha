@@ -1,7 +1,7 @@
 {
 	tierra:[
 		{name:"ciudad_1",tmx:"Builds"},
-		{name:"ciudad_2",tmx:"citylb"},
+		{name:"ciudad_2",tmx:"mapa3"},
 		{name:"ciudad_3",tmx:"cityla"}
 	],
 	espacio:[
