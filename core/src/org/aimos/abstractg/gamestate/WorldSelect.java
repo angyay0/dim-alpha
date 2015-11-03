@@ -55,7 +55,7 @@ public class WorldSelect extends GameState {
         btnWorld[0].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("marte");
+                setLevel("tierra");
 
             }
         });
@@ -65,7 +65,7 @@ public class WorldSelect extends GameState {
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("tierra");
+                setLevel("marte");
             }
         });
 

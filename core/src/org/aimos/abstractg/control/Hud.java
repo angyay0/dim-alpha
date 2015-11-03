@@ -90,14 +90,14 @@ public class Hud extends WidgetGroup {
         TextureAtlas txcoin= Launcher.res.getAtlas("coins");
         AtlasRegion  coin  = txcoin.findRegion(ICON);
 
-        TextureAtlas arm = Launcher.res.getAtlas("armas");
-        AtlasRegion ar =  arm.findRegion(ARM);
+        /*TextureAtlas arm = Launcher.res.getAtlas("armas");
+        AtlasRegion ar =  arm.findRegion(ARM);*/
 
-        Button acc = new Button( new TextureRegionDrawable( new  TextureRegion( Launcher.res.getTexture("accion"))));
+       /* Button acc = new Button( new TextureRegionDrawable( new  TextureRegion( Launcher.res.getTexture("accion"))));
         acc.setSize(SQBUTTON, SQBUTTON);
-        acc.setPosition((800 / 2) - (acc.getWidth() / 2), 512 / 2);
+        acc.setPosition((800 / 2) - (acc.getWidth() / 2), 512 / 2);*/
 
-        Button meleeButton = new Button( new TextureRegionDrawable( meleeReg ) );
+      /*  Button meleeButton = new Button( new TextureRegionDrawable( meleeReg ) );
         meleeButton.setSize(SQBUTTON,SQBUTTON);
         meleeButton.setPosition(Launcher.WIDTH - (meleeReg.getRegionWidth() + CTRL_MARGIN * 2), CTRL_MARGIN);
         meleeButton.addListener(new ClickListener() {
@@ -106,7 +106,7 @@ public class Hud extends WidgetGroup {
                 p.attack();
                 return super.touchDown(event, x, y, pointer, button);
             }
-        });
+        });*/
 
         Button shootButton = new Button( new TextureRegionDrawable( shootReg ) );
         shootButton.setSize(SQBUTTON, SQBUTTON);
@@ -251,9 +251,9 @@ public class Hud extends WidgetGroup {
         star.setPosition(750f, poyImg + 10);
         star.setSize(coin.getRegionWidth(), coin.getRegionWidth());
 
-        Image txBal = new Image( new  TextureRegionDrawable(ar));
+        /*Image txBal = new Image( new  TextureRegionDrawable(ar));
         txBal.setPosition(750f, poyImg - 38);
-        txBal.setSize(coin.getRegionWidth(), coin.getRegionWidth());
+        txBal.setSize(coin.getRegionWidth(), coin.getRegionWidth());*/
 
 
 
@@ -266,9 +266,9 @@ public class Hud extends WidgetGroup {
         addActor(bar);
         addActor(cir);
         addActor(star);
-        addActor(txBal);
-        addActor(acc);
-        addActor(meleeButton);
+      /*  addActor(txBal);*/
+      /*  addActor(acc);*/
+       /* addActor(meleeButton);*/
         addActor(shootButton);
     }
 

@@ -142,6 +142,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
                 setAnimation(1);
             }
         } else {
+
             float velX = -getBody().getLinearVelocity().x * .96f;
             float velY = -getBody().getLinearVelocity().y * .96f;
             float forceX = (float) (getBody().getMass() * velX / (1 / 60.0)); // f = mv/t
@@ -203,6 +204,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public void update(float dt) {
+        Vector2 pos = getPosition();
+        pos.cpy();
+        Gdx.app.debug("Posicion:=>",pos.toString());
+
         if (isDead()) die();
         else animations.get(animationIndex).update(dt);
     }
@@ -230,11 +235,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             getBody().applyForce(new Vector2(0, forceY), getBody().getWorldCenter(), true);
             jumps--;
             return true;
-
         } else {
             return false;
         }
-
         //return  true;
     }
 
@@ -306,9 +309,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
         float forceX = (float) (getBody().getMass() * desiredVelX / (1 / 60.0)); // f = mv/t
         if(Math.abs(getBody().getLinearVelocity().x) < MAXVELOCITY) {
-
-                getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
-
+            getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
         }
         return true;
     }
@@ -583,7 +584,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     @Override
     public void act() {
         if (iaChunk.isCharacterSet()) {
-            Gdx.app.debug("Should Execute Script", "Let see if it works!");
+            //Gdx.app.debug("Should Execute Script", "Let see if it works!");
             iaChunk.exec();
         } else
             Gdx.app.error("Cannot Execute Script", "Character Is Not Set");
@@ -611,28 +612,4 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
     @Override
     public abstract void run();
 
-
-    /*public boolean checkFixtureC(){
-
-    }*/
-    public class Indicators{
-        public int min_health = 8;
-        public int change_health = 80;
-        public int final_change = 20;
-        public int hp_per_tic = 4;
-        public int behavior = 2;
-        public int shieldHP = 0;
-        public float spawnRate = 0.25f; //1/4 per sec
-        public int enemyToSpawn = 1; //minions
-        public int limitSpawn = 3;
-        public int spawnTimes = 0;
-
-        public boolean shielded = false;
-        public boolean recover = true;
-        public boolean spawner = true;
-
-        public void addSpawn(){
-            spawnTimes++;
-        }
-    }
 }

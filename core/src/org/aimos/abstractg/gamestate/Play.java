@@ -1,5 +1,6 @@
 package org.aimos.abstractg.gamestate;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
@@ -8,8 +9,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import org.aimos.abstractg.character.Enemy;
-import org.aimos.abstractg.character.Player;
+import org.aimos.abstractg.character.*;
+import org.aimos.abstractg.character.Character;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
@@ -21,6 +22,7 @@ import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.Item;
 import org.aimos.abstractg.physics.MeleeWeapon;
 import org.aimos.abstractg.physics.PhysicalBody;
+import org.aimos.abstractg.physics.Portal;
 import org.aimos.abstractg.physics.ShootWeapon;
 import org.aimos.abstractg.physics.ThrowWeapon;
 import org.aimos.abstractg.physics.Weapon;
@@ -36,17 +38,19 @@ public abstract class Play extends GameState {
     private GameContactListener contact;
 
     private Player player;
-    private Enemy ene;
+   // private Enemy ene;
     private Array<Coin> coins;
     private Array<PhysicalBody> removed;
     private MapLoader loader;
     private Hud hud;
+    private Portal portal;
+    private boolean win;
     MeleeWeapon mw;
     ShootWeapon sw;
     ThrowWeapon tw;
     Skin skin;
     Thread t;
-    Label labelInfo,labelInf;
+    Label labelInfo/*,labelInfo*/;
 
     private static String map = "tutorial";
     private static int worldLvel = 1;
@@ -57,7 +61,7 @@ public abstract class Play extends GameState {
         //Load music
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
         AudioManager.getInstance().play(0.5f, true);
-        Enemy.running = true;
+       // Enemy.running = true;
 
         coins = new Array<Coin>();
 
@@ -66,13 +70,15 @@ public abstract class Play extends GameState {
         removed = new Array<PhysicalBody>();
         contact = new GameContactListener(removed);
         world.setContactListener(contact);
+        win = false;
+        //create the portal
 
         //create player
         player = new Player("player","Hero", this, new Vector2(128,128));
-        /*ene = new Enemy("player","Enemy", this, new Vector2(200, 128)){
+       /* ene = new Boss("player","Enemy", this, new Vector2(200, 128));/*{
             @Override
             public void run(){
-                while( running(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )){
+                while( running ){
                     try{
 
 
@@ -90,29 +96,42 @@ public abstract class Play extends GameState {
                 }
             }
         };*/
-
+       /* ene.setConfigurations("boss.lua",1000,0);
+        ene.setIndicators( new Indicators() );*/
+        
         loader = new MapLoader(world, player);
-       // mw = new MeleeWeapon(10,10,10,7,this,"sword");
+      //  mw = new MeleeWeapon(10, 10, 10, 7, this, "sword");
         //sw = new ShootWeapon(10,10,10,7,this,"gun");
-       // tw = new ThrowWeapon(10,10,10,7,this,"steel");
-        //player.setWeapon(mw);
+        // tw = new ThrowWeapon(10,10,10,7,this,"steel");
+      //  player.setWeapon(mw);
         //player.setWeapon(sw);
-      //  player.setWeapon(tw);
+        //  player.setWeapon(tw);
 
         skin = new Skin();
         skin.addRegions(Launcher.res.getAtlas("uiskin"));
         skin.add("default-font", font);
         skin.load(Gdx.files.internal("data/uiskin2.json"));
+        Gdx.app.setLogLevel(Application.LOG_DEBUG);
+        Vector2[] pos = new Vector2[5];
+        pos[0] = new Vector2(256,512);
+        pos[1] = new Vector2(704,1455);
+        pos[2] = new Vector2(445,1585);
+        pos[3] = new Vector2(223,2034);
+        pos[4] = new Vector2(768,2650);
 
-        addCoins(Coin.generateCoins(this, new Vector2(256, 512), 100));
+        Vector2 porPos = new Vector2(443,2671);
+       // addCoins(Coin.generateCoins(this, new Vector2(256, 512), 1000));
+        addCoins(Coin.generateCoins(this, pos, pos.length));
 
         //Create Hud
         hud = new Hud(player, gsm);
         addActor(hud);
         initLabel();
 
-        //t = new Thread(ene);
-        //t.start();
+        portal = new Portal(this,porPos);
+        portal.setVisibility(false);
+     /*   t = new Thread(ene);
+        t.start();*/
     }
 
     @Override
@@ -120,6 +139,15 @@ public abstract class Play extends GameState {
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
         player.update(dt);
+        if( !portal.isVisible() ){
+            if( player.hasMinimumCoins(4) )
+                portal.setVisibility(true);
+        }
+        if(win){
+            Gdx.app.debug("Ya","Gane");
+            Gdx.app.exit();
+        }
+      /*  ene.update(dt);*/
         /*if(ene.isDead()) {
             System.out.println("Enemy muerto");
         }*/
@@ -157,7 +185,7 @@ public abstract class Play extends GameState {
             disposeState();
         }
         updLabel(String.valueOf(player.getMoney()));
-        updArm(String.valueOf(player.getMoney()));   
+      /*  updArm(String.valueOf(player.getMoney()));   */
     }
 
     @Override
@@ -171,8 +199,9 @@ public abstract class Play extends GameState {
             coin.draw(sb);
         }
         player.draw(sb);
-        //System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
- //       ene.draw(sb);
+        portal.render(sb);
+        System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
+        /*ene.draw(sb);*/
         draw();
     }
 
@@ -218,17 +247,17 @@ public abstract class Play extends GameState {
         labelInfo.setPosition(690f, 450f);
         labelInfo.setAlignment(Align.right);
 
-        labelInf = new Label("0", skin, "default");
+      /*  labelInf = new Label("0", skin, "default");
         labelInf.setPosition(690f, 400f);
-        labelInf.setAlignment(Align.right);
+        labelInf.setAlignment(Align.right);*/
 
-        addActor(labelInf);
         addActor(labelInfo);
+    /*    addActor(labelInf);*/
     }
-
+/*
     public void updArm(String val) {
         labelInf.setText(val);
-    }
+    }*/
 
     public void updLabel(String val) {
         labelInfo.setText(val);
@@ -246,4 +275,7 @@ public abstract class Play extends GameState {
         return gsm.getState().getID();
     }
 
+    public void setWin(boolean bool) {
+        win = bool;
+    }
 }

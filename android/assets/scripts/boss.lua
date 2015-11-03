@@ -5,21 +5,26 @@
 -- Time: 10:53 AM
 --
 
+require("basic")
+require("officer")
+
 function behavior(chrtr)
     p = chrtr:getPlay():getPlayer()
     indi = chrtr:getIndicators()
     inRange = false
     commonSenseFunction(chrtr,indi)
 
-    if indi.spawner and chrtr:getHP() < indi.spawnHealth then
+    if indi.spawner then
         if indi.spawnTimes < indi.limitSpawn then
             spawnEnemy(indi.spawnRate,indi.enemyToSpawn)
+            chrtr:createEnemy()
             indi:addSpawn()
         end
     end
 end
 
 function spawnEnemy()
+
 end
 
 -- This is the minimalistic boss ai, basedn in pathfinder and
