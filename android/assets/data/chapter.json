@@ -1,6 +1,6 @@
 {
 	tierra:[
-		{name:"ciudad_1",tmx:"cityla"},
+		{name:"ciudad_1",tmx:"Builds"},
 		{name:"ciudad_2",tmx:"citylb"},
 		{name:"ciudad_3",tmx:"cityla"}
 	],

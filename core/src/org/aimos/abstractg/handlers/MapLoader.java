@@ -37,6 +37,8 @@ import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.gamestate.Play;
 
+import java.util.Iterator;
+
 /**
  * Created by Herialvaro on 06/10/2015.
  */
@@ -139,6 +141,7 @@ public class MapLoader {
         // load tile map and map renderer
         try {
            tileMap = new TmxMapLoader().load(Play.getMap() + "/" + Play.getMap() + ".tmx");
+            System.out.println(tileSize);
         } catch (Exception e) {
             Gdx.app.error("ERROR ", "Cannot find file: " + Play.getMap() + ".tmx");
             Gdx.app.exit();
@@ -162,12 +165,15 @@ public class MapLoader {
         layers[4] = (TiledMapTileLayer) tileMap.getLayers().get("building");
 
        // TiledMapTileLayer objects = (TiledMapTileLayer) tileMap.getLayers().get()
-        /*MapObjects objects = tileMap.getLayers().get("ways").getObjects();
+        MapObjects objects = tileMap.getLayers().get("objetos").getObjects();
 
-        for (MapObject obj : objects){
-            System.out.println(obj.getProperties().get("camino"));
-        }*/
-        createBlocks(layers[3], Constants.BIT.FLOOR.BIT());
+
+        if(objects != null){
+            createBlocks(objects);
+        }else {
+            createBlocks(layers[3], Constants.BIT.FLOOR.BIT());
+        }
+
 
     }
 
@@ -283,6 +289,53 @@ public class MapLoader {
         }
         size.clear();
         coords.clear();
+
+    }
+
+    private void createBlocks(MapObjects objects){
+
+        BodyDef bdef = new BodyDef();
+        bdef.type = BodyDef.BodyType.StaticBody;
+        bdef.position.set(0, 0);
+        ChainShape cs = new ChainShape();
+        Vector2[] v = new Vector2[4];
+        v[0] = new Vector2(0, 0);
+        v[1] = new Vector2(0, (tileMapHeight * tileSize) / Constants.PTM);
+        v[2] = new Vector2((tileMapWidth * tileSize) / Constants.PTM, (tileMapHeight * tileSize) / Constants.PTM);
+        v[3] = new Vector2((tileMapWidth * tileSize) / Constants.PTM, 0);
+        cs.createChain(v);
+        FixtureDef fd = new FixtureDef();
+        fd.friction = 0;
+        fd.shape = cs;
+        fd.filter.categoryBits = Constants.BIT.WALL.BIT();
+        fd.filter.maskBits = Constants.BIT.CHARACTER.BIT();
+        Body b = world.createBody(bdef);
+        b.createFixture(fd).setUserData(Constants.DATA.CELL);
+        cs.dispose();
+        for (MapObject obj : objects){
+            if (obj.getProperties().containsKey("clase") && obj.getProperties().get("clase").equals("1")){
+                Vector2 c = new Vector2(Float.parseFloat(obj.getProperties().get("x").toString())/ Constants.PTM,
+                        Float.parseFloat(obj.getProperties().get("y").toString())/ Constants.PTM);
+                Vector2 s = new Vector2((Float.parseFloat(obj.getProperties().get("width").toString())/ Constants.PTM) / 2,
+                        (Float.parseFloat(obj.getProperties().get("height").toString())/ Constants.PTM) / 2);
+                bdef = new BodyDef();
+                bdef.type = BodyDef.BodyType.StaticBody;
+                bdef.position.set(c.x + s.x,c.y + s.y);
+                PolygonShape shape = new PolygonShape();
+                shape.setAsBox(s.x,s.y);
+                fd = new FixtureDef();
+                fd.friction = 1;
+                fd.shape = shape;
+                fd.filter.categoryBits = Constants.BIT.FLOOR.BIT();
+                fd.filter.maskBits = (short) (Constants.BIT.CHARACTER.BIT() | Constants.BIT.FLOOR.BULLET.BIT() |
+                        Constants.BIT.GRANADE.BIT() | Constants.BIT.ITEM.BIT());
+                b = world.createBody(bdef);
+                b.createFixture(fd).setUserData(Constants.DATA.CELL);
+                b.setUserData(s);
+                shape.dispose();
+            }
+
+        }
 
     }
 

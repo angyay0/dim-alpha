@@ -25,6 +25,8 @@ import org.aimos.abstractg.physics.Interactive;
 import org.aimos.abstractg.physics.PhysicalBody;
 import org.aimos.abstractg.physics.Weapon;
 
+import java.util.LinkedList;
+
 /**
  * Clase que representa el modelo abstracto
  * del personaje para los escenarios
@@ -65,7 +67,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     //Constants
     protected float ANIMATION_DELTA = 1 / 5f;
     public final float BODY_SCALE = 2.2f;
-
+    LinkedList<Fixture> fixFoot = new LinkedList<Fixture>();
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0
     protected static final String WALK_SEQ = "walk"; // 1
@@ -234,6 +236,19 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public boolean isOnGround() {
+        /*for (Fixture f : fixFoot){
+            Vector2 s = (Vector2) f.getBody().getUserData();
+            if(((((f.getBody().getPosition().x -s.x) < getX() -((getWidth() / 2.2) / Constants.PTM))
+                    && (((f.getBody().getPosition().x +s.x) > getX() -((getWidth() / 2.2) / Constants.PTM)))) ||
+                    ((f.getBody().getPosition().x + s.x) > getX() +((getWidth() / 2.2) / Constants.PTM))) &&
+                    ((f.getBody().getPosition().x - s.x) < getX() +((getWidth() / 2.2) / Constants.PTM))
+                    && (f.getBody().getPosition().y + s.y) < getY() - ((getHeight() / 2.2) / Constants.PTM)){
+                    jumps = maxJumps;
+                    return true;
+            }
+        }
+
+        return false;*/
         return jumps == maxJumps;
     }
 
@@ -351,7 +366,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         getBody().createFixture(fdef).setUserData(Constants.DATA.BODY);
 
         // create fixturedef for player foot
-        shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+        shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
@@ -359,7 +374,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         getBody().createFixture(fdef).setUserData(Constants.DATA.FOOT);
 
         //create fixturedef for player head
-        shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
+        shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
         fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
@@ -399,20 +414,20 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
                 shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, (getHeight() / BODY_SCALE) / Constants.PTM);
                 fix = getBody().getFixtureList().get(1);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
                 fix = getBody().getFixtureList().get(2);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE)) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE / 4)) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE)) / Constants.PTM), 0);
                 break;
             case 3://crouch
             case 4://crouch walk
                 shape.setAsBox((getWidth() / BODY_SCALE) * 1.25f / Constants.PTM, (getHeight() / BODY_SCALE) * 0.62f / Constants.PTM);
                 fix = getBody().getFixtureList().get(1);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 fix = getBody().getFixtureList().get(2);
                 shape = (PolygonShape) fix.getShape();
-                shape.setAsBox(((getWidth() - 1) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
+                shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 break;
         }
         getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
@@ -567,6 +582,15 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         } else
             Gdx.app.error("Cannot Execute Script", "Character Is Not Set");
     }
+
+    public void addFixtureCollide(Fixture f){
+        fixFoot.add(f);
+    }
+
+    public void removeFixtureCollide(Fixture f){
+        fixFoot.remove(f);
+    }
+
 
     @Override
     public void loadScript() {
