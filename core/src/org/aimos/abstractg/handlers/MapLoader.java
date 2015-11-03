@@ -165,7 +165,10 @@ public class MapLoader {
         layers[4] = (TiledMapTileLayer) tileMap.getLayers().get("building");
 
        // TiledMapTileLayer objects = (TiledMapTileLayer) tileMap.getLayers().get()
-        MapObjects objects = tileMap.getLayers().get("objetos").getObjects();
+        MapObjects objects = null;
+        if(tileMap.getLayers().get("objetos") != null) {
+            objects = tileMap.getLayers().get("objetos").getObjects();
+        }
 
 
         if(objects != null){
