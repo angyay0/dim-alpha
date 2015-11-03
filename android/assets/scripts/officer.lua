@@ -136,7 +136,7 @@ function commonSenseFunction(chrtr,indi)
 
     if indi.recover then
         cowardBehavior(chrtr)
-        chrtr:recover(indi.hp_per_tic)
+       -- chrtr:recover(indi.hp_per_tic)
     end
 
 end

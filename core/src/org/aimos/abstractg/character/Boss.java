@@ -1,8 +1,11 @@
 //Boss
 package org.aimos.abstractg.character;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.gamestate.Play;
 
@@ -24,7 +27,12 @@ public class Boss extends Enemy {
 	private long bonusDamage;
 	//phases: se va a usar para definir las fases que tendra el jefe
 	private int phases;
+	//Minions array
+	private Array<Enemy> minions;
 
+	private Vector2 initial;
+
+	private Thread t;
 	/**
 	 * @param spriteSrc
 	 * @param name
@@ -33,8 +41,17 @@ public class Boss extends Enemy {
 	 */
 	public Boss(String spriteSrc, String name, Play play, Vector2 pos) {
 		super(spriteSrc, name, play, pos);
+		minions = new Array<Enemy>();
+		initial = pos;
 	}
 
+	@Override
+	protected void render(SpriteBatch sb) {
+		for (Enemy minion : minions) {
+			minion.render(sb);
+		}
+		super.render(sb);
+	}
 
 	/**
 	 *
@@ -49,8 +66,12 @@ public class Boss extends Enemy {
 	 *retorna una variable tipo Enemy
 	 *@return Type Enemy
 	 **/
-	public Enemy createEnemy(){
-		return new Enemy("cambia esto luego","Minion",getPlay(), getPosition().cpy());
+	public void createEnemy(){
+		Enemy ene = new Boss("player","Minion", getPlay(), initial/*.set(getPosition().x,getPosition().y+getPosition().y)*/);
+		ene.setConfigurations("minion.lua",getIndicators().spawnHealth,0);
+		minions.add(ene);
+		new Thread(ene).start();
+		Gdx.app.debug("Imp","Minion created "+ene.getPosition()+"=="+getPosition());
 	}
 
 

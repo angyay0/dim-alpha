@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="150" height="25" tilewidth="32" tileheight="32" nextobjectid="25">
+ <tileset firstgid="1" name="blockX224" tilewidth="32" tileheight="32" tilecount="7">
+  <image source="blockX224.png" width="224" height="32"/>
+ </tileset>
+ <tileset firstgid="8" name="box1_64" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="box1_64.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="9" name="box2_64" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="box2_64.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="10" name="box3_64" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="box3_64.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="11" name="box4_64" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="box4_64.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="12" name="box32" tilewidth="32" tileheight="32" tilecount="16">
+  <image source="box32.png" width="138" height="138"/>
+ </tileset>
+ <tileset firstgid="28" name="bricks" tilewidth="32" tileheight="32" tilecount="16">
+  <image source="bricks.png" width="128" height="128"/>
+ </tileset>
+ <tileset firstgid="44" name="casa1" tilewidth="32" tileheight="32" tilecount="91">
+  <image source="casa1.png" width="416" height="224"/>
+ </tileset>
+ <tileset firstgid="135" name="casa2" tilewidth="32" tileheight="32" tilecount="247">
+  <image source="casa2.png" width="417" height="609"/>
+ </tileset>
+ <tileset firstgid="382" name="casa3" tilewidth="32" tileheight="32" tilecount="154">
+  <image source="casa3.png" width="450" height="352"/>
+ </tileset>
+ <tileset firstgid="536" name="casa4" tilewidth="32" tileheight="32" tilecount="300">
+  <image source="casa4.png" width="511" height="653"/>
+ </tileset>
+ <tileset firstgid="836" name="casa5" tilewidth="32" tileheight="32" tilecount="121">
+  <image source="casa5.png" width="352" height="378"/>
+ </tileset>
+ <tileset firstgid="957" name="casa6" tilewidth="32" tileheight="32" tilecount="380">
+  <image source="casa6.png" width="622" height="640"/>
+ </tileset>
+ <tileset firstgid="1337" name="casa7" tilewidth="32" tileheight="32" tilecount="552">
+  <image source="casa7.png" width="786" height="766"/>
+ </tileset>
+ <tileset firstgid="1889" name="casa8" tilewidth="32" tileheight="32" tilecount="460">
+  <image source="casa8.png" width="640" height="736"/>
+ </tileset>
+ <tileset firstgid="2349" name="blockBuilding01" tilewidth="32" tileheight="32" tilecount="63">
+  <image source="blockBuilding01.png" width="224" height="288"/>
+ </tileset>
+ <tileset firstgid="2412" name="blockBuilding02" tilewidth="32" tileheight="32" tilecount="72">
+  <image source="blockBuilding02.png" width="256" height="288"/>
+ </tileset>
+ <layer name="building" width="150" height="25">
+  <data encoding="base64" compression="zlib">
+   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
+  </data>
+ </layer>
+ <layer name="floor" width="150" height="25">
+  <data encoding="base64" compression="zlib">
+   eJzt2esKwjAMhuH+q4e78EI87ZJ1envmnxXMVmJDU3wf+AhkDLbRZoOlBAAAAADobS/ZFXXtuFaB0kayLeraca0CPTDXYLW0dphrsNLWDrNqfBG/p5lV/m45pXt+12f+7M+SR0VfE+17OuI6x/iirfNRHBby75hR8MCMAhAd7z944P2HVphR8MCMqscehAf24HfsNzv+P+jYb3b8f/BzlJwkZ8lFcpVMjfq/9Cana2rZt5zT6jn2uu/a3gsh6DTR
+  </data>
+ </layer>
+ <objectgroup name="objetos">
+  <object id="1" x="0" y="768" width="4800" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="7" x="2016" y="704" width="128" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="9" x="2048" y="640" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="10" x="2336" y="416" width="224" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="11" x="2720" y="352" width="160" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="12" x="2912" y="352" width="160" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="13" x="3104" y="352" width="160" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="14" x="3488" y="320" width="128" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="15" x="3872" y="160" width="128" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="16" x="4128" y="160" width="320" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="17" x="4640" y="352" width="128" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="18" x="4448" y="576" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="19" x="4288" y="672" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="20" x="4480" y="256" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="21" x="4543" y="512" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="22" x="4672" y="288" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="23" x="4704" y="224" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="24" x="4607" y="417" width="64" height="64">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <layer name="fx" width="150" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztwYEAAAAAw6D5Ux/hAlUBAAAAAAAAAAAAAAAAAMA3OpgAAQ==
+  </data>
+ </layer>
+ <layer name="xfx" width="150" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztwYEAAAAAw6D5Ux/hAlUBAAAAAAAAAAAAAAAAAMA3OpgAAQ==
+  </data>
+ </layer>
+ <layer name="more" width="150" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztwYEAAAAAw6D5Ux/hAlUBAAAAAAAAAAAAAAAAAMA3OpgAAQ==
+  </data>
+ </layer>
+ <layer name="bg" width="150" height="25">
+  <data encoding="base64" compression="zlib">
+   eJztwYEAAAAAw6D5Ux/hAlUBAAAAAAAAAAAAAAAAAMA3OpgAAQ==
+  </data>
+ </layer>
+</map>

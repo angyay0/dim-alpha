@@ -10,12 +10,14 @@ import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.character.Character;
 import org.aimos.abstractg.character.Player;
+import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.physics.Ammo;
 import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.DroppedWeapon;
 import org.aimos.abstractg.physics.Interactive;
 import org.aimos.abstractg.physics.Item;
 import org.aimos.abstractg.physics.PhysicalBody;
+import org.aimos.abstractg.physics.Portal;
 
 /**
  * Created by EinarGretch on 25/09/2015.
@@ -109,6 +111,24 @@ public class GameContactListener implements ContactListener {
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
                 Character c = (Character) fa.getBody().getUserData();
                 c.setInteractive(i);
+            }
+        }
+        //Portal
+        if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.PORTAL)) {
+            Portal i = (Portal) fa.getBody().getUserData();
+            if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.BODY)) {
+                Character c = (Character) fb.getBody().getUserData();
+                if( c instanceof Player ){
+                    Player pl = (Player) c;
+                    pl.setWinMapLevel();
+                }
+            }
+        }
+        if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.PORTAL)) {
+            Portal i = (Portal) fb.getBody().getUserData();
+            if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
+                Portal j = (Portal) fb.getBody().getUserData();
+                j.getPlay().getPlayer().setWinMapLevel();
             }
         }
         //Pick-up

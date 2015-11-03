@@ -1,8 +1,8 @@
 {
 	tierra:[
-		{name:"ciudad_1",tmx:"Builds"},
-		{name:"ciudad_2",tmx:"mapa3"},
-		{name:"ciudad_3",tmx:"cityla"}
+		{name:"Tutorial",tmx:"tutorial"},
+		{name:"ciudad_1",tmx:"city"},
+		{name:"ciudad_2",tmx:"Builds"}
 	],
 	espacio:[
 		{name:"espacio_1",tmx:"cityla"},

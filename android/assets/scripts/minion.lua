@@ -8,13 +8,24 @@
 
 require("basic")
 
---[[
+--
 function behavior(chrtr)
-    p = chrtr:getPlay():getPlayer()
+  --[[  p = chrtr:getPlay():getPlayer()
     inRange = false
     evaluateDir(chrtr)
+
+    if chrtr:getX() > p:getX()+(70/getPTM()) then
+        chrtr:move(false)
+    elseif chrtr:getX() < p:getX()-(70/getPTM()) then
+        chrtr:move(true)
+    else
+        inRange = true
+    end
+
+    jumperBehavior(chrtr,p)--]]
+    cowardBehavior(chrtr)
 end
---]]
+--
 
 -- Follower Behavior in same horizontal spot
 -- can jump

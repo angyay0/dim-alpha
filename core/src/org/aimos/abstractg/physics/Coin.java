@@ -14,6 +14,8 @@ import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.Constants;
 
+import java.util.Random;
+
 /**
  * Clase que representa el objeto Coin
  * que representa la moneda del juego
@@ -74,6 +76,25 @@ public class Coin extends Item implements PickUp{
                 coins.add(new Coin(c, p, nPos));
             }
             val = res;
+        }
+        return coins;
+    }
+
+    /**
+     * La misma cantidad de monedas y vectores de posicion para que aparezcan
+     * @param p
+     * @param pos
+     * @param amount
+     * @return
+     */
+    public static Array<Coin> generateCoins(Play p, Vector2[] pos, int amount){
+        Array<Coin> coins = new Array<Coin>();
+        //Random r = new Random();
+        long res;
+        for(int i = 0; i < amount; i++){
+            Vector2 nPos = pos[i].cpy();
+            nPos.add(MathUtils.random(-2, 2),MathUtils.random(-2,2));
+            coins.add(new Coin(TYPE.GOLD, p, nPos));
         }
         return coins;
     }

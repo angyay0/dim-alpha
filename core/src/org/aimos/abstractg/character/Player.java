@@ -27,6 +27,7 @@ public class Player extends Character {
     private Array<Weapon> weapons;
     private long enemiesKilled = 0;
     public boolean checkVelocityY = false;
+    private int coinCount = 0;
 
     public volatile boolean running = true;
     int count = 0;
@@ -42,7 +43,7 @@ public class Player extends Character {
     public Player(String spriteSrc, String name, Play play, Vector2 pos) {
         super(spriteSrc, name, play, pos);
         weapons = new Array<Weapon>();
-        //setStats(200,1);
+        setStats(400,10);
      //   chainShape = true;
     //    loadScript("ia_agents.lua");
        // loadScript();
@@ -70,17 +71,34 @@ public class Player extends Character {
     @Override
     public void run() {
         while(running){
-           // body.getLinearVelocity()
+            act();
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            if(count < 100){
+                count++;
+            }else{
+                running = false;
+            }
+
         }
     }
 
     public void addMoney(Coin c) {
         addMoney(c.getValue());
+        coinCount++;
     }
 
     public void addWeapon(DroppedWeapon w) {
         weapons.add(w.getWeapon());
         setWeapon(w.getWeapon());
+    }
+
+    public boolean hasMinimumCoins(int min){
+        return (coinCount>=min);
     }
 
     public void setWeapon(int i){
@@ -103,5 +121,7 @@ public class Player extends Character {
     public long getEnemiesKilled() {
         return enemiesKilled;
     }
+
+    public void setWinMapLevel(){ getPlay().setWin(true);   }
 
 }

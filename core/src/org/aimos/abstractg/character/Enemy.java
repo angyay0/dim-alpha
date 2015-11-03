@@ -33,10 +33,16 @@ import org.aimos.abstractg.physics.DroppedWeapon;
      */
     public Enemy(String spriteSrc, String name, Play play, Vector2 pos) {
         super(spriteSrc, name, play, pos);
-		loadScript("officer.lua");
+	/*	loadScript("officer.lua");
 		setSelfToScript();
-		setStats(8,1);
+		setStats(8,1);*/
     }
+
+	public void setConfigurations(String luafile, long hp, long atk){
+		loadScript(luafile);
+		setSelfToScript();
+		setStats(hp,atk);
+	}
 
     @Override
 	protected void createBodyExtra(Vector2 pos) {
@@ -63,7 +69,20 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 
 	@Override
 	public void run() {
-
+		while( running /*(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )*/ ){
+			try{
+				act();
+				try{
+					Thread.sleep(50);
+				}catch(Exception e){
+					Gdx.app.error("Fatal Thread Failure", e.getMessage());
+					Gdx.app.exit();
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				Gdx.app.exit();
+			}
+		}
 	}
 
 }
