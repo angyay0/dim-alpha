@@ -212,6 +212,7 @@ public class Pause extends GameState {
         window.setMovable(false);
         window.setResizable(true);
         window.setSize(500, 500);
+        window.setResizeBorder(4);
         window.setPosition(250, 150);
         window.defaults().spaceBottom(10);
         window.row().fill().expandX().expandY();

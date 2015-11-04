@@ -83,7 +83,9 @@ public class MapLoader {
         b2dCam.setToOrtho(false, Launcher.WIDTH / Constants.PTM, Launcher.HEIGHT / Constants.PTM);
         b2dCam.setBounds(0, (tileMapWidth * tileSize) / Constants.PTM, 0, (tileMapHeight * tileSize) / Constants.PTM);
     }
-
+    public int getHeight(){
+        return tileMapHeight;
+    }
     public void render() {
         if(bg != null) {
             batch.begin();

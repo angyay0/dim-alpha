@@ -65,6 +65,9 @@ public class GameStateManager {
             case GAME_OVER:
                 if(getState() instanceof Play) return new GameOver(this, (Play)getState()).setID(state);
                 else return getState();
+            case WINNER:
+                if(getState() instanceof Play) return new WinScreen(this,(Play)getState()).setID(state);
+                else return getState();
             default:
                 return null;
         }

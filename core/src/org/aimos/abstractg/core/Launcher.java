@@ -91,6 +91,8 @@ public class Launcher extends Game {
         res.loadTexture("menu/accion.png");
         res.loadTexture("menu/creditos.png");
         res.loadTexture("menu/share.png");
+        res.loadTexture("menu/next.png");
+        res.loadTexture("menu/fondoWin.png");
         res.loadTexture("data/cityIcon.png");
         res.loadTexture("data/cityIcon2.png");
         res.loadTexture("data/cityIcon3.png");

@@ -118,8 +118,12 @@ public abstract class Play extends GameState {
         pos[2] = new Vector2(445,1585);
         pos[3] = new Vector2(223,2034);
         pos[4] = new Vector2(768,2650);
-
-        Vector2 porPos = new Vector2(443,2671);
+        Vector2 porPos;
+        if(loader.getHeight() < 25){
+            porPos = new Vector2(2100,150);
+        }else{
+            porPos = new Vector2(443,2671);
+        }
        // addCoins(Coin.generateCoins(this, new Vector2(256, 512), 1000));
         addCoins(Coin.generateCoins(this, pos, pos.length));
 
@@ -144,8 +148,9 @@ public abstract class Play extends GameState {
                 portal.setVisibility(true);
         }
         if(win){
-            Gdx.app.debug("Ya","Gane");
-            Gdx.app.exit();
+            WinScreen.settter(JsonIO.readProfileTScore(), String.valueOf(player.getMoney()), map, JsonIO.tmxName);
+            getManager().pushState(Constants.STATE.WINNER);
+            //Gdx.app.exit();
         }
       /*  ene.update(dt);*/
         /*if(ene.isDead()) {

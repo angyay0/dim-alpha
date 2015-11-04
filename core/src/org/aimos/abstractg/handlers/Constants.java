@@ -35,7 +35,7 @@ public class Constants {
 
     public enum STATE{
         SPLASH(0),MENU(1),WORLD_SELECT(2),SOLO_PLAY(3),LEVEL_SELECT(4),MULTI_PLAY(5),PAUSE(6),
-        GAME_OVER(7),OPTIONS(8);
+        GAME_OVER(7),OPTIONS(8),WINNER(9);
 
         private int id = -1;
 

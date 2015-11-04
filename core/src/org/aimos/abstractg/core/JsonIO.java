@@ -62,6 +62,15 @@ public class JsonIO {
 
     }
 
+    public static String readProfileTScore(){
+        FileHandle file = Gdx.files.local("dimensionsDir/profile.json");
+        if(file.exists()) {
+            SavePoint.Profile profile = json.fromJson(SavePoint.Profile.class, file.read());
+            return String.valueOf(profile.gettCoins());
+        }else
+            return "0";
+    }
+
     public static boolean readProfile(){
         FileHandle file = Gdx.files.local("dimensionsDir/profile.json");
         if(file.exists()) {
