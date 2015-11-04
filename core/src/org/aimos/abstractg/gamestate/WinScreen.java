@@ -194,6 +194,7 @@ public class WinScreen extends GameState {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
         */
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.BLACK);
         //shapeRenderer.setColor(0, 0, 0, alpha);
