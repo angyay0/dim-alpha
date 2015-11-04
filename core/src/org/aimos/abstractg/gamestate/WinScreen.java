@@ -110,30 +110,15 @@ public class WinScreen extends GameState {
     }
 
     private void nextLevel(String mapita) {
-        if(maps.get(0) == mapita) {
-            Play.levelSelect(maps.get(1));
-            gsm.pushState(Constants.STATE.SOLO_PLAY);
-        }else {
-            for(int i=1;i<maps.size;i++){
-                if(maps.get(i) == mapita && i < maps.size-1){
-                    Play.levelSelect(maps.get(i+1));
-                    gsm.pushState(Constants.STATE.SOLO_PLAY);
-                }else{
-                    gsm.pushState(Constants.STATE.WORLD_SELECT);
-                }
-            }
-        }
-        /*for(int i=1;i<maps.size;i++){
-            if(maps.get(0) == mapita){
-                Play.levelSelect(maps.get(1));
-                gsm.pushState(Constants.STATE.SOLO_PLAY);
-            }else if(maps.get(i) == mapita && i < maps.size-1){
+
+        for(int i=0;i<maps.size-1;i++){
+            if(maps.get(i).equals(mapita)){
                 Play.levelSelect(maps.get(i+1));
                 gsm.pushState(Constants.STATE.SOLO_PLAY);
-            }else{
-                gsm.pushState(Constants.STATE.WORLD_SELECT);
+                return;
             }
-        }*/
+        }
+        gsm.pushState(Constants.STATE.WORLD_SELECT);
 
     }
 
@@ -194,13 +179,25 @@ public class WinScreen extends GameState {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(cam.combined);
         */
-
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        shapeRenderer.setProjectionMatrix(cam.combined);
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        //shapeRenderer.setColor(Color.BLACK);
+        shapeRenderer.setColor(new Color(0,0,0, 0.5f));
+        //shapeRenderer.setColor(0, 0, 0, alpha);
+       // shapeRenderer.rect(150, 0, (Gdx.graphics.getWidth() /2) + 150, Gdx.graphics.getWidth());
+       // shapeRenderer.rect(Gdx.graphics.getWidth()*0.125f, Gdx.graphics.getHeight()*0.125f, Gdx.graphics.getWidth()*0.75f,Gdx.graphics.getHeight()*0.75f );
+        shapeRenderer.rect(0f,0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
+        shapeRenderer.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
+        /*
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.BLACK);
         //shapeRenderer.setColor(0, 0, 0, alpha);
-        shapeRenderer.rect(200, 10, 420, 460);
+        shapeRenderer.rect(Gdx.graphics.getWidth()*0.125f, Gdx.graphics.getWidth()*0.125f, Gdx.graphics.getWidth()*0.75f,Gdx.graphics.getWidth()*0.75f );
         shapeRenderer.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);
+        Gdx.gl.glDisable(GL20.GL_BLEND);*/
         draw();
         act();
     }

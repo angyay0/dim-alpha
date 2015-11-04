@@ -46,8 +46,8 @@ public class WorldSelect extends GameState {
 
     private void initButtons() {
         btnWorld[0] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("cityIcon")))); //Cuidad
-        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("cityIcon2")))); //Bosque
-        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("cityIcon3")))); //Espacio
+        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("forestIcon")))); //Bosque
+        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("spaceIcon")))); //Espacio
         btnWorld[3] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("back")))); //back
 
         //Mundo Marte
