@@ -153,20 +153,7 @@ public abstract class Play extends GameState {
         removeBodies();
 
         float y1 = (player.getY() +((player.getHeight() / player.BODY_SCALE) / Constants.PTM));
-        if(y1 < 0) {
-
-
-            System.out.println("Entro  " + y1);
-        }
-
-
-
-        float y3 = ((player.getHeight() / player.BODY_SCALE) / Constants.PTM);
         if (y1 < 0 && loader.getFloorCamera().position.y == (Launcher.HEIGHT/2)) {
-           System.out.println("Entro a morir " + y1);
-          //  System.out.println("Entro a morir " + y1);
-            System.out.println("Entro a morir " + y3);
-
             /*long money = 0;
             long enem = 0;
             Array<Weapon> weap = null;
@@ -191,13 +178,14 @@ public abstract class Play extends GameState {
         Gdx.gl.glClearColor(103/255f, 219/255f, 248/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         loader.render();
-        // draw player
         sb.setProjectionMatrix(loader.getFloorCamera().combined);
+        // Dibuja las monedas en el mapa
         for (Coin coin : coins) {
             coin.draw(sb);
         }
+        //Dibuja el jugador y el portal
         player.draw(sb);
-        portal.render(sb);
+        //portal.render(sb);
        // System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
         /*ene.draw(sb);*/
         draw();

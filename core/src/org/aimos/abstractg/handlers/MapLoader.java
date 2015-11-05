@@ -48,32 +48,37 @@ import java.util.Iterator;
  */
 public class MapLoader {
 
-
+    //Variable del mundo
     World world;
+    //Variable del mapa
     TiledMap tileMap;
+    //variable para renderizar el mapa
     OrthogonalTiledMapRenderer tmRenderer;
+    //Variables para obtener las dimensiones del mundo
     int tileMapWidth, tileMapHeight, tileSize;
+    //Variables para obtener las capas del mapa
     TiledMapTileLayer[] layers = new TiledMapTileLayer[5];
+    //Variables para obtener las diferentes camaras del mundo
     BoundedCamera floor, fx, xFx, b2dCam;
+    //Variable para renderizar las fisicas del mundo
     private Box2DDebugRenderer b2dRenderer;
+    //Variable para debuggear el mundo
     private boolean debug = true;
-    SpriteBatch batch;
-    static Texture  bg = new Texture("data/bck.png");
+    //Variable para obtener al jugador
     private Player player;
-
-    private ShapeRenderer sr;
-
+    //Variable para obtener los tiles que se usaran en el portal
     StaticTiledMapTile[][] portalTiles = new StaticTiledMapTile[10][4];
+    //Variable para obtener las celdas en donde se pintara el portal
     TiledMapTileLayer.Cell[] parts = new TiledMapTileLayer.Cell[10];
+    //indice para cambiar el cuadro del portal
     int index = 0;
+    //Variable para obtener el tiempo en el que se cambiara el cuadro del portal
     float elapseTime = 0;
     public MapLoader(World world, Player player){
         super();
         this.world = world;
         this.player = player;
         b2dRenderer = new Box2DDebugRenderer();
-        batch = new SpriteBatch();
-        sr = new ShapeRenderer();
         createMap();
         //Camera to Fx
         fx = new BoundedCamera();
@@ -85,21 +90,22 @@ public class MapLoader {
         floor = new BoundedCamera();
         floor.setToOrtho(false, Launcher.WIDTH, Launcher.HEIGHT);
         floor.setBounds(0, tileMapWidth * tileSize, 0, tileMapHeight * tileSize);
-
         // set up box2d cam
         b2dCam = new BoundedCamera();
         b2dCam.setToOrtho(false, Launcher.WIDTH / Constants.PTM, Launcher.HEIGHT / Constants.PTM);
         b2dCam.setBounds(0, (tileMapWidth * tileSize) / Constants.PTM, 0, (tileMapHeight * tileSize) / Constants.PTM);
     }
+
+    /**
+     * Funcion para obtener el alto del mapa
+     * */
     public int getHeight(){
         return tileMapHeight;
     }
+    /**
+     * Función que sirve para renderizar el mundo
+     * */
     public void render() {
-
-            /*batch.begin();
-            batch.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            batch.end();*/
-
 
         tmRenderer.getBatch().begin();
 
@@ -109,13 +115,16 @@ public class MapLoader {
         if (xFx.position.x >= ((tileMapWidth * tileSize) + (Launcher.WIDTH / 2))) {
             xFx.position.x = -(tileMapWidth * tileSize);
         }
+        //Efecto de movimiento de las nubes
         fx.translate(1, 0, 0);
         xFx.translate(.25f, 0, 0);
-        //floor.position.x = ((player.getX()) * AimosVars.PTM + Launcher.WIDTH / 4) ;
+        //Camara del mapa siguiendo al jugador
         floor.setPosition(player.getX() * Constants.PTM + Launcher.WIDTH / 4, player.getY() * Constants.PTM + Launcher.HEIGHT / 4);
+        //actualización de camaras
         fx.update();
         xFx.update();
         floor.update();
+        //Dibujado de los layers
         if (layers[0] != null) {
             tmRenderer.setView(fx);
             tmRenderer.renderTileLayer(layers[0]);
@@ -134,6 +143,9 @@ public class MapLoader {
         if (layers[3] != null) {
             tmRenderer.renderTileLayer(layers[3]);
         }
+        tmRenderer.getBatch().end();
+
+        //Efecto del portal
         elapseTime += Gdx.graphics.getDeltaTime();
         if(elapseTime > 0.1f) {
             for (int i = 0; i < parts.length; i++){
@@ -146,7 +158,7 @@ public class MapLoader {
             index = 0;
         }
 
-        tmRenderer.getBatch().end();
+        //Debuggeado de las fisicas
         if (debug) {
             b2dCam.setPosition(player.getX() + Launcher.WIDTH / 4 / Constants.PTM, player.getY() + Launcher.HEIGHT / 4 / Constants.PTM);
             b2dCam.update();
@@ -154,9 +166,19 @@ public class MapLoader {
         }
     }
 
+    /**
+     * Función que retorna la camara del piso
+     * @return floor
+     *
+     * */
     public BoundedCamera getFloorCamera() {
         return floor;
     }
+    /**
+     *
+     * Funcion para obtener el mapa,layers y objetos a pintar
+     *
+     * */
 
     private void createMap() {
 
@@ -168,6 +190,8 @@ public class MapLoader {
             Gdx.app.error("ERROR ", "Cannot find file: " + Play.getMap() + ".tmx");
             Gdx.app.exit();
         }
+
+        //-----------------Obtener las dimensiones del mapa----------------------------
 
         tileMapWidth = Integer.parseInt(tileMap.getProperties().get("width").toString());
         tileMapHeight = Integer.parseInt(tileMap.getProperties().get("height").toString());
@@ -189,10 +213,9 @@ public class MapLoader {
 
 
 
-        TiledMapTileSet tileset =tileMap.getTileSets().getTileSet("portal");
-        //System.out.println("Tiene a ghost");
+        //----------------Obtener los tiles del portal---------------------
 
-        //portalTiles = new Array<StaticTiledMapTile>();
+        TiledMapTileSet tileset =tileMap.getTileSets().getTileSet("portal");
         for(int i = 0; i < portalTiles.length; i++) {
             index = 0;
             for (TiledMapTile tile : tileset) {
@@ -203,16 +226,14 @@ public class MapLoader {
                 }
             }
         }
-        index = 1;
-
-
+        index = 0;
+        //---------Obtener los tiles del portal dentro de la capa del suelo----------
         for(int i = 0; i < parts.length; i++){
             for(int x = 0; x < layers[3].getWidth();x++){
                 for(int y = 0; y < layers[3].getHeight();y++){
                     TiledMapTileLayer.Cell cell = layers[3].getCell(x, y);
                     Object property = null;
                     if (cell!= null) {
-
                             if (cell.getTile().getProperties().get("part" + (i+1)) != null) {
                                 property = cell.getTile().getProperties().get("part" +(i +1));
                             }
@@ -220,32 +241,29 @@ public class MapLoader {
                                 parts[i] = cell;
                             }
                         }
-
                     }
-
                 }
         }
 
-       // TiledMapTileLayer objects = (TiledMapTileLayer) tileMap.getLayers().get()
+        //Mandar a pintar las fisicas del mundo con objetos o sin objetos
         MapObjects objects = null;
         if(tileMap.getLayers().get("objetos") != null) {
             objects = tileMap.getLayers().get("objetos").getObjects();
         }
-
-
         if(objects != null){
-
-
             createBlocks(objects);
         }else {
-
-            createBlocks(layers[3], Constants.BIT.FLOOR.BIT());
+            createBlocks(layers[3]);
         }
-
-
     }
 
-    private void createBlocks(TiledMapTileLayer layer, short bits) {
+    /**
+     *
+     * Función que sirve para crear las fisicas del mundo sin objetos
+     * @param layer sirve para obtener las celdas del layer en donde se dibujaran las fisicas
+     *
+     */
+    private void createBlocks(TiledMapTileLayer layer) {
 
         // tile size
         float ts = layer.getTileWidth();
@@ -260,9 +278,9 @@ public class MapLoader {
         ChainShape cs = new ChainShape();
         Vector2[] v = new Vector2[4];
         v[0] = new Vector2(0, 0);
-        v[1] = new Vector2(0, (tileMapHeight * ts) / Constants.PTM);
-        v[2] = new Vector2((tileMapWidth * ts) / Constants.PTM, (tileMapHeight * ts) / Constants.PTM);
-        v[3] = new Vector2((tileMapWidth * ts) / Constants.PTM, 0);
+        v[1] = new Vector2(0, (tileMapHeight * tileSize) / Constants.PTM);
+        v[2] = new Vector2((tileMapWidth * tileSize) / Constants.PTM, (tileMapHeight * tileSize) / Constants.PTM);
+        v[3] = new Vector2((tileMapWidth * tileSize) / Constants.PTM, 0);
         cs.createChain(v);
 
         FixtureDef fd = new FixtureDef();
@@ -273,7 +291,7 @@ public class MapLoader {
         Body b = world.createBody(bdef);
         b.createFixture(fd).setUserData(Constants.DATA.CELL);
         cs.dispose();
-
+        //Algorimo para obtener las dimensiones de las fisicas a pintar
         // go through all cells in layer
         for (int row = 0; row < layer.getHeight(); row++) {
             for (int col = 0; col < layer.getWidth(); col++) {
@@ -336,18 +354,18 @@ public class MapLoader {
                 width = 0;
             }
         }
-
+        //Pintar las fisicas en el mundo
         for (int i = 0; i < coords.size; i++) {
             bdef = new BodyDef();
             bdef.type = BodyDef.BodyType.StaticBody;
-            bdef.position.set((coords.get(i).x * ts / Constants.PTM) + (((size.get(i).x * ts) / 2) / Constants.PTM),
-                    (coords.get(i).y * ts / Constants.PTM) + (((size.get(i).y * ts) / 2) / Constants.PTM));
+            bdef.position.set((coords.get(i).x * tileSize / Constants.PTM) + (((size.get(i).x * tileSize) / 2) / Constants.PTM),
+                    (coords.get(i).y * tileSize / Constants.PTM) + (((size.get(i).y * tileSize) / 2) / Constants.PTM));
             PolygonShape shape = new PolygonShape();
-            shape.setAsBox((((size.get(i).x * ts) / 2) / Constants.PTM), (((size.get(i).y * ts) / 2) / Constants.PTM));
+            shape.setAsBox((((size.get(i).x * tileSize) / 2) / Constants.PTM), (((size.get(i).y * tileSize) / 2) / Constants.PTM));
             fd = new FixtureDef();
             fd.friction = 1;
             fd.shape = shape;
-            fd.filter.categoryBits = bits;
+            fd.filter.categoryBits = Constants.BIT.FLOOR.BIT();
             fd.filter.maskBits = (short) (Constants.BIT.CHARACTER.BIT() | Constants.BIT.FLOOR.BULLET.BIT() |
                                 Constants.BIT.GRANADE.BIT() | Constants.BIT.ITEM.BIT());
             b = world.createBody(bdef);
@@ -359,9 +377,13 @@ public class MapLoader {
         coords.clear();
 
     }
-
+    /**
+     *
+     * Funcion que sirve para crear las fisicas del mundo con objetos
+     * @param objects parametro para obtener los objetos con los que se pintara el mundo
+    * */
     private void createBlocks(MapObjects objects){
-
+        //Crea las paredes del mundo
         BodyDef bdef = new BodyDef();
         bdef.type = BodyDef.BodyType.StaticBody;
         bdef.position.set(0, 0);
@@ -380,6 +402,7 @@ public class MapLoader {
         Body b = world.createBody(bdef);
         b.createFixture(fd).setUserData(Constants.DATA.CELL);
         cs.dispose();
+        //Algoritmo para crear las fisicas del mundo
         for (MapObject obj : objects){
             if (obj.getProperties().containsKey("clase") && obj.getProperties().get("clase").equals("1")){
                 Vector2 c = new Vector2(Float.parseFloat(obj.getProperties().get("x").toString())/ Constants.PTM,
