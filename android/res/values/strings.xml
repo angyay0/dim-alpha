@@ -2,5 +2,6 @@
 <resources>
 
     <string name="app_name">Dimensions</string>
+    <string name="facebook_app_id">1234</string>
 
 </resources>
