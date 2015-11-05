@@ -41,7 +41,7 @@ public class DimensionsLauncher extends  AndroidApplication {
 		//config.
 		//Log.d("Cores","->"+getCores()+"<-");
 		launcher = new Launcher();
-		launcher.socialMedia = new AndroidSocialMedia(getParent());
+		launcher.socialMedia = new AndroidSocialMedia(getContext());
 		//Metodo para inicial0000000izar la siguiente vista
 		//initialize(new MainScreenFX(), config);
 		//initialize(new PhysicsBox2D(), config);

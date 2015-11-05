@@ -1,6 +1,8 @@
 package org.aimos.dim.android;
 
-import android.app.Activity;
+import android.content.Context;
+
+import com.facebook.FacebookSdk;
 
 import org.aimos.abstractg.handlers.SocialMedia;
 
@@ -10,10 +12,11 @@ import org.aimos.abstractg.handlers.SocialMedia;
 
 public class AndroidSocialMedia implements SocialMedia {
 
-    private Activity activity;
+    private Context context;
 
-    public AndroidSocialMedia(Activity activity){
-        this.activity = activity;
+    public AndroidSocialMedia(Context context){
+        this.context = context;
+        FacebookSdk.sdkInitialize(context);
     }
 
     @Override
