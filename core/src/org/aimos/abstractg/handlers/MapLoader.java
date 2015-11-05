@@ -15,9 +15,13 @@ import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
+import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
 import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -59,6 +63,10 @@ public class MapLoader {
 
     private ShapeRenderer sr;
 
+    StaticTiledMapTile[][] portalTiles = new StaticTiledMapTile[10][4];
+    TiledMapTileLayer.Cell[] parts = new TiledMapTileLayer.Cell[10];
+    int index = 0;
+    float elapseTime = 0;
     public MapLoader(World world, Player player){
         super();
         this.world = world;
@@ -87,11 +95,11 @@ public class MapLoader {
         return tileMapHeight;
     }
     public void render() {
-        if(bg != null) {
-            batch.begin();
+
+            /*batch.begin();
             batch.draw(bg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            batch.end();
-        }
+            batch.end();*/
+
 
         tmRenderer.getBatch().begin();
 
@@ -126,6 +134,17 @@ public class MapLoader {
         if (layers[3] != null) {
             tmRenderer.renderTileLayer(layers[3]);
         }
+        elapseTime += Gdx.graphics.getDeltaTime();
+        if(elapseTime > 0.1f) {
+            for (int i = 0; i < parts.length; i++){
+                parts[i].setTile(portalTiles[i][index]);
+            }
+            index++;
+            elapseTime = 0.0f;
+        }
+        if(index == (portalTiles[0].length)){
+            index = 0;
+        }
 
         tmRenderer.getBatch().end();
         if (debug) {
@@ -149,6 +168,7 @@ public class MapLoader {
             Gdx.app.error("ERROR ", "Cannot find file: " + Play.getMap() + ".tmx");
             Gdx.app.exit();
         }
+
         tileMapWidth = Integer.parseInt(tileMap.getProperties().get("width").toString());
         tileMapHeight = Integer.parseInt(tileMap.getProperties().get("height").toString());
         tileSize = Integer.parseInt(tileMap.getProperties().get("tilewidth").toString());
@@ -166,6 +186,45 @@ public class MapLoader {
         layers[3] = (TiledMapTileLayer) tileMap.getLayers().get("floor");
         //Building
         layers[4] = (TiledMapTileLayer) tileMap.getLayers().get("building");
+
+
+
+        TiledMapTileSet tileset =tileMap.getTileSets().getTileSet("portal");
+        //System.out.println("Tiene a ghost");
+
+        //portalTiles = new Array<StaticTiledMapTile>();
+        for(int i = 0; i < portalTiles.length; i++) {
+            index = 0;
+            for (TiledMapTile tile : tileset) {
+                Object property = tile.getProperties().get("part" + (i + 1));
+                if (property != null) {
+                    portalTiles[i][index] = new StaticTiledMapTile(tile.getTextureRegion());
+                    index++;
+                }
+            }
+        }
+        index = 1;
+
+
+        for(int i = 0; i < parts.length; i++){
+            for(int x = 0; x < layers[3].getWidth();x++){
+                for(int y = 0; y < layers[3].getHeight();y++){
+                    TiledMapTileLayer.Cell cell = layers[3].getCell(x, y);
+                    Object property = null;
+                    if (cell!= null) {
+
+                            if (cell.getTile().getProperties().get("part" + (i+1)) != null) {
+                                property = cell.getTile().getProperties().get("part" +(i +1));
+                            }
+                            if(property != null){
+                                parts[i] = cell;
+                            }
+                        }
+
+                    }
+
+                }
+        }
 
        // TiledMapTileLayer objects = (TiledMapTileLayer) tileMap.getLayers().get()
         MapObjects objects = null;

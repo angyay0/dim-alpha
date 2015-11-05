@@ -39,6 +39,227 @@
  <tileset firstgid="1402" name="1" tilewidth="32" tileheight="32" tilecount="800">
   <image source="1.png" width="800" height="1028"/>
  </tileset>
+ <tileset firstgid="2202" name="ghost" tilewidth="32" tileheight="32" tilecount="84">
+  <image source="ghost.png" width="466" height="192"/>
+  <tile id="0">
+   <properties>
+    <property name="numero" value="1"/>
+   </properties>
+  </tile>
+  <tile id="42">
+   <properties>
+    <property name="numero" value="4"/>
+   </properties>
+  </tile>
+  <tile id="48">
+   <properties>
+    <property name="numero" value="2"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="2286" name="portal" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="portal.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="part1" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="part6" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="part1" value="2"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="part6" value="2"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="part1" value="3"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="part6" value="3"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="part1" value="4"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="part6" value="4"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="part2" value="1"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="part7" value="1"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="part2" value="2"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="part7" value="2"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="part2" value="3"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="part7" value="3"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="part2" value="4"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="part7" value="4"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="part3" value="1"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="part8" value="1"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="part3" value="2"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="part8" value="2"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="part3" value="3"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="part8" value="3"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="part3" value="4"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="part8" value="4"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="part4" value="1"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="part9" value="1"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="part4" value="2"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="part9" value="2"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="part4" value="3"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="part9" value="3"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="part4" value="4"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="part9" value="4"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="part5" value="1"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="part10" value="1"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="part5" value="2"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="part10" value="2"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="part5" value="3"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="part10" value="3"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="part5" value="4"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="part10" value="4"/>
+   </properties>
+  </tile>
+ </tileset>
  <layer name="building" width="25" height="100">
   <data encoding="base64" compression="zlib">
    eJzt2QdwFFUcx/ETshTpHen9pHcIhAQCBEIPCTV0kGpXul26SAsdGwmQ0FRC6Kj0jnSk9y5VsPdvZm7H5xud927fktEZbuYz75jd9/sDe///3c56PI9ej17/z1fl1B5PFVRFNVRHDdREIGqhNoJQB8EIQV14BQMDPJ5BGIwhGIphGI56HA9FfTRAQ4ShERojHE3QFM3QHC3QUqoxgqyRGIXRGIOxGIdWHI9Aa0QiCm3QFu3QHh3QEdHohM7oItWIIWsqpmE6ZmAmZmENx9diHdbjM3yOL7ABG7EJm7EFW7EN26UasWTFYR7mYwHikYAdHN+JXdiNPdiLL7EP+3EAB3EIh3EER6Uay8hKxHIkYQVWYhW+4vgxHMcJnMQpnMYZnMU5nMcFXMQlXJZqbCBrIzZhM7ZgK7YF/P28h+lo8r8Hx3AcJ3ASp4S/g9PPuL3/NFlncBbncB4XcFGo4fQzbu+/RNZlXMFVXMN13BBqOP2M2/u/JusmbuE27uAu7gk1uqIbuqMHeqIXnkJv9EFf9EN/DMDTQo1vyLqPB/gW3+F7/CDUeBbP4Xm8gBfxEl7GQAzCYAzBUAzDcKHGj2T9hJ/xC37Fb/hdqPEqXsPreANv4i28jREYiVEYjTEYi3FCjT/I8lgez2NIhdQIgGX9dc54vIsJmIhJmIwpiMFUTMN0zMBMzBJqpCErLdIhPR5HBmQUaszBe3gfH+BDfIS5iEUc5mE+FiAeCUKNTGRlRhZkRTZkRw6hxiIsxhIsxcf4BJ9iGRKxHElYgZVY5ef1cDo7/bkeTmenP9fD6exMqXnoxve5aqa68X2umqlufJ+rZqrTWfeMUEM1U53Oulf8uB5OZ907flwPp7Nuth/Xw+msW+jH9XA661YLNVTfcW78TlTNVKezTvydqJqpbvxOVM3UK7iKa7iOG8nXEDdxC7dxB3dxL/n/HvfxQKih8x33sJWgVkmUSq6JJ1EaZVDWcmduliOnPCqgIiqhMqqgquXO3KxGTnXUQE0EohZqI8hyZ27WIScYIaiLeghFfTSw3JmbDckJQyM0RjiaoCmaWe7MzebktEBLtEIEWiMSUZY7c7MNOW3RDu3RAR0RjU6WO3MzJzm5kBt5kBdPIB/yW+7MzQLkFEQhFEYRFEUxFLfcmZs6PWg6N3V60HRu6vSgKZ0eNKXTg6YzUacHTWeiTg+azkSdHjSdiTo9aDoTdXrQdCbq9KDpTNTpQdOZqNODpjNRpwdNZ6JOD5rORJ0eNKXTg6YZOj2ouhdTZej0oOpeTJWh04OqezFVhk4Pqu7FVBk6Pai6F1Nl6PSg6l5MlaHTg6p7MVWGTg+q7sVSoo//C1JzPQNgIQ3SIh3S+z4zGVgzIhMyIwuyIluAfkZ21hzIiVzIjTzI6zuejzU/CqAgCqEwigg1VBlFWYuhOEqgJEolH/MdL81aBmVRDuVRARWFGqqMSqyVUQVVUQ3VUcN3PJC1FmojCHUQjBChhiqjLms9hKI+GqAhwnzHG7OGowmaohmao4VQQ5XRkrUVItAakYhCG9/xdqzt0QEdEY1O6CzUUGV0Ye2KbuiOHuiJXr7jvVn7oC/6oT8GCNczWV5FxnbWHdiJXdiNPdjrO76PdT8O4CAO4TCOCDVUGSnF5JmcV9or59jnmDyT80p75Rz7HJNncl5pr5xjn2PyTM4r7ZVz7HNMnsl5pb1yjn2OyTM5r7RXzrHPMXkm55X2yjn2OSbP5LzSXjnHPsfkmZxX2ivn2OeYPJPzSnvlHPsc02dy4l45J6Vm1fhUfHYxARMxCZMxBTGYKry3/zwLszEHcxGLuH95fxTzsQDxSMBCLMJiLMHSf3ifiOVIwgqsxCqsxhqsxTqsxx38CTLA5Yc=
@@ -66,7 +287,7 @@
  </layer>
  <layer name="floor" width="25" height="100">
   <data encoding="base64" compression="zlib">
-   eJztmdsOgjAMhnfhFA9XeqUP6YVn3sZHtQshGXOEMdZtbfolf4wEe1oZVJQSBEEQej46TG3geb7fCYJNTM/5bIzZTRknJqnjrcXXEtw47e/XifjHcrwRyBsTKms/B1+PcMvR4O6JHOGeXwzuPTCGVg/FEQ59w2F9OOSADeY8RPE6yNEvtfXk0jUqMVOHzPIlZ31sv7X1UAwU9wcb6vFjM/VfSmlaaw9ZqhzkqBvY/xrl8IHtZyKGpPW86061UMs1Rhmp4RB3/qfwDIL5zsd9H0ChHjlIWYexur4y1Nr4MHoXWNfebyn/bhwYPHSnp/XJEbmP+OnXvHSPh2LHi21/bj1WjVIatAZtQA1oC9qB9qBD82/f6AjHT6Az6DKhHPwAzYxjHQ==
+   eJztmckKwjAQhnNJFxUFPelDenDv2/iEetObOqEU0tiQtulkGfLBjyg6WyZpxzKWSCQSiYYb76eq5/e6fpdIyIzpuS4bOrtTxonJ1PGG4ssGNU75/d4Qvy7HQwR5YxLL2g+hq0eo5ShQz0SKUM9vDOo1cAwVb4siFPqGwvpQyAEbzHkoxn3gol9C60nbNfIxU/eZ5X3O+th+Q+uhMcR4PsjEHj82pv9SfFNJZ4itXOCibmD/LuTCB7YfQwyT1vPIa4VCKHssZlIN26jzfwz3IJjPfNTnATHUwwVT1kFX14uDWgsfQlcP69r49eVfjQODE691ll4pQvE68igYexZ2Npo11/XYC+y/LX2Y+ID9b08fcrxDyErG8nKY/aF7bgn2V6AMcslBBagEzUBz0KL4ty+0hs83oC1oZ5ALfpEMaUk=
   </data>
  </layer>
  <objectgroup name="objetos">

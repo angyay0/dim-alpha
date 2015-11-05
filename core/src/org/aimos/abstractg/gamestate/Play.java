@@ -188,7 +188,7 @@ public abstract class Play extends GameState {
 
     @Override
     public void render() {
-        Gdx.gl.glClearColor(0.7f, 0.7f, 1.0f, 1);
+        Gdx.gl.glClearColor(103/255f, 219/255f, 248/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         loader.render();
         // draw player
@@ -198,7 +198,7 @@ public abstract class Play extends GameState {
         }
         player.draw(sb);
         portal.render(sb);
-        System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
+       // System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
         /*ene.draw(sb);*/
         draw();
     }

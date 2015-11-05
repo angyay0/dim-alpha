@@ -206,7 +206,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     public void update(float dt) {
         Vector2 pos = getPosition();
         pos.cpy();
-        Gdx.app.debug("Posicion:=>",pos.toString());
+        //Gdx.app.debug("Posicion:=>",pos.toString());
 
         if (isDead()) die();
         else animations.get(animationIndex).update(dt);
