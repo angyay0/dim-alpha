@@ -109,7 +109,7 @@ public class MainMenu extends GameState{
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsmFinal.setState(Constants.STATE.WORLD_SELECT);
+                gsmFinal.pushState(Constants.STATE.WORLD_SELECT);
             }
         });
 

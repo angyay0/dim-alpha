@@ -1,6 +1,8 @@
 package org.aimos.abstractg.gamestate;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
@@ -16,18 +18,22 @@ public class GameStateManager {
 
     private Stack<GameState> gameStates;
 
-    private GameState tmp;
-
-    private boolean paused = false;
+    private Stack<GameState> disposed;
 
     public GameStateManager(Launcher game) {
         this.game = game;
         gameStates = new Stack<GameState>();
+        disposed = new Stack<GameState>();
         pushState(Constants.STATE.SPLASH);
     }
 
     public void update(float dt) {
         getState().update(dt);
+        while(!disposed.empty()){
+            GameState g = disposed.pop();
+            g.dispose();
+        }
+        if(!Gdx.input.getInputProcessor().equals(getState())) Gdx.input.setInputProcessor(getState());
     }
 
     public void render() {
@@ -84,7 +90,20 @@ public class GameStateManager {
 
     public void popState() {
         GameState g = gameStates.pop();
-        g.dispose();
+        disposed.push(g);
+    }
+
+    public void doublePopState() {
+        GameState g1 = gameStates.pop();
+        GameState g2 = gameStates.pop();
+        disposed.push(g2);
+        disposed.push(g1);
+    }
+
+    public void popAndSetState(Constants.STATE state) {
+        GameState g = gameStates.pop();
+        setState(state);
+        disposed.push(g);
     }
 
     public void dispose(){
@@ -94,19 +113,11 @@ public class GameStateManager {
     }
 
     public GameState getState(){
-        if(tmp == null){
-            return gameStates.peek();
-        }else{
-            return tmp;
-        }
+        return gameStates.peek();
     }
 
     public void back(){
         getState().back();
-    }
-
-    public boolean isPause(){
-        return paused;
     }
 
     public Constants.STATE getStateID() {

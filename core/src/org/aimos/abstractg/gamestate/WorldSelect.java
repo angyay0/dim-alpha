@@ -96,7 +96,7 @@ public class WorldSelect extends GameState {
     }
     public void setLevel(String name){
         LevelSelect.setWorld(name);
-        gsm.setState(Constants.STATE.LEVEL_SELECT);
+        gsm.pushState(Constants.STATE.LEVEL_SELECT);
     }
 
     @Override
@@ -105,7 +105,8 @@ public class WorldSelect extends GameState {
 
     @Override
     public void back() {
-        gsm.setState(Constants.STATE.MENU);
+        //gsm.setState(Constants.STATE.MENU);
+        gsm.popState();
     }
 
     @Override

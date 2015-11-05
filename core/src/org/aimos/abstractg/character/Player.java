@@ -2,6 +2,8 @@
 package org.aimos.abstractg.character;
 
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Filter;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
@@ -55,7 +57,10 @@ public class Player extends Character {
 
     @Override
     protected final void createBodyExtra(Vector2 pos) {
-
+        for (Fixture fixture : getBody().getFixtureList()) {
+            Filter f = fixture.getFilterData();
+            f.groupIndex = (short) (Constants.BIT.CHARACTER.BIT() | Constants.BIT.PLAYER.BIT());
+        }
     }
 
     @Override

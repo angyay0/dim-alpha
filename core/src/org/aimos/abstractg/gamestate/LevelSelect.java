@@ -92,7 +92,7 @@ public class LevelSelect extends GameState {
 
     public void setLevel(String mapLevel){
         Play.levelSelect(mapLevel);
-        gsm.setState(Constants.STATE.SOLO_PLAY);
+        gsm.pushState(Constants.STATE.SOLO_PLAY);
     }
     public static void setWorld(String w) {
         world = w;
@@ -125,6 +125,7 @@ public class LevelSelect extends GameState {
 
     @Override
     public void back() {
-        gsm.setState(Constants.STATE.WORLD_SELECT);
+        //gsm.setState(Constants.STATE.WORLD_SELECT);
+        gsm.popState();
     }
 }

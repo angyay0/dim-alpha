@@ -55,7 +55,8 @@ public class GameOver extends GameState {
 
     @Override
     public void back() {
-        gsm.pushState(Constants.STATE.MENU);
+        //gsm.pushState(Constants.STATE.MENU);
+        gsm.doublePopState();
     }
 
 
@@ -68,7 +69,8 @@ public class GameOver extends GameState {
         reloadG.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(Constants.STATE.SOLO_PLAY);
+                gsm.popAndSetState(Constants.STATE.SOLO_PLAY);
+                //gsm.setState(Constants.STATE.SOLO_PLAY);
             }
         });
         TextureRegion home = new TextureRegion(Launcher.res.getTexture("home2"));
@@ -91,7 +93,7 @@ public class GameOver extends GameState {
         shareB.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.pushState(Constants.STATE.MENU);
+                //gsm.pushState(Constants.STATE.MENU);
             }
         });
         addActor(reloadG);

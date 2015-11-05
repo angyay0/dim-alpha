@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import org.aimos.abstractg.gamestate.GameState;
 import org.aimos.abstractg.gamestate.GameStateManager;
 import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.BoundedCamera;
@@ -127,7 +128,6 @@ public class Launcher extends Game {
         super.render();
         manager.update(Gdx.graphics.getDeltaTime());
         // clear the screen
-
         //Gdx.graphics.getGL20().glClearColor(0.7f, 0.7f, 1.0f, 1);
         //Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         manager.render();

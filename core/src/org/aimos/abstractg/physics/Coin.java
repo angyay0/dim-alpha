@@ -120,7 +120,7 @@ public class Coin extends Item implements PickUp{
         fdef.density = 1;
         fdef.friction = 1f;
         fdef.filter.categoryBits = (short) (Constants.BIT.ITEM.BIT() | Constants.BIT.COIN.BIT());
-        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.CHARACTER.BIT() | Constants.BIT.COIN.BIT()); //cambiar por player
+        fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.PLAYER.BIT() | Constants.BIT.COIN.BIT()); //cambiar por player
         fdef.restitution = 0.4f;
 
         // create character collision box fixture

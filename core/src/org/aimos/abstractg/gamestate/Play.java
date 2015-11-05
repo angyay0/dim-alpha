@@ -1,6 +1,5 @@
 package org.aimos.abstractg.gamestate;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector2;
@@ -9,8 +8,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
 
-import org.aimos.abstractg.character.*;
-import org.aimos.abstractg.character.Character;
+import org.aimos.abstractg.character.Enemy;
+import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
@@ -80,8 +79,6 @@ public abstract class Play extends GameState {
             public void run(){
                 while( running ){
                     try{
-
-
                     act();
                     try{
                         Thread.sleep(50);
@@ -111,7 +108,6 @@ public abstract class Play extends GameState {
         skin.addRegions(Launcher.res.getAtlas("uiskin"));
         skin.add("default-font", font);
         skin.load(Gdx.files.internal("data/uiskin2.json"));
-        Gdx.app.setLogLevel(Application.LOG_DEBUG);
         Vector2[] pos = new Vector2[5];
         pos[0] = new Vector2(256,512);
         pos[1] = new Vector2(704,1455);

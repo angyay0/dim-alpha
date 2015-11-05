@@ -364,7 +364,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         fdef.shape = shape;
         fdef.density = 1;
         fdef.friction = 1f;
-        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.categoryBits = (short) (Constants.BIT.CHARACTER.BIT() |Constants.BIT.PLAYER.BIT());
         fdef.filter.maskBits = (short) (Constants.BIT.FLOOR.BIT() | Constants.BIT.WALL.BIT() |
                 Constants.BIT.GRANADE.BIT() | Constants.BIT.BULLET.BIT() | Constants.BIT.ITEM.BIT());
         fdef.restitution = 0f;
@@ -376,7 +376,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (-(getHeight() / BODY_SCALE)) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.categoryBits = (short) (Constants.BIT.CHARACTER.BIT() |Constants.BIT.PLAYER.BIT());
         fdef.filter.maskBits = Constants.BIT.FLOOR.BIT();
         getBody().createFixture(fdef).setUserData(Constants.DATA.FOOT);
 
@@ -384,7 +384,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, (getHeight() / BODY_SCALE) / Constants.PTM), 0);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.categoryBits = (short) (Constants.BIT.CHARACTER.BIT() |Constants.BIT.PLAYER.BIT());
         fdef.filter.maskBits = (short) (Constants.BIT.WALL.BIT() | Constants.BIT.FLOOR.BIT() | Constants.BIT.ITEM.BIT());
         getBody().createFixture(fdef).setUserData(Constants.DATA.HEAD);
 
@@ -392,7 +392,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         shape.setAsBox((getWidth() / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM);
         fdef.shape = shape;
         fdef.isSensor = true;
-        fdef.filter.categoryBits = Constants.BIT.CHARACTER.BIT();
+        fdef.filter.categoryBits = (short) (Constants.BIT.CHARACTER.BIT() |Constants.BIT.PLAYER.BIT());
         fdef.filter.maskBits = Constants.BIT.CHARACTER.BIT();
         getBody().createFixture(fdef).setUserData(Constants.DATA.ATTACK);
 

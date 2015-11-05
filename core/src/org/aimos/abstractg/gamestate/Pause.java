@@ -110,8 +110,8 @@ public class Pause extends GameState {
             btnPause.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
-                    gsm.popState();
-                    gsm.setState(Constants.STATE.MENU);
+                    gsm.doublePopState();
+                    //gsm.setState(Constants.STATE.MENU);
                 }
             });
         }

@@ -63,7 +63,7 @@ public class WinScreen extends GameState {
         reloadG.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.setState(Constants.STATE.SOLO_PLAY);
+                gsm.popAndSetState(Constants.STATE.SOLO_PLAY);
             }
         });
         TextureRegion home = new TextureRegion(Launcher.res.getTexture("home2"));
@@ -86,7 +86,7 @@ public class WinScreen extends GameState {
         shareB.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                gsm.pushState(Constants.STATE.MENU);
+                //gsm.pushState(Constants.STATE.MENU);
             }
         });
 
@@ -114,12 +114,12 @@ public class WinScreen extends GameState {
         for(int i=0;i<maps.size-1;i++){
             if(maps.get(i).equals(mapita)){
                 Play.levelSelect(maps.get(i+1));
-                gsm.pushState(Constants.STATE.SOLO_PLAY);
+                gsm.popAndSetState(Constants.STATE.SOLO_PLAY);
                 return;
             }
         }
-        gsm.pushState(Constants.STATE.WORLD_SELECT);
-
+        gsm.doublePopState();
+        //gsm.pushState(Constants.STATE.WORLD_SELECT);
     }
 
     private void initLabel(){
@@ -209,6 +209,7 @@ public class WinScreen extends GameState {
 
     @Override
     public void back() {
-        gsm.pushState(Constants.STATE.MENU);
+        //gsm.pushState(Constants.STATE.MENU);
+        gsm.doublePopState();
     }
 }
