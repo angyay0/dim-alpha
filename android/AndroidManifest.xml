@@ -5,7 +5,7 @@
     android:versionName="1.0"
     android:installLocation="preferExternal">
 
-    <uses-sdk android:minSdkVersion="8" android:targetSdkVersion="23" />
+    <uses-sdk android:minSdkVersion="15" android:targetSdkVersion="23" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
@@ -16,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/GdxTheme" >
         <activity
-            android:name="org.aimos.dim.android.AndroidLauncher"
+            android:name="org.aimos.dim.android.DimensionsLauncher"
             android:label="@string/app_name"
             android:screenOrientation="landscape"
             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"

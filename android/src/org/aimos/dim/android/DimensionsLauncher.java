@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
  * @company AIMOS
  */
 
-public class AndroidLauncher extends  AndroidApplication {
+public class DimensionsLauncher extends  AndroidApplication {
 
 	private Launcher launcher;
 
@@ -41,6 +41,7 @@ public class AndroidLauncher extends  AndroidApplication {
 		//config.
 		//Log.d("Cores","->"+getCores()+"<-");
 		launcher = new Launcher();
+		launcher.socialMedia = new AndroidSocialMedia(getParent());
 		//Metodo para inicial0000000izar la siguiente vista
 		//initialize(new MainScreenFX(), config);
 		//initialize(new PhysicsBox2D(), config);

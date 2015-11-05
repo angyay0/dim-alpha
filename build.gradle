@@ -50,6 +50,7 @@ project(":android") {
         compile "com.badlogicgames.gdx:gdx-controllers:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-controllers-android:$gdxVersion"
         compile "org.luaj:luaj-jse:3.0.1"
+        compile 'com.facebook.android:facebook-android-sdk:4.6.0'
         //Font
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-freetype-platform:$gdxVersion:natives-armeabi"

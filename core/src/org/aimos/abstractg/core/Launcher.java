@@ -21,6 +21,7 @@ import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.BoundedCamera;
 import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.Resources;
+import org.aimos.abstractg.handlers.SocialMedia;
 
 
 /**
@@ -32,8 +33,8 @@ public class Launcher extends Game {
     public static final float WIDTH = 800f;
     public static final float HEIGHT = 512f;
     public static final float STEP = 1 / 60f;
-
     public static Resources res;
+    public static SocialMedia socialMedia;
 
     public SpriteBatch batch;
     private BoundedCamera cam;
