@@ -14,6 +14,7 @@ import org.aimos.abstractg.control.Hud;
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
+import org.aimos.abstractg.handlers.GameConfiguration;
 import org.aimos.abstractg.handlers.GameContactListener;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.MapLoader;
@@ -135,6 +136,7 @@ public abstract class Play extends GameState {
     public void update(float dt) {
         //update box2d world
         world.step(Launcher.STEP, 6, 2); // 6 - 8, 2 - 3
+        if(!AudioManager.getInstance().isPlaying() && GameConfiguration.getInstance().getMusic()) AudioManager.getInstance().play();
         player.update(dt);
         if( !portal.isVisible() ){
             if( player.hasMinimumCoins(4) )
@@ -142,7 +144,9 @@ public abstract class Play extends GameState {
         }
         if(win){
             WinScreen.settter(JsonIO.readProfileTScore(), String.valueOf(player.getMoney()), map, JsonIO.tmxName);
+            disposeState();
             getManager().pushState(Constants.STATE.WINNER);
+
             //Gdx.app.exit();
         }
       /*  ene.update(dt);*/
@@ -153,7 +157,9 @@ public abstract class Play extends GameState {
         removeBodies();
 
         float y1 = (player.getY() +((player.getHeight() / player.BODY_SCALE) / Constants.PTM));
+
         if (y1 < 0 && loader.getFloorCamera().position.y == (Launcher.HEIGHT/2)) {
+
             /*long money = 0;
             long enem = 0;
             Array<Weapon> weap = null;

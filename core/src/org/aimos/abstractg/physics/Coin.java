@@ -89,19 +89,12 @@ public class Coin extends Item implements PickUp{
      */
     public static Array<Coin> generateCoins(Play p, Vector2[] pos, int amount){
         Array<Coin> coins = new Array<Coin>();
-        //Random r = new Random();
-        long res;
         for(int i = 0; i < amount; i++){
             Vector2 nPos = pos[i].cpy();
             nPos.add(MathUtils.random(-2, 2),MathUtils.random(-2,2));
             coins.add(new Coin(TYPE.GOLD, p, nPos));
         }
         return coins;
-    }
-
-    public static Array<Coin> generateCoins(World w, Array<Vector2> points, long val){
-        //sprint 3
-        return null;
     }
 
     @Override
