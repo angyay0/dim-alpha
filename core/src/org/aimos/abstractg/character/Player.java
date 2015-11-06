@@ -94,7 +94,7 @@ public class Player extends Character {
 
     public void addMoney(Coin c) {
         addMoney(c.getValue());
-        coinCount++;
+        coinCount+=1;
     }
 
     public void addWeapon(DroppedWeapon w) {

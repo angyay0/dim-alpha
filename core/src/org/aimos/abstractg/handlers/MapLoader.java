@@ -221,8 +221,11 @@ public class MapLoader {
             for (TiledMapTile tile : tileset) {
                 Object property = tile.getProperties().get("part" + (i + 1));
                 if (property != null) {
+                    System.out.print(property);
                     portalTiles[i][index] = new StaticTiledMapTile(tile.getTextureRegion());
                     index++;
+                }else{
+                    System.out.print("Es nulo");
                 }
             }
         }
