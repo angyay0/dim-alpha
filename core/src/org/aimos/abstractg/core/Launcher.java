@@ -83,6 +83,7 @@ public class Launcher extends Game {
 
         /*MENU*/
         res.loadTexture("menu/home.png");
+        res.loadTexture("menu/prba.png");
         res.loadTexture("menu/hideW.png");
         res.loadTexture("menu/fxOnB.png");
         res.loadTexture("menu/fxOffB.png");
