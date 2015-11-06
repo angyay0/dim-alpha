@@ -191,7 +191,7 @@ public abstract class Play extends GameState {
         }
         //Dibuja el jugador y el portal
         player.draw(sb);
-        //portal.render(sb);
+        portal.render(sb);
        // System.out.println(player.getBody().getLinearVelocity().x + " " + player.getBody().getLinearVelocity().y);
         /*ene.draw(sb);*/
         draw();

@@ -88,7 +88,7 @@ public class Portal extends Item {
 
     @Override
     public void render(SpriteBatch sb){
-        super.render(sb);
+        //super.render(sb);
 
         sb.begin();
         particle_A.draw(sb,Gdx.graphics.getDeltaTime());
