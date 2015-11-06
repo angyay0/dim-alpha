@@ -105,7 +105,7 @@ public class Pause extends GameState {
                 }
             });
         }else {
-            btnPause = new Button(new TextureRegionDrawable(new TextureRegion( Launcher.res.getTexture("home2")))); //Home
+            btnPause = new Button(new TextureRegionDrawable(new TextureRegion( Launcher.res.getTexture("home")))); //Home
             btnPause.setSize(imgCuad, imgCuad);
             btnPause.addListener(new ClickListener() {
                 @Override

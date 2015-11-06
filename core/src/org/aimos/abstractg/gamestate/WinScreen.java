@@ -66,7 +66,7 @@ public class WinScreen extends GameState {
                 gsm.popAndSetState(Constants.STATE.SOLO_PLAY);
             }
         });
-        TextureRegion home = new TextureRegion(Launcher.res.getTexture("home2"));
+        TextureRegion home = new TextureRegion(Launcher.res.getTexture("home"));
         Button homeb = new Button(new TextureRegionDrawable(home));
         homeb.setWidth(80f);
         homeb.setHeight(80f);

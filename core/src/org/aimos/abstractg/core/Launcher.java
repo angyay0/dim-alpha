@@ -82,19 +82,17 @@ public class Launcher extends Game {
 
 
         /*MENU*/
+        res.loadTexture("menu/home.png");
+        res.loadTexture("menu/hideW.png");
         res.loadTexture("menu/fxOnB.png");
         res.loadTexture("menu/fxOffB.png");
         res.loadTexture("menu/soundOnB.png");
         res.loadTexture("menu/soundOffB.png");
         res.loadTexture("menu/violenceOnB.png");
         res.loadTexture("menu/violenceOffB.png");
-        res.loadTexture("menu/hideW.png");
-        res.loadTexture("menu/home2.png");
-        res.loadTexture("menu/accion.png");
         res.loadTexture("menu/creditos.png");
         res.loadTexture("menu/share.png");
         res.loadTexture("menu/next.png");
-        res.loadTexture("menu/fondoWin.png");
         res.loadTexture("data/cityIcon.png");
         res.loadTexture("data/forestIcon.png");
         res.loadTexture("data/spaceIcon.png");
