@@ -98,7 +98,7 @@ public abstract class Play extends GameState {
        /* ene.setConfigurations("boss.lua",1000,0);
         ene.setIndicators( new Indicators() );*/
         
-        loader = new MapLoader(world, player);
+        loader = new MapLoader(this, player);
       //  mw = new MeleeWeapon(10, 10, 10, 7, this, "sword");
         //sw = new ShootWeapon(10,10,10,7,this,"gun");
         // tw = new ThrowWeapon(10,10,10,7,this,"steel");
@@ -110,17 +110,17 @@ public abstract class Play extends GameState {
         skin.addRegions(Launcher.res.getAtlas("uiskin"));
         skin.add("default-font", font);
         skin.load(Gdx.files.internal("data/uiskin2.json"));
-        Vector2[] pos = new Vector2[5];
+        /*Vector2[] pos = new Vector2[5];
         pos[0] = new Vector2(256,512);
         pos[1] = new Vector2(704,1455);
         pos[2] = new Vector2(445,1585);
         pos[3] = new Vector2(223,2034);
-        pos[4] = new Vector2(768,2650);
+        pos[4] = new Vector2(768,2650);*/
 
         Vector2 porPos = new Vector2(25,/*2560*/128);
         Vector2 parPos = new Vector2(25,/*2530*/128);
        // addCoins(Coin.generateCoins(this, new Vector2(256, 512), 1000));
-        addCoins(Coin.generateCoins(this, pos, pos.length));
+        //addCoins(Coin.generateCoins(this, pos, pos.length));
 
         //Create Hud
         hud = new Hud(player, gsm);
@@ -147,13 +147,8 @@ public abstract class Play extends GameState {
             WinScreen.settter(JsonIO.readProfileTScore(), String.valueOf(player.getMoney()), map, JsonIO.tmxName);
             disposeState();
             getManager().pushState(Constants.STATE.WINNER);
-
             //Gdx.app.exit();
         }
-      /*  ene.update(dt);*/
-        /*if(ene.isDead()) {
-            System.out.println("Enemy muerto");
-        }*/
         //ene.update(dt);
         removeBodies();
 

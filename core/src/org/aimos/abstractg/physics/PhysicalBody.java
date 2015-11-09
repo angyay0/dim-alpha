@@ -17,7 +17,7 @@ public abstract class PhysicalBody {
     private Body body = null;
     private boolean visible = true;
 
-    public PhysicalBody(Play p){
+    protected PhysicalBody(Play p){
         play = p;
     }
 
@@ -95,13 +95,6 @@ public abstract class PhysicalBody {
 
     public void draw(SpriteBatch sb){
         if(isVisible()) render(sb);
-    }
-
-    protected void unsetBody() {
-        if(hasBody()) {
-            //body.setUserData(null);
-            body = null;
-        }
     }
 
     public World getWorld(){

@@ -3,7 +3,6 @@ package org.aimos.abstractg.gamestate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Interpolation;
@@ -11,15 +10,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Array;
-
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
-
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
@@ -30,21 +26,29 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
  * Created by DiegoArmando on 04/11/2015.
  */
 public class WinScreen extends GameState {
-
+    //Variable Game Stae
     GameState actual;
-
+    //Variables para labels
     private Label nivel,comp,score,total;
+    //Variable para Skin
     private Skin skinLabel;
+    //Variable para guardar nomnre de mapa
     private static String map="";
+    //VAriabla para almacenar puntuacion de mapa
     private static String scor="";
+    //Variable para visualizar total de puntuacion
     private static String tot="";
+    //Variable para almacenar los nombre de los mapas
     private static Array<String> maps;
+    //Variable para el fondo de pantalla
     private ShapeRenderer shapeRenderer;
-    private float duration =5f;
-    private float timer = 0;
-    private float alpha =0;
 
 
+    /**
+     * Metodo constructor donde se realizan las inicializaciones
+     * @param gsm
+     * @param act
+     */
     protected WinScreen(GameStateManager gsm, GameState act) {
         super(gsm);
         shapeRenderer = new ShapeRenderer();
@@ -54,6 +58,9 @@ public class WinScreen extends GameState {
         initButton();
     }
 
+    /**
+     * crea los botones a visualizar en pantalla
+     */
     private void initButton() {
         TextureRegion reload = new TextureRegion(Launcher.res.getTexture("reload"));
         Button reloadG = new Button(new TextureRegionDrawable(reload));
@@ -109,8 +116,11 @@ public class WinScreen extends GameState {
         addActor(nextB);
     }
 
+    /**
+     * Aayuda cambiar de nivel o regresar a menu
+     * @param mapita
+     */
     private void nextLevel(String mapita) {
-
         for(int i=0;i<maps.size-1;i++){
             if(maps.get(i).equals(mapita)){
                 Play.levelSelect(maps.get(i+1));
@@ -119,9 +129,11 @@ public class WinScreen extends GameState {
             }
         }
         gsm.doublePopState();
-        //gsm.pushState(Constants.STATE.WORLD_SELECT);
     }
 
+    /**
+     * crea labels con los datos previamente establecidos
+     */
     private void initLabel(){
         nivel = new Label("Nivel "+map, skinLabel, "default");
         comp  = new Label("COMPLETO!!", skinLabel, "default");
@@ -151,6 +163,9 @@ public class WinScreen extends GameState {
         addActor(total);
     }
 
+    /**
+     * crea el skin para los label
+     */
     private void initSkin() {
         skinLabel = new Skin();
         skinLabel.addRegions(Launcher.res.getAtlas("uiskin"));
@@ -158,6 +173,13 @@ public class WinScreen extends GameState {
         skinLabel.load(Gdx.files.internal("data/uiskin2.json"));
     }
 
+    /**
+     * Establece los datos de partida a visualizar en pantalla
+     * @param total
+     * @param score
+     * @param mapa
+     * @param tmxName
+     */
     public static void settter(String total, String score, String mapa, Array<String> tmxName) {
         tot = total;
         scor = score;
@@ -165,51 +187,45 @@ public class WinScreen extends GameState {
         maps=tmxName;
     }
 
+    /**
+     * actualiza graficos en pantalla
+     * @param dt
+     */
     @Override
-    public void update(float dt) {
-        timer += dt;
-        alpha = 1 - (timer - duration/2) * (timer - duration/2) / (duration/2);
-    }
+    public void update(float dt) {}
 
 
+    /**
+     * Ilumina graficos en pantalla
+     */
     @Override
     public void render() {
         actual.render();
-        /*Gdx.gl.glClearColor(200, 0, 0, 0.3);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        sb.setProjectionMatrix(cam.combined);
-        */
         Gdx.gl.glEnable(GL20.GL_BLEND);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
         shapeRenderer.setProjectionMatrix(cam.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        //shapeRenderer.setColor(Color.BLACK);
         shapeRenderer.setColor(new Color(0,0,0, 0.5f));
-        //shapeRenderer.setColor(0, 0, 0, alpha);
-       // shapeRenderer.rect(150, 0, (Gdx.graphics.getWidth() /2) + 150, Gdx.graphics.getWidth());
-       // shapeRenderer.rect(Gdx.graphics.getWidth()*0.125f, Gdx.graphics.getHeight()*0.125f, Gdx.graphics.getWidth()*0.75f,Gdx.graphics.getHeight()*0.75f );
         shapeRenderer.rect(0f,0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
         shapeRenderer.end();
         Gdx.gl.glDisable(GL20.GL_BLEND);
-        /*
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
-        shapeRenderer.setColor(Color.BLACK);
-        //shapeRenderer.setColor(0, 0, 0, alpha);
-        shapeRenderer.rect(Gdx.graphics.getWidth()*0.125f, Gdx.graphics.getWidth()*0.125f, Gdx.graphics.getWidth()*0.75f,Gdx.graphics.getWidth()*0.75f );
-        shapeRenderer.end();
-        Gdx.gl.glDisable(GL20.GL_BLEND);*/
         draw();
         act();
     }
 
+    /**
+     * Elimina graficos
+     */
     @Override
     protected void disposeState() {
 
     }
 
+    /**
+     * reteocede pantalla
+     */
     @Override
     public void back() {
-        //gsm.pushState(Constants.STATE.MENU);
         gsm.doublePopState();
     }
 }

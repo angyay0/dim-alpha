@@ -19,31 +19,59 @@ public class AndroidSocialMedia implements SocialMedia {
         FacebookSdk.sdkInitialize(context);
     }
 
+    /**
+     * Metodo que funciona para compartir en facebook tu puntuacion y un pequeño texto
+     * @param text
+     * @param score
+     */
     @Override
     public void shareOnFacebook(String text, String score) {
 
     }
 
+    /**
+     * Metodo que funciona para compartir en facebook una imagen con un texto
+     * @param text
+     * @param img
+     */
     @Override
     public void shareOnFacebook(String text, Object img) {
 
     }
 
+    /**
+     * Metodo que funciona para compartir un texto en facebook,
+     * @param text
+     */
     @Override
     public void shareOnFacebook(String text) {
 
     }
 
+    /**
+     * Metodo para compartir en twitter puntuacion y un texto pequeño
+     * @param text
+     * @param score
+     */
     @Override
     public void shareOnTwitter(String text, String score) {
 
     }
 
+    /**
+     * Metodo que funciona para compartir en twitter una imagen con un texto
+     * @param text
+     * @param img
+     */
     @Override
     public void shareOnTwitter(String text, Object img) {
 
     }
 
+    /**
+     * Metodo que funciona compartir en la cuenta de twitter un texto
+     * @param text
+     */
     @Override
     public void shareOnTwitter(String text) {
 

@@ -11,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.control.script.BehaviorListener;
@@ -63,11 +62,11 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     private long score = 0;
     // Current money the character has or gives when killed
     protected long money = 0;
-    private float MAXVELOCITY;
+    private float maxVelocity;
+    private volatile LinkedList<Fixture> fixFoot = new LinkedList<Fixture>();
     //Constants
-    protected float ANIMATION_DELTA = 1 / 5f;
-    public final float BODY_SCALE = 2.2f;
-    LinkedList<Fixture> fixFoot = new LinkedList<Fixture>();
+    public static final float BODY_SCALE = 2.2f;
+    protected static final float ANIMATION_DELTA = 1 / 5f;
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0
     protected static final String WALK_SEQ = "walk"; // 1
@@ -242,6 +241,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     }
 
     public boolean isOnGround() {
+        if(fixFoot.isEmpty()) return false;
         for (Fixture f : fixFoot){
             Vector2 s = (Vector2) f.getBody().getUserData();
             if(((((f.getBody().getPosition().x -s.x) <= getX() -((getWidth() / 2.2) / Constants.PTM))
@@ -285,11 +285,11 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         if (direction) {
             if (isOnGround()) {
                 if (isCrouching()) {
-                    MAXVELOCITY = 2;
+                    maxVelocity = 2;
                     desiredVelX = 0.5f;
                 } else {
                     desiredVelX = 0.7f;
-                    MAXVELOCITY = 3;
+                    maxVelocity = 3;
                 }
             } else {
                 desiredVelX = 0.1f;//*
@@ -297,10 +297,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         } else {
             if (isOnGround()) {
                 if (isCrouching()) {
-                    MAXVELOCITY = 2;
+                    maxVelocity = 2;
                     desiredVelX = -0.5f;
                 } else {
-                    MAXVELOCITY = 3;
+                    maxVelocity = 3;
                     desiredVelX = -0.7f;
                 }
             } else {
@@ -308,7 +308,7 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
             }
         }
         float forceX = (float) (getBody().getMass() * desiredVelX / (1 / 60.0)); // f = mv/t
-        if(Math.abs(getBody().getLinearVelocity().x) < MAXVELOCITY) {
+        if(Math.abs(getBody().getLinearVelocity().x) < maxVelocity) {
             getBody().applyForce(new Vector2(forceX, 0), getBody().getWorldCenter(), true);
         }
         return true;

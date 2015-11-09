@@ -1,32 +1,13 @@
 package org.aimos.abstractg.handlers;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.objects.CircleMapObject;
-import com.badlogic.gdx.maps.objects.PolygonMapObject;
-import com.badlogic.gdx.maps.objects.PolylineMapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
-import com.badlogic.gdx.maps.objects.TextureMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.AnimatedTiledMapTile;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
-import com.badlogic.gdx.math.Circle;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Polygon;
-import com.badlogic.gdx.math.Polyline;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -34,23 +15,21 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.ChainShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.gamestate.Play;
+import org.aimos.abstractg.physics.Coin;
 import org.aimos.abstractg.physics.Portal;
-
-import java.util.Iterator;
 
 /**
  * Created by Herialvaro on 06/10/2015.
  */
 public class MapLoader {
 
-    //Variable del mundo
-    World world;
+    //Variable del estado Play
+    Play play;
     //Variable del mapa
     TiledMap tileMap;
     //variable para renderizar el mapa
@@ -68,9 +47,9 @@ public class MapLoader {
     //Variable para obtener al jugador
     private Player player;
     Portal portal;
-    public MapLoader(World world, Player player){
+    public MapLoader(Play play, Player player){
         super();
-        this.world = world;
+        this.play = play;
         this.player = player;
         b2dRenderer = new Box2DDebugRenderer();
         createMap();
@@ -157,7 +136,7 @@ public class MapLoader {
         if (debug) {
             b2dCam.setPosition(player.getX() + Launcher.WIDTH / 4 / Constants.PTM, player.getY() + Launcher.HEIGHT / 4 / Constants.PTM);
             b2dCam.update();
-            b2dRenderer.render(world, b2dCam.combined);
+            b2dRenderer.render(play.getWorld(), b2dCam.combined);
         }
     }
 
@@ -180,6 +159,7 @@ public class MapLoader {
         // load tile map and map renderer
         try {
            tileMap = new TmxMapLoader().load(Play.getMap() + "/" + Play.getMap() + ".tmx");
+            System.out.println(Play.getMap());
             System.out.println(tileSize);
         } catch (Exception e) {
             Gdx.app.error("ERROR ", "Cannot find file: " + Play.getMap() + ".tmx");
@@ -254,6 +234,7 @@ public class MapLoader {
         }else {
             createBlocks(layers[3]);
         }
+        createCoins();
     }
     public TiledMap getMap(){
         return  tileMap;
@@ -289,7 +270,7 @@ public class MapLoader {
         fd.shape = cs;
         fd.filter.categoryBits = Constants.BIT.WALL.BIT();
         fd.filter.maskBits = Constants.BIT.CHARACTER.BIT();
-        Body b = world.createBody(bdef);
+        Body b = play.getWorld().createBody(bdef);
         b.createFixture(fd).setUserData(Constants.DATA.CELL);
         cs.dispose();
         //Algorimo para obtener las dimensiones de las fisicas a pintar
@@ -369,7 +350,7 @@ public class MapLoader {
             fd.filter.categoryBits = Constants.BIT.FLOOR.BIT();
             fd.filter.maskBits = (short) (Constants.BIT.CHARACTER.BIT() | Constants.BIT.FLOOR.BULLET.BIT() |
                                 Constants.BIT.GRANADE.BIT() | Constants.BIT.ITEM.BIT());
-            b = world.createBody(bdef);
+            b = play.getWorld().createBody(bdef);
             b.createFixture(fd).setUserData(Constants.DATA.CELL);
             b.setUserData(new Vector2((((size.get(i).x * ts) / 2) / Constants.PTM), (((size.get(i).y * ts) / 2) / Constants.PTM)));
             shape.dispose();
@@ -400,7 +381,7 @@ public class MapLoader {
         fd.shape = cs;
         fd.filter.categoryBits = Constants.BIT.WALL.BIT();
         fd.filter.maskBits = Constants.BIT.CHARACTER.BIT();
-        Body b = world.createBody(bdef);
+        Body b = play.getWorld().createBody(bdef);
         b.createFixture(fd).setUserData(Constants.DATA.CELL);
         cs.dispose();
         //Algoritmo para crear las fisicas del mundo
@@ -412,7 +393,7 @@ public class MapLoader {
                         (Float.parseFloat(obj.getProperties().get("height").toString())/ Constants.PTM) / 2);
                 bdef = new BodyDef();
                 bdef.type = BodyDef.BodyType.StaticBody;
-                bdef.position.set(c.x + s.x,c.y + s.y);
+                bdef.position.set(c.x + s.x, c.y + s.y);
                 PolygonShape shape = new PolygonShape();
                 shape.setAsBox(s.x,s.y);
                 fd = new FixtureDef();
@@ -421,7 +402,7 @@ public class MapLoader {
                 fd.filter.categoryBits = Constants.BIT.FLOOR.BIT();
                 fd.filter.maskBits = (short) (Constants.BIT.CHARACTER.BIT() | Constants.BIT.FLOOR.BULLET.BIT() |
                         Constants.BIT.GRANADE.BIT() | Constants.BIT.ITEM.BIT());
-                b = world.createBody(bdef);
+                b = play.getWorld().createBody(bdef);
                 b.createFixture(fd).setUserData(Constants.DATA.CELL);
                 b.setUserData(s);
                 shape.dispose();
@@ -429,6 +410,29 @@ public class MapLoader {
 
         }
 
+    }
+
+    /**
+     * Crea las monedas leyendo la capa coins del TMX
+     */
+    private void createCoins() {
+
+        // create list of Vector2
+        Array<Vector2> points = new Array<Vector2>();
+
+        // get all crystals in "crystals" layer,
+        // create bodies for each, and add them
+        // to the crystals list
+        MapLayer ml = tileMap.getLayers().get("coins");
+        if(ml == null) return;
+
+        for(MapObject mo : ml.getObjects()) {
+            float x = Float.parseFloat(mo.getProperties().get("x").toString());
+            float y = Float.parseFloat(mo.getProperties().get("y").toString());
+            points.add(new Vector2(x,y));
+        }
+        Vector2[] array = points.toArray(Vector2.class);
+        play.addCoins(Coin.generateCoins(play, array));
     }
 
 }

@@ -13,13 +13,17 @@ import java.util.Stack;
  * Created by EinarGretch on 17/09/2015.
  */
 public class GameStateManager {
-
+    //
     private Launcher game;
-
+    //
     private Stack<GameState> gameStates;
-
+    //
     private Stack<GameState> disposed;
 
+    /**
+     *
+     * @param game
+     */
     public GameStateManager(Launcher game) {
         this.game = game;
         gameStates = new Stack<GameState>();
@@ -27,6 +31,10 @@ public class GameStateManager {
         pushState(Constants.STATE.SPLASH);
     }
 
+    /**
+     *
+     * @param dt
+     */
     public void update(float dt) {
         getState().update(dt);
         while(!disposed.empty()){
@@ -36,18 +44,34 @@ public class GameStateManager {
         if(!Gdx.input.getInputProcessor().equals(getState())) Gdx.input.setInputProcessor(getState());
     }
 
+    /**
+     *
+     */
     public void render() {
         getState().render();
     }
 
+    /**
+     *
+     * @return
+     */
     public Launcher game() {
         return game;
     }
 
+    /**
+     *
+     * @return
+     */
     public SpriteBatch getRender(){
         return game.getSpriteBatch();
     }
 
+    /**
+     *
+     * @param state
+     * @return
+     */
     private GameState getState(Constants.STATE state) {
         switch(state){
             case SPLASH:
@@ -79,20 +103,34 @@ public class GameStateManager {
         }
     }
 
+    /**
+     *
+     * @param state
+     */
     public void setState(Constants.STATE state) {
         popState();
         pushState(state);
     }
 
+    /**
+     *
+     * @param state
+     */
     public void pushState(Constants.STATE state) {
         gameStates.push(getState(state));
     }
 
+    /**
+     *
+     */
     public void popState() {
         GameState g = gameStates.pop();
         disposed.push(g);
     }
 
+    /**
+     *
+     */
     public void doublePopState() {
         GameState g1 = gameStates.pop();
         GameState g2 = gameStates.pop();
@@ -100,26 +138,44 @@ public class GameStateManager {
         disposed.push(g1);
     }
 
+    /**
+     *
+     * @param state
+     */
     public void popAndSetState(Constants.STATE state) {
         GameState g = gameStates.pop();
         setState(state);
         disposed.push(g);
     }
 
+    /**
+     *
+     */
     public void dispose(){
         for(GameState g : gameStates){
             g.dispose();
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public GameState getState(){
         return gameStates.peek();
     }
 
+    /**
+     *
+     */
     public void back(){
         getState().back();
     }
 
+    /**
+     *
+     * @return
+     */
     public Constants.STATE getStateID() {
         return getState().getID();
     }
