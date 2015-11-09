@@ -63,10 +63,14 @@ public class GameContactListener implements ContactListener {
 
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.FOOT)) {
-            Character c = (Character) fb.getBody().getUserData();
+           /* Character c = (Character) fb.getBody().getUserData();
             if (c != null) {
                 c.onGround();
-            }
+            }*/
+            Character c = (Character) fb.getBody().getUserData();
+            Vector2 s = (Vector2) fa.getBody().getUserData();
+            //System.out.println((fb.getBody().getPosition().x + s.x));
+            c.addFixtureCollide(fa);
         }
         //Side Collisions
         if(fa.getUserData() !=null && fa.getUserData().equals(Constants.DATA.BODY)){

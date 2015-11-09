@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="180" tilewidth="32" tileheight="32" nextobjectid="1">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="180" tilewidth="32" tileheight="32" nextobjectid="6">
  <tileset firstgid="1" name="Background" tilewidth="32" tileheight="32" tilecount="800">
   <image source="1.png" trans="ff00ff" width="800" height="1028"/>
  </tileset>
@@ -48,4 +48,21 @@
    eJzt1kkOwyAMBVCknKhze/+LleyyoGpxQybek9hFQbI/hpS+Ow0pnfO6DD98HHTN/77ldW+4xyP/+5nXq+EeEaX6zl3zUn3nrnmpvlutOUCN2pkcmeG1Mzkyw2tnshnOUrw1+ZcMwXY5n3B8zjm9kn16Ms17q8xP894q89O895Z5PYzvs2dr3lVz7v2pH+5Janm/LUetoSzyJqs9T5E3We15irzJljhPZg9HJNdEyA29kHVgLebP/ow9a923sWet+zb2rKe+AW25z45BH+HYnHFK5AKIegOC0Tp4
   </data>
  </layer>
+ <objectgroup name="coins">
+  <object id="1" x="357" y="5477">
+   <ellipse/>
+  </object>
+  <object id="2" x="291" y="5081">
+   <ellipse/>
+  </object>
+  <object id="3" x="551" y="4701">
+   <ellipse/>
+  </object>
+  <object id="4" x="186" y="4283">
+   <ellipse/>
+  </object>
+  <object id="5" x="443" y="4058">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>
