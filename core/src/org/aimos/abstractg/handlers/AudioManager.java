@@ -14,13 +14,22 @@ public class AudioManager {
    // private static AudioManager ourInstance = new AudioManager();
    //public static AudioManager getInstance() {return ourInstance;}
 
+    //Variable para la instancia del audio
     private static AudioManager ourInstance;
+    //Variable
     private Music audio;
 
+    /**
+     * Metodo constructor de la clase
+     */
     private AudioManager() {
         super();
     }
 
+    /**
+     * Genera una instancia o retorna la creada
+     * @return una instancia del la clase
+     */
     public static AudioManager getInstance() {
         if (ourInstance == null) {
             ourInstance = new AudioManager();
@@ -28,13 +37,20 @@ public class AudioManager {
         return ourInstance;
     }
 
+    /**
+     * se establece el audio a reproducir
+     * @param audio
+     */
     public void initializeAudio(Music audio){
         stopAudio();
         this.audio = audio;
     }
 
-    //Agregar metoddo de loop personaliado MANGEEEEE
-
+    /**
+     * Se reproduce el audio con el volumen y un ciclo
+     * @param vol
+     * @param loop
+     */
     public void play(float vol,boolean loop){
         audio.setVolume(vol);
         audio.setLooping(loop);
@@ -43,25 +59,23 @@ public class AudioManager {
         }
     }
 
+    /**
+     * Detiene el audio
+     */
     public void stopAudio(){
         if(audio != null) audio.stop();
     }
 
+    /**
+     * Verifica si algo en reproduccion
+     * @return
+     */
     public boolean isPlaying(){
         return audio.isPlaying();
     }
 
-    public void play(){
-        audio.play();
-    }
-
-
-    //metodo para leer los ajustes previos y checar
-    public boolean setting(){
-        return false;
-    }
-
-
-
-
+    /**
+     * despausa el audio
+     */
+    public void play(){audio.play();}
 }

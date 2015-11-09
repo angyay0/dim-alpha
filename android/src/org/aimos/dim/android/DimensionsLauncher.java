@@ -29,9 +29,13 @@ import java.util.regex.Pattern;
  */
 
 public class DimensionsLauncher extends  AndroidApplication {
-
+	//Variable para
 	private Launcher launcher;
 
+	/**
+	 * este metodo se llama cuando se crea por primera vez la actividad
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -49,33 +53,13 @@ public class DimensionsLauncher extends  AndroidApplication {
 		config.useWakelock = true;
 		initialize(launcher, config);
 
-
 		//// Sondea y oculta desde KITKAT(4.4)
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-	//		hideVirtualButtons();
+    	//hideVirtualButtons();
 		}
 		//Bloque para realizar ajustes y ocultar botones virtuales
 	}
 
-	/*@Override
-	public void onBackPressed(){
-		//Disabled for controlling from Inside libGDX
-	//	Game g = (Game) launcher;
-	//	g.pause();
-	}
-*/
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if( keyCode == KeyEvent.KEYCODE_BACK ){
-			//Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
-			return true;
-		}
-		if( keyCode == KeyEvent.KEYCODE_MENU){
-			//Toast.makeText(this, "Back Pressed", Toast.LENGTH_LONG ).show();
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
 
 	/**
 	 * Metodo que configura y oculta botones virtuales
@@ -93,6 +77,7 @@ public class DimensionsLauncher extends  AndroidApplication {
 
 	/**
 	 * Metodo complementario para asegurar ocultar los botones virtuales
+     * @param hasFocus
 	 **/
 	@Override
 	public void onWindowFocusChanged(boolean hasFocus) {

@@ -147,13 +147,8 @@ public abstract class Play extends GameState {
             WinScreen.settter(JsonIO.readProfileTScore(), String.valueOf(player.getMoney()), map, JsonIO.tmxName);
             disposeState();
             getManager().pushState(Constants.STATE.WINNER);
-
             //Gdx.app.exit();
         }
-      /*  ene.update(dt);*/
-        /*if(ene.isDead()) {
-            System.out.println("Enemy muerto");
-        }*/
         //ene.update(dt);
         removeBodies();
 

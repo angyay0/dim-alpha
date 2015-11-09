@@ -27,13 +27,17 @@ import org.aimos.abstractg.handlers.GameConfiguration;
  */
 public class Pause extends GameState {
 
+    //Variable Game State
     GameState actual;
-
+    //Variable Botones
     private  Button btnPause;
+    //Variable Tamaño imagenes
     private float imgCuad = 10f;
+    //Variable visualizar menu
     private boolean opt = false;
+    //Variable Skin
     private Skin skin;
-
+    //Variable Windows
     Window window;
 
     /**
@@ -60,6 +64,9 @@ public class Pause extends GameState {
         createWindowPause();
     }
 
+    /**
+     * Create ventana pausa o opciones
+     */
     private void createWindowPause() {
         skin = new Skin(Gdx.files.internal("data/uiskin.json"));
         skin.add("fx_on",  Launcher.res.getTexture("fxOnB"));
@@ -236,19 +243,32 @@ public class Pause extends GameState {
         addActor(window);
     }
 
+    /**
+     * Limpia graficos en pantalla
+     */
     @Override
     protected final void disposeState() {
         Gdx.input.setInputProcessor(actual);
     }
 
+    /**
+     * Retrocede Pantalla
+     */
     @Override
     public void back() {
         gsm.popState();
     }
 
+    /**
+     * actualiza graficos en pantalla
+     * @param dt
+     */
     @Override
     public void update(float dt) {}
 
+    /**
+     * ilumina graficos
+     */
     @Override
     public void render() {
         actual.render();

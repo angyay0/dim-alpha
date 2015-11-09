@@ -1,16 +1,12 @@
 package org.aimos.abstractg.gamestate;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.Constants;
 
@@ -19,9 +15,16 @@ import org.aimos.abstractg.handlers.Constants;
  */
 public class GameOver extends GameState {
 
+    //Variable del Game State Manager
     GameStateManager gsm;
+    //Variable de Play
     Play game;
 
+    /**
+     * clase donde se crea la Vista cuando el jugador pierde
+     * @param gsm
+     * @param actual
+     */
     protected GameOver(GameStateManager gsm, Play actual) {
         super(gsm);
         this.gsm = gsm;
@@ -29,10 +32,17 @@ public class GameOver extends GameState {
         initButtons();
     }
 
+    /**
+     * actualizacion de graficos
+     * @param dt
+     */
     @Override
     public void update(float dt) {
     }
 
+    /**
+     * ilumina graficos en pantalla
+     */
     @Override
     public void render() {
         Gdx.gl.glClearColor(0, 0, 0, 1f);
@@ -49,17 +59,24 @@ public class GameOver extends GameState {
 
     }
 
+    /**
+     * limpiar buffer de pantalla
+     */
     @Override
     protected void disposeState() {
     }
 
+    /**
+     * retroceso de pantalla
+     */
     @Override
     public void back() {
-        //gsm.pushState(Constants.STATE.MENU);
         gsm.doublePopState();
     }
 
-
+    /**
+     * inicializacion de botones (Recargar,Home,Share
+     */
     public void initButtons() {
         TextureRegion reload = new TextureRegion(Launcher.res.getTexture("reload"));
         Button reloadG = new Button(new TextureRegionDrawable(reload));
