@@ -19,7 +19,7 @@ public class Animation {
     private int timesPlayed;
 
     /**
-     * Metodo constructor
+     * Metodo constructor e inicializacion de algunas variables.
      * @param frames
      * @param delta
      */
@@ -60,7 +60,7 @@ public class Animation {
     }
 
     /**
-     *
+     * actualizacion de graficos
      * @param dt
      */
     public void update(float dt) {
@@ -72,7 +72,7 @@ public class Animation {
     }
 
     /**
-     *
+     * Visualiza los frames del personaje
      */
     private void step() {
         time -= delta;
@@ -84,8 +84,8 @@ public class Animation {
     }
 
     /**
-     *
-     * @return
+     * Busca el frame del personaje
+     * @return frame especifico
      */
     public AtlasRegion getFrame() {
         return frames[currentFrame];

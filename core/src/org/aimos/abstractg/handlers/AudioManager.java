@@ -10,9 +10,7 @@ import org.aimos.abstractg.handlers.GameConfiguration;
  * @version 1.0
  */
 public class AudioManager {
-
-   // private static AudioManager ourInstance = new AudioManager();
-   //public static AudioManager getInstance() {return ourInstance;}
+    //public static AudioManager getInstance() {return ourInstance;}
 
     //Variable para la instancia del audio
     private static AudioManager ourInstance;
