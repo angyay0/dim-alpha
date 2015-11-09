@@ -97,6 +97,14 @@ public class Coin extends Item implements PickUp{
         return coins;
     }
 
+    public static Array<Coin> generateCoins(Play play, Vector2[] pos){
+        Array<Coin> coins = new Array<Coin>();
+        for (Vector2 p : pos) {
+            coins.add(new Coin(TYPE.GOLD, play, p));
+        }
+        return coins;
+    }
+
     @Override
     protected final void createBody(Vector2 pos) {
         BodyDef bodyDef = new BodyDef();
