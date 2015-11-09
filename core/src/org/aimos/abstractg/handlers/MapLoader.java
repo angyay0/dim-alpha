@@ -40,6 +40,7 @@ import com.badlogic.gdx.utils.Array;
 import org.aimos.abstractg.character.Player;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.gamestate.Play;
+import org.aimos.abstractg.physics.Portal;
 
 import java.util.Iterator;
 
@@ -66,14 +67,7 @@ public class MapLoader {
     private boolean debug = true;
     //Variable para obtener al jugador
     private Player player;
-    //Variable para obtener los tiles que se usaran en el portal
-    StaticTiledMapTile[][] portalTiles = new StaticTiledMapTile[10][4];
-    //Variable para obtener las celdas en donde se pintara el portal
-    TiledMapTileLayer.Cell[] parts = new TiledMapTileLayer.Cell[10];
-    //indice para cambiar el cuadro del portal
-    int index = 0;
-    //Variable para obtener el tiempo en el que se cambiara el cuadro del portal
-    float elapseTime = 0;
+    Portal portal;
     public MapLoader(World world, Player player){
         super();
         this.world = world;
@@ -144,7 +138,7 @@ public class MapLoader {
             tmRenderer.renderTileLayer(layers[3]);
         }
         tmRenderer.getBatch().end();
-
+/*
         //Efecto del portal
         elapseTime += Gdx.graphics.getDeltaTime();
         if(elapseTime > 0.1f) {
@@ -157,6 +151,7 @@ public class MapLoader {
         if(index == (portalTiles[0].length)){
             index = 0;
         }
+        */
 
         //Debuggeado de las fisicas
         if (debug) {
@@ -214,6 +209,7 @@ public class MapLoader {
 
 
         //----------------Obtener los tiles del portal---------------------
+        /*
 
         TiledMapTileSet tileset =tileMap.getTileSets().getTileSet("portal");
         for(int i = 0; i < portalTiles.length; i++) {
@@ -247,7 +243,7 @@ public class MapLoader {
                     }
                 }
         }
-
+        */
         //Mandar a pintar las fisicas del mundo con objetos o sin objetos
         MapObjects objects = null;
         if(tileMap.getLayers().get("objetos") != null) {
@@ -259,7 +255,9 @@ public class MapLoader {
             createBlocks(layers[3]);
         }
     }
-
+    public TiledMap getMap(){
+        return  tileMap;
+    }
     /**
      *
      * Función que sirve para crear las fisicas del mundo sin objetos

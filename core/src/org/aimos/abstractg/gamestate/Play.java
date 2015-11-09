@@ -2,6 +2,7 @@ package org.aimos.abstractg.gamestate;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -125,8 +126,8 @@ public abstract class Play extends GameState {
         hud = new Hud(player, gsm);
         addActor(hud);
         initLabel();
-
-        portal = new Portal(this,porPos,parPos,false);
+        TiledMap map= loader.getMap();
+        portal = new Portal(this,map);
         portal.setVisibility(false);
      /*   t = new Thread(ene);
         t.start();*/
