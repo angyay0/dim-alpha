@@ -4,18 +4,13 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-import org.aimos.abstractg.gamestate.GameState;
 import org.aimos.abstractg.gamestate.GameStateManager;
 import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.BoundedCamera;
@@ -29,27 +24,36 @@ import org.aimos.abstractg.handlers.SocialMedia;
  */
 public class Launcher extends Game {
 
-    public static final String TITLE = "Dimensions";
+    //Ancho de la Pantalla
     public static final float WIDTH = 800f;
+    //Alto de la Pantalla
     public static final float HEIGHT = 512f;
+    //Variable para los segundos
     public static final float STEP = 1 / 60f;
+    //Variable de para almacenar los recursos del juego
     public static Resources res;
+    //Variable Social Media
     public static SocialMedia socialMedia;
-
+    //Variable SpriteBatch
     public SpriteBatch batch;
+    //Variable camara 1
     private BoundedCamera cam;
+    //Varibale Camara 2
     private OrthographicCamera hudCam;
-
+    //Variable Game State Manager
     public GameStateManager manager;
+    //Variable para las letras
     private BitmapFont font;
+    //variable viewport
     private Viewport viewport;
 
+    /**
+     *Carga los recursos para el juego
+     */
     @Override
     public void create () {
-
         //Debug Logger
         Gdx.app.setLogLevel(Application.LOG_DEBUG);
-
         //Load Resources
         res = new org.aimos.abstractg.handlers.Resources();
         res.loadAtlas("hero/player.atlas");
@@ -58,27 +62,27 @@ public class Launcher extends Game {
         res.loadAtlas("armas/armas.atlas");
         res.loadAtlas("data/uiskin.atlas");
         //res.loadAtlas("player/player1.atlas");
-        //------------------------
+        //Menu HOME
         res.loadTexture("menu/fondo.png");
         res.loadTexture("menu/mask.png");
         res.loadTexture("menu/play.png");
         res.loadTexture("menu/Opciones.png");
         res.loadTexture("menu/Salir.png");
         res.loadTexture("menu/reload.png");
-
+        //SPLASH
         res.loadTexture("splash/logo_base.png");
         res.loadTexture("splash/logo_hilo.png");
         res.loadTexture("splash/pluma.png");
         res.loadTexture("splash/plumas.png");
         res.loadTexture("splash/aimos.png");
         res.loadTexture("splash/studio.png");
-
+        //
         res.loadTexture("menu/bgcpad.png");
-        res.loadTexture("menu/back.png");
-        res.loadTexture("menu/pause.png");
-
         res.loadTexture("menu/circle.png");
         res.loadTexture("menu/bar.png");
+        /*menu pausa, Game Over, Winner*/
+        res.loadTexture("menu/back.png");
+        res.loadTexture("menu/pause.png");
 
 
         /*MENU*/
@@ -97,16 +101,19 @@ public class Launcher extends Game {
         res.loadTexture("data/cityIcon.png");
         res.loadTexture("data/forestIcon.png");
         res.loadTexture("data/spaceIcon.png");
+        res.loadTexture("data/num1.png");
+        res.loadTexture("data/num2.png");
+        res.loadTexture("data/num3.png");
+        res.loadTexture("data/num4.png");
+        res.loadTexture("data/num5.png");
 
 
-        //-------------------------
+        //Musica
         res.loadMusic("music/arcade.mp3");
         res.loadMusic("music/field.mp3");
         res.loadMusic("music/city_l2.wav");
-
         //SpriteBatch
         batch = new SpriteBatch();
-
         //Cameras
         cam = new BoundedCamera();
         cam.setToOrtho(false,WIDTH,HEIGHT);
@@ -114,36 +121,40 @@ public class Launcher extends Game {
 
         viewport = new StretchViewport(800,512,hudCam);
         viewport.apply();
-        //hudCam.setToOrtho(false, WIDTH, HEIGHT);
-
         //Fonts
         initFonts();
-
         //GameStateManager
         manager = new GameStateManager(this);
     }
 
+    /**
+     * ilumina graficos
+     */
     @Override
     public void render() {
         super.render();
         manager.update(Gdx.graphics.getDeltaTime());
-        // clear the screen
         //Gdx.graphics.getGL20().glClearColor(0.7f, 0.7f, 1.0f, 1);
         //Gdx.graphics.getGL20().glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         manager.render();
     }
 
+    /**
+     * Limpia el buffer
+     */
     @Override
     public void dispose(){
         batch.dispose();
+        font.dispose();
         manager.dispose();
     }
 
+    /**
+     * metodo donde se inicializa las letras.
+     */
     public void initFonts(){
-        //font = new BitmapFont();
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Arcon.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter params = new FreeTypeFontGenerator.FreeTypeFontParameter();
-
         params.size = 48;
         params.shadowOffsetX = 3;
         params.shadowOffsetY = 3;
@@ -154,21 +165,37 @@ public class Launcher extends Game {
         generator.dispose();
     }
 
+    /**
+     * @return el tipo de letras
+     */
     public BitmapFont getFont() {
         return font;
     }
 
+    /**
+     * @return batch
+     */
     public SpriteBatch getSpriteBatch() {
         return batch;
     }
+
+    /**
+     * @return bounded camera
+     */
     public BoundedCamera getCamera() {
         return cam;
     }
+
+    /**
+     * @return orthographic camera
+     */
     public OrthographicCamera getHUDCamera() {
         return hudCam;
     }
 
-
+    /**
+     * envia a estado pausa
+     */
     @Override
     public void pause() {
         super.pause();
@@ -177,17 +204,14 @@ public class Launcher extends Game {
         }
     }
 
+    /**
+     * redimensiona las dimensiones de las pantallas de los dispositivos
+     * @param width
+     * @param height
+     */
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
         hudCam.position.set(hudCam.viewportWidth/2,hudCam.viewportHeight/2,0);
     }
-
-    public void initSkinLabel(){
-        Skin skin = new Skin();
-        skin.addRegions(Launcher.res.getAtlas("uiskin"));
-        skin.add("default-font", font);
-        skin.load(Gdx.files.internal("data/uiskin2.json"));
-    }
-
 }

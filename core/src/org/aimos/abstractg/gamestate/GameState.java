@@ -20,37 +20,33 @@ import org.aimos.abstractg.handlers.Constants;
  */
 public abstract class GameState extends Stage{
 
+    //Variable Game State Manager
     protected GameStateManager gsm;
+    //Variable Launcher
     protected Launcher game;
-
+    //Variable Sprite Batch
     protected SpriteBatch sb;
+    //Variable Bounded Camera
     protected BoundedCamera cam;
+    //Variable Orthographic Camera
     protected OrthographicCamera hudCam;
-
+    //Variable para la creacion de letras
     protected BitmapFont font;
-
-    private Viewport viewport;
-
+    //Variable State
     public Constants.STATE id;
 
+    /**
+     *
+     * @param gsm
+     */
     protected GameState(GameStateManager gsm) {
-
-        //super(new FillViewport(800,512, gsm.game().getHUDCamera()));
         super( new StretchViewport(Launcher.WIDTH, Launcher.HEIGHT, gsm.game().getHUDCamera()) );
-        //this.stage = new Stage(new FillViewport(Launcher.WIDTH, 512, gsm.game().getCamera()));
-
         this.gsm = gsm;
         game = gsm.game();
         sb = game.getSpriteBatch();
         cam = game.getCamera();
         hudCam = game.getHUDCamera();
         font = game.getFont();
-        /*
-        viewport = new StretchViewport(800,512,hudCam);
-        viewport.apply();
-        setViewport(viewport);
-        */
-
         Gdx.input.setInputProcessor(this);
         Gdx.input.setCatchBackKey(true);
         addListener(new InputListener(){
@@ -65,26 +61,57 @@ public abstract class GameState extends Stage{
         });
     }
 
+    /**
+     * actualizacion de graficos
+     * @param dt
+     */
     public abstract void update(float dt);
 
+    /**
+     * ilumina graficos en pantalla
+     */
     public abstract void render();
 
+    /**
+     * limpiaa graficos
+     */
     @Override
     public void dispose(){
         super.dispose();
         disposeState();
     }
 
+
+    /**
+     *
+     * @return GameStateManager
+     */
     public GameStateManager getManager(){
         return gsm;
     }
 
+
+    /**
+     * limpiar buffer de pantalla
+     */
     protected abstract void disposeState();
 
+    /**
+     *
+     */
     public abstract void back();
 
+    /**
+     *
+     * @return int
+     */
     public Constants.STATE getID(){    return id;  }
 
+    /**
+     *
+     * @param id
+     * @return GameState
+     */
     public GameState setID(Constants.STATE id){ this.id = id; return this;}
 
 }

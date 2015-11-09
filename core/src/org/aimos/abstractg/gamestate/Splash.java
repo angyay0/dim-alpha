@@ -13,17 +13,28 @@ import org.aimos.abstractg.handlers.Constants;
  * Created by EinarGretch,DiegoBanderas, angyay0 on 18/09/2015.
  */
 public class Splash extends GameState{
-
+    //variable para almacenar las imagenes
     private Sprite[] imgs;
+    //VAriables para las posiciones
     private float x,y;
+    //Variable para los tamaños
     private float w,h;
+    //
     private float pw,ph,px,py;
+
     private float aPx, aPy;
+
     private float elapsed = 0f;
+
     private float velRot = 0.3f;
+
     private float delta = 0;
 
-
+    /**
+     * Metodo constructor de la clase donde se cargan las imagenes,
+     * se asigna tamaños y posiciones
+     * @param gsm
+     */
     protected Splash(GameStateManager gsm) {
         super(gsm);
         imgs = new Sprite[]{
@@ -35,7 +46,6 @@ public class Splash extends GameState{
         new Sprite(Launcher.res.getTexture("aimos")), //6-1=5
         new Sprite(Launcher.res.getTexture("studio")) //7-1=6
     };
-
 
         x = 308;
         y = 265;
@@ -80,11 +90,18 @@ public class Splash extends GameState{
 
     }
 
+    /**
+     * Actualiza los graficos
+     * @param dt
+     */
     @Override
     public void update(float dt) {
         delta = dt;
     }
 
+    /**
+     * ilumina los graficos en pantalla
+     */
     @Override
     public void render() {
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
@@ -135,6 +152,9 @@ public class Splash extends GameState{
         }
     }
 
+    /**
+     * limpia graficos en pantalla
+     */
     @Override
     public void disposeState() {
         Launcher.res.removeTexture("logo_base");
@@ -146,6 +166,9 @@ public class Splash extends GameState{
         Launcher.res.removeTexture("studio");
     }
 
+    /**
+     *
+     */
     @Override
     public void back() {
     }

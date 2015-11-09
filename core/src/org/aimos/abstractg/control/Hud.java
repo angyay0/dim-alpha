@@ -27,9 +27,9 @@ import java.util.List;
  */
 public class Hud extends WidgetGroup {
 
+    //ICono de la moneda
     private static final String ICON = "coina";
-    private static final String ARM = "gun";
-
+    //Posicion en Y de los botnes
     private final float poyImg = 450f;//410
     //Default Buttons Name With Atlas file
     //Salto
@@ -60,21 +60,33 @@ public class Hud extends WidgetGroup {
     private Player player;
     //Instancia del GameStateManager
     private GameStateManager manager;
-    //
+    //Variable Mov
     private Movement mov;
 
+    /**
+     *
+     * @param player
+     * @param gsm
+     */
     public Hud(Player player, GameStateManager gsm) {
         this.player = player;
         manager = gsm;
         mov = new Movement();
     }
 
+    /**
+     * se asginar un stage al hud y se inicializan sus valores
+     * @param stage
+     */
     @Override
     public void setStage(Stage stage) {
         super.setStage(stage);
         init();
     }
 
+    /**
+     * se inicializa la parte grafica.
+     */
     private void init() {
         final Player p = player;
         final GameStateManager gsm = manager;

@@ -1,21 +1,21 @@
 {
 	tierra:[
-		{name:"Tutorial",tmx:"tutorial"},
-		{name:"ciudad_1",tmx:"mapa3"},
-		{name:"ciudad_2",tmx:"Builds"}
+		{name:"Tutorial",tmx:"tutorial",icon:"num1"},
+		{name:"ciudad_1",tmx:"mapa3",icon:"num2"},
+		{name:"ciudad_2",tmx:"Builds",icon:"num3"}
 	],
 	espacio:[
-		{name:"espacio_1",tmx:"cityla"},
-		{name:"espacio_2",tmx:"cityla"},
-		{name:"espacio_3",tmx:"cityla"},
-		{name:"espacio_4",tmx:"cityla"}
+		{name:"espacio_1",tmx:"cityla",icon:"num1"},
+		{name:"espacio_2",tmx:"cityla",icon:"num2"},
+		{name:"espacio_3",tmx:"cityla",icon:"num3"},
+		{name:"espacio_4",tmx:"cityla",icon:"num4"}
 
 	],
 	marte:[
-		{name:"bosque_1",tmx:"cityla"},
-		{name:"bosque_2",tmx:"cityla"},
-		{name:"bosque_3",tmx:"cityla"},
-		{name:"bosque_4",tmx:"cityla"},
-		{name:"bosque_5",tmx:"cityla"}
+		{name:"bosque_1",tmx:"cityla",icon:"num1"},
+		{name:"bosque_2",tmx:"cityla",icon:"num2"},
+		{name:"bosque_3",tmx:"cityla",icon:"num3"},
+		{name:"bosque_4",tmx:"cityla",icon:"num4"},
+		{name:"bosque_5",tmx:"cityla",icon:"num5"}
 	]
 }

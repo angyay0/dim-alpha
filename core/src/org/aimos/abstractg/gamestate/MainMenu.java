@@ -3,7 +3,6 @@ package org.aimos.abstractg.gamestate;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -11,14 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.Constants;
-
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.delay;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
@@ -33,28 +28,29 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
 
 public class MainMenu extends GameState{
 
-
-    private float dx = 0f;
-    private float dy = 0f;
-    private Texture background;
-
-
+    /**
+     * Metodo constructor
+     * @param gsm
+     */
     protected MainMenu(final GameStateManager gsm) {
         super(gsm);
-        background = new Texture("menu/fondo.png");
         initButtons();
         AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("field"));
         AudioManager.getInstance().play(0.5f, true);
-
-        //JsonIO.readProfile();
-        //JsonIO.ReadJSON();
     }
 
+    /**
+     * actualiza graficos en pantalla
+     * @param dt
+     */
     @Override
     public void update(float dt) {
 
     }
 
+    /**
+     * ilumina graficos en pantalla
+     */
     @Override
     public void render() {
         Gdx.gl.glClearColor(0.86f, 0.86f, 0.86f, 1f);
@@ -63,13 +59,15 @@ public class MainMenu extends GameState{
         if(Gdx.input.isKeyPressed(Input.Keys.BACK)){
             Gdx.app.exit();
         }
-
         sb.begin();
             super.draw();
             super.act();
         sb.end();
     }
 
+    /**
+     * limpia graficos en pantalla
+     */
     @Override
     protected final void disposeState() {
         if(AudioManager.getInstance().isPlaying()){
@@ -77,11 +75,17 @@ public class MainMenu extends GameState{
         }
     }
 
+    /**
+     * retrocede pantalla
+     */
     @Override
     public void back() {
         Gdx.app.exit();
     }
 
+    /**
+     * Inicializa botones
+     */
     public void initButtons(){
         TextureRegion bgRegion = new TextureRegion(Launcher.res.getTexture("fondo"));
         TextureRegion logoRegion = new TextureRegion(Launcher.res.getTexture("mask"));
