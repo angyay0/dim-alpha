@@ -53,8 +53,6 @@ public class Portal extends Item {
                     System.out.print(property);
                     portalTiles[i][index] = new StaticTiledMapTile(tile.getTextureRegion());
                     index++;
-                }else{
-                    System.out.print("Es nulo");
                 }
             }
         }

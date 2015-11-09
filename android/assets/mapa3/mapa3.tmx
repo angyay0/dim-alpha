@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="150" height="25" tilewidth="32" tileheight="32" nextobjectid="26">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="150" height="25" tilewidth="32" tileheight="32" nextobjectid="33">
  <tileset firstgid="1" name="blockX224" tilewidth="32" tileheight="32" tilecount="7">
   <image source="blockX224.png" width="224" height="32"/>
  </tileset>
@@ -381,4 +381,24 @@
    eJztwYEAAAAAw6D5Ux/hAlUBAAAAAAAAAAAAAAAAAMA3OpgAAQ==
   </data>
  </layer>
+ <objectgroup name="coins">
+  <object id="26" x="613" y="614" width="23" height="23">
+   <ellipse/>
+  </object>
+  <object id="27" x="2082" y="523" width="26" height="25">
+   <ellipse/>
+  </object>
+  <object id="29" x="2991" y="302">
+   <ellipse/>
+  </object>
+  <object id="30" x="4268" y="102">
+   <ellipse/>
+  </object>
+  <object id="31" x="3920" y="104">
+   <ellipse/>
+  </object>
+  <object id="32" x="3564" y="230">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

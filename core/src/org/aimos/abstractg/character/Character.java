@@ -437,7 +437,7 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
                 shape.setAsBox(((getWidth()) / BODY_SCALE) / Constants.PTM, ((getHeight() / BODY_SCALE) / 4) / Constants.PTM, new Vector2(0, ((getHeight() / BODY_SCALE) * 0.75f) / Constants.PTM), 0);
                 break;
         }
-        getBody().setTransform(0,0,0);
+        getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
     }
 
     public boolean isForceCrouched() {
