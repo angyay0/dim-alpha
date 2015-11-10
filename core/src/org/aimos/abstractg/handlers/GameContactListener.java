@@ -124,15 +124,22 @@ public class GameContactListener implements ContactListener {
                 Character c = (Character) fb.getBody().getUserData();
                 if( c instanceof Player ){
                     Player pl = (Player) c;
-                    pl.setWinMapLevel();
+                    if(pl.hasMinimumCoins(4)) {
+                        pl.setWinMapLevel();
+                    }
                 }
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.PORTAL)) {
             Portal i = (Portal) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
-                Portal j = (Portal) fb.getBody().getUserData();
-                j.getPlay().getPlayer().setWinMapLevel();
+                Character c = (Character) fa.getBody().getUserData();
+                if( c instanceof Player ){
+                    Player pl = (Player) c;
+                    if(pl.hasMinimumCoins(4)) {
+                        pl.setWinMapLevel();
+                    }
+                }
             }
         }
         //Pick-up
