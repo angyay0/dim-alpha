@@ -32,26 +32,42 @@ import org.aimos.abstractg.physics.Interactive;
 		super(spriteSrc, name, play, pos);
 	}
 
+	/**
+	 * crea cuerpo
+	 * @param pos
+	 */
 	@Override
 	protected final void createBodyExtra(Vector2 pos) {
 
 	}
 
+	/**
+	 * crea animacion
+	 */
 	@Override
 	protected final void setExtraAnimations() {
 
 	}
 
+	/**
+	 * elimina cuerpo si esta muerto
+	 */
 	@Override
 	public void die() {
 		dispose();
 	}
 
+	/**
+	 * Hilo
+	 */
 	@Override
 	public void run() {
 
 	}
 
+	/**
+	 * Interact
+	 */
 	@Override
 	public void interact() {
 

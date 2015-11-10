@@ -25,13 +25,17 @@ import org.aimos.abstractg.physics.Weapon;
  **/
 
 public class Player extends Character {
-
+    //lista de armas
     private Array<Weapon> weapons;
+    //enemigos eliminados
     private long enemiesKilled = 0;
+    //velocidad de caida
     public boolean checkVelocityY = false;
+    //score
     private int coinCount = 0;
-
+    //hilo
     public volatile boolean running = true;
+    //
     int count = 0;
 
     /**
@@ -55,6 +59,10 @@ public class Player extends Character {
     //    t.start();
     }
 
+    /**
+     * crea Cuerpo
+     * @param pos
+     */
     @Override
     protected final void createBodyExtra(Vector2 pos) {
         for (Fixture fixture : getBody().getFixtureList()) {
@@ -63,16 +71,25 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * establece animacion
+     */
     @Override
     protected final void setExtraAnimations() {
 
     }
 
+    /**
+     * remueve cuerpo
+     */
     @Override
     public void die() {
         getPlay().remove(this);
     }
 
+    /**
+     * Hilo
+     */
     @Override
     public void run() {
         while(running){
@@ -92,41 +109,76 @@ public class Player extends Character {
         }
     }
 
+    /**
+     * agrega monedas
+     * @param c
+     */
     public void addMoney(Coin c) {
         addMoney(c.getValue());
         coinCount+=1;
     }
 
+    /**
+     * agrega armas
+     * @param w
+     */
     public void addWeapon(DroppedWeapon w) {
         weapons.add(w.getWeapon());
         setWeapon(w.getWeapon());
     }
 
+    /**
+     * checa si tiene el minimo de monedas para salir del mundo
+     * @param min
+     * @return boolean
+     */
     public boolean hasMinimumCoins(int min){
         return (coinCount>=min);
     }
 
+    /**
+     * establece arma
+     * @param i
+     */
     public void setWeapon(int i){
         setWeapon(weapons.get(i));
     }
 
-
+    /**
+     * establece armas
+     * @param w
+     */
     public void setWeapons(Array<Weapon> w){
         weapons = w;
     }
 
+    /**
+     * agrega arma
+     * @param w
+     */
     public void addWeapon(Weapon w){
         weapons.add(w);
     }
 
+    /**
+     * retorna total de armas
+     * @return weapon
+     */
     public Array<Weapon> getWeapons(){
         return weapons;
     }
 
+    /**
+     * contabiliza las muerte
+     * @return enemiesKilled
+     */
     public long getEnemiesKilled() {
         return enemiesKilled;
     }
 
+    /**
+     * Visualiza pantalla ganador
+     */
     public void setWinMapLevel(){ getPlay().setWin(true);   }
 
 }

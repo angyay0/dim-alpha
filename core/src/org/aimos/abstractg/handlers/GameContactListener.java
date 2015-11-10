@@ -23,16 +23,23 @@ import org.aimos.abstractg.physics.Portal;
  * Created by EinarGretch on 25/09/2015.
  */
 public class GameContactListener implements ContactListener {
-
+    //Variable de almacenamiento
     private Array<PhysicalBody> remove;
 
+    /**
+     * Metodo constructor
+     * @param r
+     */
     public GameContactListener(Array<PhysicalBody> r) {
         super();
         remove = r;
     }
 
 
-
+    /**
+     * Checa colisiones del personaje
+     * @param contact
+     */
     @Override
     public void beginContact(Contact contact) {
 
@@ -220,6 +227,10 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    /**
+     * checa colisiones el personaje
+     * @param contact
+     */
     @Override
     public void endContact(Contact contact) {
 
@@ -325,11 +336,21 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    /**
+     * Checa colisiones del personaje
+     * @param contact
+     * @param oldManifold
+     */
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
 
     }
 
+    /**
+     * checa colisiones del personaje
+     * @param contact
+     * @param impulse
+     */
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 
