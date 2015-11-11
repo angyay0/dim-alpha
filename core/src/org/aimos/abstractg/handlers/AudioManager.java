@@ -76,7 +76,7 @@ public class AudioManager {
     /**
      * metodo para continuar con el audio
      */
-    public void continuarAudio(Music audio){
+    public void continueAudio(Music audio){
         if(audio.equals("field")){
             if(GameConfiguration.getInstance().getMusic()){
                 this.audio.play();
