@@ -50,8 +50,8 @@ public class WorldSelect extends GameState {
      */
     private void initButtons() {
         btnWorld[0] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("cityIcon")))); //Cuidad
-        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("forestIcon")))); //Bosque
-        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("spaceIcon")))); //Espacio
+        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("forestIconS")))); //Bosque
+        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("spaceIconS")))); //Espacio
         btnWorld[3] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("back")))); //back
 
         //Mundo Marte
@@ -73,7 +73,7 @@ public class WorldSelect extends GameState {
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("marte");
+                //setLevel("marte");
             }
         });
 
@@ -84,7 +84,8 @@ public class WorldSelect extends GameState {
         btnWorld[2].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("espacio");
+                //setLevel("espacio");
+
             }
         });
 
