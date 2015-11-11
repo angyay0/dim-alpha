@@ -109,9 +109,8 @@ public class Launcher extends Game {
 
 
         //Musica
-        res.loadMusic("music/arcade.mp3");
-        res.loadMusic("music/field.mp3");
-        res.loadMusic("music/city_l2.wav");
+        res.loadMusic("music/menu_base.mp3");
+        res.loadMusic("music/cap1.mp3");
         //SpriteBatch
         batch = new SpriteBatch();
         //Cameras

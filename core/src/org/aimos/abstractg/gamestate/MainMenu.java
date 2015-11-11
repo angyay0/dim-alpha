@@ -35,7 +35,7 @@ public class MainMenu extends GameState{
     protected MainMenu(final GameStateManager gsm) {
         super(gsm);
         initButtons();
-        AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("field"));
+        AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("menu_base"));
         AudioManager.getInstance().play(0.5f, true);
     }
 

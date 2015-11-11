@@ -60,7 +60,7 @@ public abstract class Play extends GameState {
     protected Play(GameStateManager gsm) {
         super(gsm);
         //Load music
-        AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("city_l2"));
+        AudioManager.getInstance().initializeAudio(Launcher.res.getMusic("cap1"));
         AudioManager.getInstance().play(0.5f, true);
        // Enemy.running = true;
 

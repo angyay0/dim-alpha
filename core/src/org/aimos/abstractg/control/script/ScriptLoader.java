@@ -8,8 +8,6 @@ public interface ScriptLoader {
 
     public void setup();
 
-    public void setup(Config config);
-
     public Chunk loadIAScript(final String file);
 
     public Chunk loadBehaviorScript(final String file);

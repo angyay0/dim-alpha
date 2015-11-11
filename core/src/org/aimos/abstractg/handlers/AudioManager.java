@@ -76,4 +76,20 @@ public class AudioManager {
      * despausa el audio
      */
     public void play(){audio.play();}
+
+    /**
+     * metodo para continuar con el audio
+     */
+    public void continuarAudio(Music audio){
+        if(audio.equals("field")){
+            if(GameConfiguration.getInstance().getMusic()){
+                this.audio.play();
+            }
+        }else{
+            this.audio = audio;
+            if(GameConfiguration.getInstance().getMusic()){
+                this.audio.play();
+            }
+        }
+    }
 }
