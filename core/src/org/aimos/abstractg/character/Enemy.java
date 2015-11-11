@@ -22,7 +22,7 @@ import org.aimos.abstractg.physics.DroppedWeapon;
  **/
 
  public class Enemy extends Character {
-
+	//Variable para conocer si esta ejecutando
 	public static volatile boolean running = true;
 
     /**
@@ -38,22 +38,38 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 		setStats(8,1);*/
     }
 
+	/**
+	 * establece configuraciones
+	 * @param luafile
+	 * @param hp
+	 * @param atk
+	 */
 	public void setConfigurations(String luafile, long hp, long atk){
 		loadScript(luafile);
 		setSelfToScript();
 		setStats(hp,atk);
 	}
 
+	/**
+	 * crea cuerpo
+	 * @param pos
+	 */
     @Override
 	protected void createBodyExtra(Vector2 pos) {
 
 	}
 
+	/**
+	 * crea animacion
+	 */
 	@Override
 	protected void setExtraAnimations() {
 
 	}
 
+	/**
+	 * verifica si esta muerto
+	 */
 	@Override
 	public void die() {
 		if (hasWeapon()) dropWeapon();
@@ -63,10 +79,17 @@ import org.aimos.abstractg.physics.DroppedWeapon;
 
 	}
 
+	/**
+	 *
+	 * @return boolean
+	 */
 	public DroppedWeapon dropWeapon(){
 		return new DroppedWeapon(getWeapon(), getPlay(), getPosition().cpy());
 	}
 
+	/**
+	 * hilo
+	 */
 	@Override
 	public void run() {
 		while( running /*(getPlay().getGameState() == Constants.STATE.SOLO_PLAY || getPlay().getGameState() == Constants.STATE.MULTI_PLAY )*/ ){

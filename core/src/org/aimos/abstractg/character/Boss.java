@@ -29,10 +29,11 @@ public class Boss extends Enemy {
 	private int phases;
 	//Minions array
 	private Array<Enemy> minions;
-
+	//posicion
 	private Vector2 initial;
-
+	//Hilo del jefe
 	private Thread t;
+
 	/**
 	 * @param spriteSrc
 	 * @param name
@@ -45,6 +46,10 @@ public class Boss extends Enemy {
 		initial = pos;
 	}
 
+	/**
+	 * Ilumina graficos en pantalla
+	 * @param sb
+	 */
 	@Override
 	protected void render(SpriteBatch sb) {
 		for (Enemy minion : minions) {
@@ -54,14 +59,12 @@ public class Boss extends Enemy {
 	}
 
 	/**
-	 *
 	 * Este metodo funciona para revivir al jefe
-	 *
 	 **/
 	public void revive(){
 	}
+
 	/**
-	 *
 	 * Este metodo funciona para crear enemigos de apoyo para el jefe y
 	 *retorna una variable tipo Enemy
 	 *@return Type Enemy
@@ -73,7 +76,4 @@ public class Boss extends Enemy {
 		new Thread(ene).start();
 		Gdx.app.debug("Imp","Minion created "+ene.getPosition()+"=="+getPosition());
 	}
-
-
-
 }

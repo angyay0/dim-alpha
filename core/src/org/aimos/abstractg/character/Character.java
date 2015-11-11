@@ -38,20 +38,30 @@ import java.util.LinkedList;
  **/
 
 public abstract class Character extends PhysicalBody implements BehaviorListener, Runnable {
-
+    //Asgina nombre al personaje
     private String name;
+    //frame del personaje
     private int animationIndex = 0;
+    //almacena las animaciones del personaje
     private Array<Animation> animations;
+    //verifica si esta agachado **corregir
     private boolean crouch = false;
+    //Verifica si continua agachado
     private boolean keepCrouched = false;
+    //verifica si esta caminando
     private boolean walking = false;
+    //Atlas de los sprite del personaje
     private TextureAtlas atlas;
+    //saltos posibles por el personaje
     private int jumps = 1;
+    //maximos saltos
     private int maxJumps = 1;
+    //direccion
     private boolean direction = true;
+    //armas del personaje
     private Weapon weapon;
+    //interactuar con partes en el juego
     private Interactive interactive;
-   
     // MaxHp value of the character
     private long maxHp = 10;
     // Hp value of the character
@@ -62,10 +72,14 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     private long score = 0;
     // Current money the character has or gives when killed
     protected long money = 0;
+    //Velocidad al caminar
     private float maxVelocity;
+    //
     private volatile LinkedList<Fixture> fixFoot = new LinkedList<Fixture>();
     //Constants
+    //Tamaño del personaje
     public static final float BODY_SCALE = 2.2f;
+    //velocidad de visualizacion en animaciones
     protected static final float ANIMATION_DELTA = 1 / 5f;
     //Definicion de Variables para el ATLAS
     protected static final String STAND_SEQ = "breath"; // 0
@@ -74,14 +88,21 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
     protected static final String CROUCH_SEQ = "crouch"; // 3
     protected static final String CROUCH_MOVE_SEQ = "crouch"; // 4
     protected static final String FALL_SEQ = "jump"; // 5
-
+    //si esta en el suelo
     protected boolean onGround = false;
+    //verifica si el personaje esta vivo
     protected  boolean alive = true;
+    //verifica salto
     protected boolean jumping;
+    //verifica si tiene poder
     protected boolean invencible = false;
+    //verifica
     protected boolean transition;
+    //Variable
     protected LuaChunk iaChunk;
+    //Variable
     protected Character killer;
+    //VAriable
     private Indicators indicators;
 
     /**
@@ -106,14 +127,26 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         initBody(pos);
     }
 
+    /**
+     * Obtiene la animacion
+     * @return animacion
+     */
     public Animation getAnimation() {
         return animations.get(animationIndex);
     }
 
+    /**
+     * ayuda al personaje a seguir agachado
+     * @param keepCrouched
+     */
     public void forceCrouch(boolean keepCrouched) {
         this.keepCrouched = keepCrouched;
     }
 
+    /**
+     * indica la direccion del personaje
+     * @param dir
+     */
     public void setDirection(boolean dir) {
         if (direction == dir) return;
         direction = dir;
@@ -123,14 +156,26 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    /**
+     * obtiene la direccion del personaje
+     * @return direction boolean
+     */
     public boolean getDirection() {
         return direction;
     }
 
+    /**
+     * verifica la muerte el personaje
+     * @return
+     */
     public boolean isDead() {
         return (hp <= 0);
     }
 
+    /**
+     * Verifica si esta caminando
+     * @param w
+     */
     public void setWalking(boolean w) {
         if (walking == w) return;
         walking = w;
@@ -156,14 +201,25 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    /**
+     * @return walking
+     */
     public boolean isWalking() {
         return walking;
     }
 
+    /**
+     * ayuda a saber cuantos saltos tiene permitido
+     * @return boolean
+     */
     public boolean canJump() {
         return (jumps > 0);
     }
 
+    /**
+     * verifica si esta agachado
+     * @param crouch
+     */
     public void setCrouching(boolean crouch) {
         if (this.crouch == crouch) return;
         this.crouch = crouch;
@@ -184,16 +240,28 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    /**
+     * obtiene el ancho de la textura
+     * @return int
+     */
     @Override
     public int getWidth() {
         return getFrame().getRegionWidth();
     }
 
+    /**
+     * Obtiene lo alto de la textura
+     * @return int
+     */
     @Override
     public int getHeight() {
         return getFrame().getRegionHeight();
     }
 
+    /**
+     * estasblece animacion
+     * @param i
+     */
     public void setAnimation(int i) {
         if (animationIndex == i || i < 0 || i > animations.size) return;
         animationIndex = i;
@@ -202,6 +270,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         transition = false;
     }
 
+    /**
+     * actualiza graficos en pantalla
+     * @param dt
+     */
     public void update(float dt) {
         Vector2 pos = getPosition();
         pos.cpy();
@@ -211,6 +283,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         else animations.get(animationIndex).update(dt);
     }
 
+    /**
+     * ilumina graficos en pantalla
+     * @param sb
+     */
     @Override
     protected void render(SpriteBatch sb) {
         if (!isDead()) {
@@ -223,6 +299,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    /**
+     * verifica el salto
+     * @return boolean
+     */
     public boolean jump() {
         if (isCrouching() && !isForceCrouched()) {
             setCrouching(false);
@@ -240,6 +320,10 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         //return  true;
     }
 
+    /**
+     * verifica si esta en el suelo
+     * @return boolean
+     */
     public boolean isOnGround() {
         if(fixFoot.isEmpty()) return false;
         for (Fixture f : fixFoot){
@@ -259,6 +343,9 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
 
     }
 
+    /**
+     * establece las animaciones cuando se encuentre en el suelo
+     */
     public void onGround() {
         //if (isOnGround()) return;
         jumps = maxJumps;
@@ -278,6 +365,11 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         }
     }
 
+    /**
+     * permite el movimiento del personaje
+     * @param direction
+     * @return boolean
+     */
     public boolean move(boolean direction) {
         float desiredVelX;
         setDirection(direction);
@@ -314,15 +406,25 @@ public abstract class Character extends PhysicalBody implements BehaviorListener
         return true;
     }
 
+    /**
+     * establece la animacion al caer
+     */
     public void fall() {
         setAnimation(5);// cambiar a fall
         jumps--;
     }
 
+    /**
+     * @return crouch
+     */
     public boolean isCrouching() {
         return crouch;
     }
 
+    /**
+     * crea el cuerpo del personaje
+     * @param pos posicion (X,Y)
+     */
     @Override
     public void createBody(Vector2 pos) {
         // create bodydef
@@ -410,6 +512,9 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         getBody().setFixedRotation(true);
     }
 
+    /**
+     * actualiza el cuerpo del personaje
+     */
     protected void updateBody() {
         Fixture fix = getBody().getFixtureList().get(0);
         PolygonShape shape = (PolygonShape) fix.getShape();
@@ -440,6 +545,9 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         getBody().applyForce(new Vector2(0, 0), getBody().getWorldCenter(), true);
     }
 
+    /**
+     * @return keepCrouched
+     */
     public boolean isForceCrouched() {
         return keepCrouched;
     }
@@ -455,6 +563,11 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         }
     }
 
+    /**
+     * permite saber el daño ocasinado al personaje
+     * @param c
+     * @return
+     */
     public long damage(Character c) {
         long dam;
         if (hasWeapon()) {
@@ -468,10 +581,18 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         return dam;
     }
 
+    /**
+     * agrega score al personaje
+     * @param l
+     */
     public void addMoney(long l) {
         money += l;
     }
 
+    /**
+     * obtiene el score del personaje
+     * @return money
+     */
     public long getMoney() {
         return money;
     }
@@ -486,11 +607,19 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         interactive.interact();
     }
 
+    /**
+     * establece arma actual
+     * @param weapon
+     */
     public void setWeapon(Weapon weapon) {
         this.weapon = weapon;
         this.weapon.setOwner(this);
     }
 
+    /**
+     * remueve armas de lista
+     * @return
+     */
     public Weapon removeWeapon() {
         Weapon w = weapon;
         weapon = null;
@@ -498,26 +627,51 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         return w;
     }
 
+    /**
+     * @return weapon
+     */
     public Weapon getWeapon() {
         return weapon;
     }
 
+    /**
+     * establece interactive
+     * @param i
+     */
     public void setInteractive(Interactive i) {
         interactive = i;
     }
 
+    /**
+     * remueve interactive
+     */
     public void removeInteractive() {
         interactive = null;
     }
 
+    /**
+     * crea cuerpo extra
+     * @param pos
+     */
     protected abstract void createBodyExtra(Vector2 pos);
 
+    /**
+     * establece animacion extra
+     */
     protected abstract void setExtraAnimations();
 
+    /**
+     *
+     * @return jumping
+     */
     public boolean isJumping() {
         return jumping;
     }
 
+    /**
+     * @param d
+     * @return boolean
+     */
     public boolean damage(long d) {
         if (invencible) {
             return false;
@@ -527,60 +681,124 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
         }
     }
 
+    /**
+     * da a conocer si cuenta con arma
+     * @return
+     */
     public boolean hasWeapon() {
         return (weapon != null);
     }
 
+    /**
+     * ayuda a conocer si el cuerpo cuenta con masa
+     * @return boolean
+     */
     public float getMass() {
         return (hasWeapon()) ? getBody().getMass() + weapon.getBody().getMass() : getBody().getMass();
     }
 
+    /**
+     * obtiene el frame del personaje
+     * @return atlas region
+     */
     public AtlasRegion getFrame() {
         return getAnimation().getFrame();
     }
 
+    /**
+     *  obtiene ataque
+     * @return atk
+     */
     public long getAttack() {
         return atk;
     }
 
+    /**
+     * obtiene la vida
+     * @return hp
+     */
     public long getHP() {
         return hp;
     }
 
+    /**
+     * obtiene el score
+     * @return score
+     */
     public long getScore() {
         return score;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getMaxHP() {
         return maxHp;
     }
 
+    /**
+     * @return boolean
+     */
     public boolean isInTransition() {
         return transition;
     }
 
+    /**
+     * establece ataque y vida
+     * @param hp
+     * @param at
+     */
     public void setStats(long hp, long at){
         atk = at;
         this.hp = hp;
     }
 
+    /**
+     * Establece maximo de vida
+     * @param mhp
+     */
     public void setMaxHp(long mhp){ maxHp = mhp;    }
 
+    /**
+     * establece score
+     * @param score
+     */
     public void setScore(long score){   this.score = score; }
 
+    /**
+     * añade score
+     * @param ad
+     */
     public void addScore(long ad){  score += ad;    }
 
+    /**
+     * @return indicators
+     */
     public Indicators getIndicators(){ return indicators;   }
 
+    /**
+     * establece indicadore
+     * @param indi
+     */
     public void setIndicators(Indicators indi){ indicators = indi;  }
 
+    /**
+     * verifica si esta muerto
+     */
     public abstract void die();
 
+    /**
+     * establece script
+     */
     @Override
     public void setSelfToScript() {
         iaChunk.setCharacter(this);
     }
 
+    /**
+     * realiza las acciones cargadas en el script
+     */
     @Override
     public void act() {
         if (iaChunk.isCharacterSet()) {
@@ -590,25 +808,42 @@ points[0] = new Vector2(0 / Constants.PTM, 0 / Constants.PTM);
             Gdx.app.error("Cannot Execute Script", "Character Is Not Set");
     }
 
+    /**
+     * Agrega fixture collide
+     * @param f
+     */
     public void addFixtureCollide(Fixture f){
         fixFoot.add(f);
     }
 
+    /**
+     * remove fixture collide
+     * @param f
+     */
     public void removeFixtureCollide(Fixture f){
         fixFoot.remove(f);
     }
 
-
+    /**
+     * carga script
+     */
     @Override
     public void loadScript() {
         iaChunk = LuaLoader.getInstance().loadScript();
     }
 
+    /**
+     * carga script de archivo definido
+     * @param file
+     */
     @Override
     public void loadScript(String file) {
         iaChunk = LuaLoader.getInstance().loadIAScript(file);
     }
 
+    /**
+     * hilo
+     */
     @Override
     public abstract void run();
 
