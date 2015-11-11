@@ -57,11 +57,6 @@ public class LuaLoader implements ScriptLoader,ResourceFinder {
     }
 
     @Override
-    public void setup(Config conf) {
-        this.conf = conf;
-    }
-
-    @Override
     public LuaChunk loadIAScript(String file) {
 
         LuaChunk chunk = new LuaChunk("TestScript","LUA",getId());

@@ -4,12 +4,9 @@ import com.badlogic.gdx.audio.Music;
 
 /**
  * Created by DiegoArmando on 02/10/2015.
- *
  * @version 1.0
  */
 public class AudioManager {
-
-    // private static AudioManager ourInstance = new AudioManager();
     //public static AudioManager getInstance() {return ourInstance;}
 
     //Variable para la instancia del audio
@@ -25,7 +22,6 @@ public class AudioManager {
 
     /**
      * Genera una instancia o retorna la creada
-     *
      * @return una instancia del la clase
      */
     public static AudioManager getInstance() {
@@ -37,7 +33,6 @@ public class AudioManager {
 
     /**
      * se establece el audio a reproducir
-     *
      * @param audio
      */
     public void initializeAudio(Music audio) {
@@ -47,7 +42,6 @@ public class AudioManager {
 
     /**
      * Se reproduce el audio con el volumen y un ciclo
-     *
      * @param vol
      * @param loop
      */
@@ -68,7 +62,6 @@ public class AudioManager {
 
     /**
      * Verifica si algo en reproduccion
-     *
      * @return
      */
     public boolean isPlaying() {
@@ -78,7 +71,21 @@ public class AudioManager {
     /**
      * despausa el audio
      */
-    public void play() {
-        audio.play();
+    public void play(){audio.play();}
+
+    /**
+     * metodo para continuar con el audio
+     */
+    public void continuarAudio(Music audio){
+        if(audio.equals("field")){
+            if(GameConfiguration.getInstance().getMusic()){
+                this.audio.play();
+            }
+        }else{
+            this.audio = audio;
+            if(GameConfiguration.getInstance().getMusic()){
+                this.audio.play();
+            }
+        }
     }
 }

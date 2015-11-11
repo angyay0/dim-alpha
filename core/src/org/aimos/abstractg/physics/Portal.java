@@ -39,9 +39,10 @@ public class Portal extends Item {
     int index = 0;
     //Variable para obtener el tiempo en el que se cambiara el cuadro del portal
     float elapseTime = 0;
+    Play p;
     public Portal(Play p,TiledMap tiledMap) {
         super(p);
-
+        this.p = p;
         //----------------Obtener los tiles del portal---------------------
 
         TiledMapTileSet tileset =tiledMap.getTileSets().getTileSet("portal");
@@ -53,8 +54,6 @@ public class Portal extends Item {
                     System.out.print(property);
                     portalTiles[i][index] = new StaticTiledMapTile(tile.getTextureRegion());
                     index++;
-                }else{
-                    System.out.print("Es nulo");
                 }
             }
         }
@@ -80,6 +79,14 @@ public class Portal extends Item {
 
         MapObjects objects = tiledMap.getLayers().get("objetos").getObjects();
         createBody(objects);
+
+
+            for (int i = 0; i < parts.length; i++) {
+                if (parts[i] != null) {
+                    parts[i].setTile(null);
+                    System.out.println(parts[i]);
+                }
+            }
 
 
 
@@ -156,29 +163,32 @@ public class Portal extends Item {
     public void render(SpriteBatch sb){
         //super.render(sb);
         //Efecto del portal
-        elapseTime += Gdx.graphics.getDeltaTime();
-        if(elapseTime > 0.1f) {
-            for (int i = 0; i < parts.length; i++){
-                if(parts[i] != null) {
-                    parts[i].setTile(portalTiles[i][index]);
+        if(p.getPlayer().hasMinimumCoins(4)) {
+            elapseTime += Gdx.graphics.getDeltaTime();
+            if (elapseTime > 0.1f) {
+                for (int i = 0; i < parts.length; i++) {
+                    if (parts[i] != null) {
+                        parts[i].setTile(portalTiles[i][index]);
+                    }
                 }
+                index++;
+                elapseTime = 0.0f;
             }
-            index++;
-            elapseTime = 0.0f;
-        }
-        if(index == (portalTiles[0].length)){
-            index = 0;
-        }
-        sb.begin();
-        particle_A.draw(sb,Gdx.graphics.getDeltaTime());
-        particle_B.draw(sb,Gdx.graphics.getDeltaTime());
-        sb.end();
+            if (index == (portalTiles[0].length)) {
+                index = 0;
+            }
+            sb.begin();
+            particle_A.draw(sb, Gdx.graphics.getDeltaTime());
+            particle_B.draw(sb, Gdx.graphics.getDeltaTime());
+            sb.end();
 
-        if (particle_A.isComplete())
-            particle_A.reset();
+            if (particle_A.isComplete())
+                particle_A.reset();
 
-        if (particle_B.isComplete())
-            particle_B.reset();
+            if (particle_B.isComplete())
+                particle_B.reset();
+
+        }
 
     }
 

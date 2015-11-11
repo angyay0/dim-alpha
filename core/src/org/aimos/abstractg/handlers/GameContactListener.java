@@ -23,16 +23,23 @@ import org.aimos.abstractg.physics.Portal;
  * Created by EinarGretch on 25/09/2015.
  */
 public class GameContactListener implements ContactListener {
-
+    //Variable de almacenamiento
     private Array<PhysicalBody> remove;
 
+    /**
+     * Metodo constructor
+     * @param r
+     */
     public GameContactListener(Array<PhysicalBody> r) {
         super();
         remove = r;
     }
 
 
-
+    /**
+     * Checa colisiones del personaje
+     * @param contact
+     */
     @Override
     public void beginContact(Contact contact) {
 
@@ -124,15 +131,22 @@ public class GameContactListener implements ContactListener {
                 Character c = (Character) fb.getBody().getUserData();
                 if( c instanceof Player ){
                     Player pl = (Player) c;
-                    pl.setWinMapLevel();
+                    if(pl.hasMinimumCoins(4)) {
+                        pl.setWinMapLevel();
+                    }
                 }
             }
         }
         if (fb.getUserData() != null && fb.getUserData().equals(Constants.DATA.PORTAL)) {
             Portal i = (Portal) fb.getBody().getUserData();
             if (fa.getUserData() != null && fa.getUserData().equals(Constants.DATA.BODY)) {
-                Portal j = (Portal) fb.getBody().getUserData();
-                j.getPlay().getPlayer().setWinMapLevel();
+                Character c = (Character) fa.getBody().getUserData();
+                if( c instanceof Player ){
+                    Player pl = (Player) c;
+                    if(pl.hasMinimumCoins(4)) {
+                        pl.setWinMapLevel();
+                    }
+                }
             }
         }
         //Pick-up
@@ -213,6 +227,10 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    /**
+     * checa colisiones el personaje
+     * @param contact
+     */
     @Override
     public void endContact(Contact contact) {
 
@@ -318,11 +336,21 @@ public class GameContactListener implements ContactListener {
         }
     }
 
+    /**
+     * Checa colisiones del personaje
+     * @param contact
+     * @param oldManifold
+     */
     @Override
     public void preSolve(Contact contact, Manifold oldManifold) {
 
     }
 
+    /**
+     * checa colisiones del personaje
+     * @param contact
+     * @param impulse
+     */
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {
 

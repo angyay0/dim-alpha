@@ -32,8 +32,8 @@ import org.aimos.abstractg.physics.Hazard.TYPE;
 	//Multiplicador de dano
 	public float multiplier;
 
-
 	/**
+	 * Metodo Constructor de la clase
 	 * @param spriteSrc
 	 * @param name
 	 * @param play

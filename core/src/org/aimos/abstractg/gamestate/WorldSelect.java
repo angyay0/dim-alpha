@@ -10,7 +10,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.Constants;
+import org.aimos.abstractg.handlers.GameConfiguration;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
@@ -47,8 +50,8 @@ public class WorldSelect extends GameState {
      */
     private void initButtons() {
         btnWorld[0] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("cityIcon")))); //Cuidad
-        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("forestIcon")))); //Bosque
-        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("spaceIcon")))); //Espacio
+        btnWorld[1] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("forestIconS")))); //Bosque
+        btnWorld[2] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("spaceIconS")))); //Espacio
         btnWorld[3] = new Button(new TextureRegionDrawable(new TextureRegion(Launcher.res.getTexture("back")))); //back
 
         //Mundo Marte
@@ -70,7 +73,7 @@ public class WorldSelect extends GameState {
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("marte");
+                //setLevel("marte");
             }
         });
 
@@ -81,7 +84,8 @@ public class WorldSelect extends GameState {
         btnWorld[2].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                setLevel("espacio");
+                //setLevel("espacio");
+
             }
         });
 
@@ -126,7 +130,9 @@ public class WorldSelect extends GameState {
      * @param dt
      */
     @Override
-    public void update(float dt) {}
+    public void update(float dt) {
+        if(!AudioManager.getInstance().isPlaying() && GameConfiguration.getInstance().getMusic()) AudioManager.getInstance().play();
+    }
 
     /**
      * Ilumina graficos

@@ -11,7 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import org.aimos.abstractg.core.JsonIO;
 import org.aimos.abstractg.core.Launcher;
+import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.Constants;
+import org.aimos.abstractg.handlers.GameConfiguration;
 
 /**
  * Created by DiegoArmando on 19/10/2015.
@@ -121,7 +123,9 @@ public class LevelSelect extends GameState {
      * @param dt
      */
     @Override
-    public void update(float dt){}
+    public void update(float dt){
+        if(!AudioManager.getInstance().isPlaying() && GameConfiguration.getInstance().getMusic()) AudioManager.getInstance().continuarAudio(Launcher.res.getMusic("menu_base"));
+    }
 
     /**
      * Ilumina instrucciones
@@ -144,7 +148,9 @@ public class LevelSelect extends GameState {
      */
     @Override
     protected void disposeState() {
-
+        if(AudioManager.getInstance().isPlaying()){
+            AudioManager.getInstance().stopAudio();
+        }
     }
 
     /**

@@ -99,8 +99,8 @@ public class Launcher extends Game {
         res.loadTexture("menu/share.png");
         res.loadTexture("menu/next.png");
         res.loadTexture("data/cityIcon.png");
-        res.loadTexture("data/forestIcon.png");
-        res.loadTexture("data/spaceIcon.png");
+        res.loadTexture("data/forestIconS.png");
+        res.loadTexture("data/spaceIconS.png");
         res.loadTexture("data/num1.png");
         res.loadTexture("data/num2.png");
         res.loadTexture("data/num3.png");
@@ -109,9 +109,8 @@ public class Launcher extends Game {
 
 
         //Musica
-        res.loadMusic("music/arcade.mp3");
-        res.loadMusic("music/field.mp3");
-        res.loadMusic("music/city_l2.wav");
+        res.loadMusic("music/menu_base.mp3");
+        res.loadMusic("music/cap1.mp3");
         //SpriteBatch
         batch = new SpriteBatch();
         //Cameras

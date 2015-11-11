@@ -362,7 +362,6 @@ public class MapLoader {
 
     }
     /**
-     *
      * Funcion que sirve para crear las fisicas del mundo con objetos
      * @param objects parametro para obtener los objetos con los que se pintara el mundo
     * */
