@@ -1,64 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="150" height="20" tilewidth="32" tileheight="32" nextobjectid="134">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="150" height="20" tilewidth="32" tileheight="32" nextobjectid="135">
  <tileset firstgid="1" name="bot_espacio" tilewidth="32" tileheight="32" tilecount="64">
-  <image source="./bot_espacio.png" width="533" height="134"/>
+  <image source="bot_espacio.png" width="533" height="134"/>
  </tileset>
  <tileset firstgid="65" name="mid_espacio" tilewidth="32" tileheight="32" tilecount="64">
-  <image source="./mid_espacio.png" width="533" height="134"/>
+  <image source="mid_espacio.png" width="533" height="134"/>
  </tileset>
  <tileset firstgid="129" name="top_espacio" tilewidth="32" tileheight="32" tilecount="64">
-  <image source="./top_espacio.png" width="534" height="133"/>
+  <image source="top_espacio.png" width="534" height="133"/>
  </tileset>
  <tileset firstgid="193" name="particula_azul32-4x4" tilewidth="32" tileheight="32" tilecount="1">
-  <image source="./particula_azul32-4x4.png" width="32" height="32"/>
+  <image source="particula_azul32-4x4.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="194" name="particula_blanca32-4x4" tilewidth="32" tileheight="32" tilecount="1">
-  <image source="./particula_blanca32-4x4.png" width="32" height="32"/>
+  <image source="particula_blanca32-4x4.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="195" name="estrella32x32" tilewidth="32" tileheight="32" tilecount="1">
-  <image source="./estrella32x32.png" width="32" height="32"/>
+  <image source="estrella32x32.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="196" name="estrella32-16-izq_bot-2" tilewidth="32" tileheight="32" tilecount="1">
-  <image source="./estrella32-16-izq_bot-2.png" width="32" height="32"/>
+  <image source="estrella32-16-izq_bot-2.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="197" name="estrella31-16-izq-2" tilewidth="32" tileheight="32" tilecount="1">
-  <image source="./estrella31-16-izq-2.png" width="32" height="32"/>
+  <image source="estrella31-16-izq-2.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="198" name="plataforma-azul-2" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-azul-2.png" width="160" height="32"/>
+  <image source="plataforma-azul-2.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="203" name="plataforma-verde-chica" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-verde-chica.png" width="160" height="32"/>
+  <image source="plataforma-verde-chica.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="208" name="plataforma-azul" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="bueno/Plataformas/grande/plataforma-azul.png" width="160" height="32"/>
+  <image source="plataforma-azul.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="213" name="plataforma-roja-2" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-roja-2.png" width="160" height="32"/>
+  <image source="plataforma-roja-2.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="218" name="PLATAFORMA-ARRIBA" tilewidth="32" tileheight="32" tilecount="9">
-  <image source="./PLATAFORMA-ARRIBA.png" width="96" height="96"/>
+  <image source="PLATAFORMA-ARRIBA.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="227" name="plataforma-roja-3" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-roja-3.png" width="160" height="32"/>
+  <image source="plataforma-roja-3.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="232" name="plataforma-verde-2" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-verde-2.png" width="160" height="32"/>
+  <image source="plataforma-verde-2.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="237" name="plataforma-roja" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-roja.png" width="160" height="32"/>
+  <image source="plataforma-roja.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="242" name="plataforma-azul-chica" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-azul-chica.png" width="160" height="32"/>
+  <image source="plataforma-azul-chica.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="247" name="plataforma-verde" tilewidth="32" tileheight="32" tilecount="5">
-  <image source="./plataforma-verde.png" width="160" height="32"/>
+  <image source="plataforma-verde.png" width="160" height="32"/>
  </tileset>
  <tileset firstgid="252" name="PLATAFORMA-ARRIBA2" tilewidth="32" tileheight="32" tilecount="9">
-  <image source="./PLATAFORMA-ARRIBA2.png" width="96" height="96"/>
+  <image source="PLATAFORMA-ARRIBA2.png" width="96" height="96"/>
  </tileset>
  <tileset firstgid="261" name="portalizq" tilewidth="32" tileheight="32" tilecount="64">
-  <image source="./portalizq.png" width="256" height="256"/>
+  <image source="portalizq.png" width="256" height="256"/>
   <tile id="0">
    <properties>
     <property name="part1" value="1"/>
@@ -261,10 +261,10 @@
   </tile>
  </tileset>
  <tileset firstgid="325" name="plataforma32x32" tilewidth="32" tileheight="32" tilecount="9">
-  <image source="./plataforma32x32.png" width="96" height="96"/>
+  <image source="plataforma32x32.png" width="96" height="96"/>
  </tileset>
- <tileset firstgid="334" name="portaldrc" tilewidth="32" tileheight="32" tilecount="64">
-  <image source="./portaldrc.png" width="256" height="256"/>
+ <tileset firstgid="334" name="portal" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="portaldrc.png" width="256" height="256"/>
   <tile id="0">
    <properties>
     <property name="part1" value="1"/>
@@ -466,12 +466,12 @@
    </properties>
   </tile>
  </tileset>
- <layer name="bildings" width="150" height="20">
+ <layer name="building" width="150" height="20">
   <data encoding="base64" compression="zlib">
    eJzt2cVuW1EUQFGXmZmZ8RfKzMzMzMzMbcrcpszMlE/rGmRQRbLq5Np+sfwGa+Z9z7VkPR/LhYlE4gEPecRjnvCUZzznBS95xWvecJ/CgLY0sjUnXXPfRjAz5H2+K1Zyfsh93vOBj3ziM1/4yje+84Of/OI3f4rvEdKWRrbmpGtuUQQz0/FeS84PuU8BF7nEZa5wlWtc5wY3ucVt7nCXexzgIIc4zBGOcozjnOAkpzjNGc5yjvMpviZ0RtxH04c86y8kwj6XqbwmdMa/fUFgHzo/n/qQZ33oDpLqnhK658R99vuQZ2ToDpLqnhK658R99vuo9qtc3RvypQ89P6r9Klf3hnzpQ8+Par/K1b0hX/rQ86N6Fqfjez/K+aHfE1HP/18fer/y/CzOZJ/Ld89WHzKjPD+LM9nn8t2z1UfxP05RInd/A4f+DxX13bPVh8wYwUhGMZoxjGUc4xnAQAYxmCEMZRjD4z7uk/QzmMksZjOHucxjPhOYyCQmM4WpTGN63Md9kn4FK1nFatawlnWsZwELWcRilrCUZSyP+7hP0u9gJ7vYzR72so/9bGAjm9jMFrayje1xH/dJ+gpUpBKVqUJVqlGdGtSkFrWpQ13qUT/uI+8zfYeynt2AhjSiMU1oSjOa04KWtKI1bWhLO9rHfeR9pu9Q1rM70JFOdKYLXelGd3rQk170pg996Uf/uI+8z/Qdynr2X78c42k=
   </data>
  </layer>
- <layer name="aimos" width="150" height="20">
+ <layer name="aimos" width="150" height="20" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt1kEOgCAMBED+/yv6Mi+SYC3qWWYSY2NWThugNQAA/i7OZ+jT95ybM33K5rXyv+wlinnuVRRz7tKqh+zrrVfVe9WrkdEvot3Prrdz8KlXOcuevuxXVba6X7lbAQAAAAAAwNUBvb4nWA==
   </data>
@@ -488,7 +488,7 @@
  </layer>
  <layer name="floor" width="150" height="20">
   <data encoding="base64" compression="zlib">
-   eJztmUtLw0AURlNEd7qrO93pf3Fjd7rTne70Zyr46E4XBaGggkIfvl8IHqHWaG7qSDJOpn4HziLQJHcmM/fepEkihBBCCGGzh/t4gIfYDBuOEEIMWaqFjmC80HwKn2h9CSFElmu8wVu8w/uw4ZgUyd8XeFlaJPGjWihiooz96ysHHOGxh+v+N5bJSQ2HvKTcleUBH/Ep5TO+hAyqIqywXlZxEqd+WDtV7oM62MXewD5eOZy3g7se4xqF774rPSfWfFj3H/W/wm9yyxq/XcdpnCmYk6wakh7ba7HLi4jYYC1tYh1nfde6gLVU72R/yxbPehvncD7nubeSz/pi6dpTTNS+nudaqz6w+plx62li+p5ximd4Pji2augC41nMGdOJ/xAz6D3BjarPU14ueLcdMC4hysDaf1Xfkz74XmPSxDQfb0wsaDA=
+   eJztmcsOwUAUhtt4Oht27Nix4zFJ3HYsJBIJEhL3O5H4JUUxmMaM6fB/ybeQqB6nM+ecto5DCCGEECKmBMuwAquwZjYcQgi5EHVNR/BbMJ9EJ1xfhBDyyAzO4QIu4cpsOEI+qd99OFAWif2wFxKbULF/ddWAOmxo+N1/I4aaFJeoS6xdj6zhBm597uDeZFAhIYH1kpRcM2Geg4ZwBMeeEziVOK4AixrjeoXuucufE1E+ROd/9V4hSG1J4btpRbVI1EP8/+2g5jTEAjJYU9lv9TiDvZT3ZN8lh2udf3O9m861v4iUnSki7u1xsr3qjGie+bWZxqbnGR3YhT3vc9B38y19oT2F9wlyhD1Pz2rBybbBuAhRgWj/hX1P6uC+x/ixKR9Hd8NnTw==
   </data>
  </layer>
  <objectgroup name="objetos">
@@ -677,7 +677,7 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="128" x="3998.72" y="413.294" width="64.9766" height="33.0209">
+  <object id="128" x="4097.72" y="511.294" width="64.9766" height="33.0209">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -690,11 +690,6 @@
   <object id="130" x="4653.81" y="512.356" width="132.084" height="31.9557">
    <properties>
     <property name="clase" value="1"/>
-   </properties>
-  </object>
-  <object id="131" x="0" y="416.489" width="15.9778" height="137.409">
-   <properties>
-    <property name="clase" value="p"/>
    </properties>
   </object>
   <object id="132" x="4781.64" y="352.578" width="12.7823" height="135.279">

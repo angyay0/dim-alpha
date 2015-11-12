@@ -84,7 +84,7 @@ public class WorldSelect extends GameState {
         btnWorld[2].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //setLevel("espacio");
+                setLevel("espacio");
 
             }
         });
