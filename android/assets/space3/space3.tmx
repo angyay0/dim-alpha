@@ -1,0 +1,556 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="150" tilewidth="32" tileheight="32" nextobjectid="64">
+ <tileset firstgid="1" name="bot_espacio" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="bot_espacio.png" width="533" height="134"/>
+ </tileset>
+ <tileset firstgid="65" name="mid_espacio" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="mid_espacio.png" width="533" height="134"/>
+ </tileset>
+ <tileset firstgid="129" name="top_espacio" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="top_espacio.png" width="534" height="133"/>
+ </tileset>
+ <tileset firstgid="193" name="particula_azul32-4x4" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="particula_azul32-4x4.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="194" name="particula_blanca32-4x4" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="particula_blanca32-4x4.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="195" name="estrella32x32" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="estrella32x32.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="196" name="estrella32-16-izq_bot-2" tilewidth="32" tileheight="32" tilecount="1">
+  <image source="estrella32-16-izq_bot-2.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="197" name="plataforma-roja" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-roja.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="202" name="PLATAFORMA-ARRIBA" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="PLATAFORMA-ARRIBA.png" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="211" name="plataforma-roja-3" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-roja-3.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="216" name="plataforma32x32" tilewidth="32" tileheight="32" tilecount="9">
+  <image source="plataforma32x32.png" width="96" height="96"/>
+ </tileset>
+ <tileset firstgid="225" name="plataforma-azul-chica" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-azul-chica.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="230" name="plataforma-verde" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-verde.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="235" name="plataforma-azul-chica" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-azul-chica.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="240" name="plataforma-verde-2" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-verde-2.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="245" name="plataforma-roja-2" tilewidth="32" tileheight="32" tilecount="5">
+  <image source="plataforma-roja-2.png" width="160" height="32"/>
+ </tileset>
+ <tileset firstgid="250" name="portal" tilewidth="32" tileheight="32" tilecount="64">
+  <image source="portaldrc.png" width="256" height="256"/>
+  <tile id="0">
+   <properties>
+    <property name="part1" value="1"/>
+   </properties>
+  </tile>
+  <tile id="1">
+   <properties>
+    <property name="part6" value="1"/>
+   </properties>
+  </tile>
+  <tile id="2">
+   <properties>
+    <property name="part1" value="2"/>
+   </properties>
+  </tile>
+  <tile id="3">
+   <properties>
+    <property name="part6" value="2"/>
+   </properties>
+  </tile>
+  <tile id="4">
+   <properties>
+    <property name="part1" value="3"/>
+   </properties>
+  </tile>
+  <tile id="5">
+   <properties>
+    <property name="part6" value="3"/>
+   </properties>
+  </tile>
+  <tile id="6">
+   <properties>
+    <property name="part1" value="4"/>
+   </properties>
+  </tile>
+  <tile id="7">
+   <properties>
+    <property name="part6" value="4"/>
+   </properties>
+  </tile>
+  <tile id="8">
+   <properties>
+    <property name="part2" value="1"/>
+   </properties>
+  </tile>
+  <tile id="9">
+   <properties>
+    <property name="part7" value="1"/>
+   </properties>
+  </tile>
+  <tile id="10">
+   <properties>
+    <property name="part2" value="2"/>
+   </properties>
+  </tile>
+  <tile id="11">
+   <properties>
+    <property name="part7" value="2"/>
+   </properties>
+  </tile>
+  <tile id="12">
+   <properties>
+    <property name="part2" value="3"/>
+   </properties>
+  </tile>
+  <tile id="13">
+   <properties>
+    <property name="part7" value="3"/>
+   </properties>
+  </tile>
+  <tile id="14">
+   <properties>
+    <property name="part2" value="4"/>
+   </properties>
+  </tile>
+  <tile id="15">
+   <properties>
+    <property name="part7" value="4"/>
+   </properties>
+  </tile>
+  <tile id="16">
+   <properties>
+    <property name="part3" value="1"/>
+   </properties>
+  </tile>
+  <tile id="17">
+   <properties>
+    <property name="part8" value="1"/>
+   </properties>
+  </tile>
+  <tile id="18">
+   <properties>
+    <property name="part3" value="2"/>
+   </properties>
+  </tile>
+  <tile id="19">
+   <properties>
+    <property name="part8" value="2"/>
+   </properties>
+  </tile>
+  <tile id="20">
+   <properties>
+    <property name="part3" value="3"/>
+   </properties>
+  </tile>
+  <tile id="21">
+   <properties>
+    <property name="part8" value="3"/>
+   </properties>
+  </tile>
+  <tile id="22">
+   <properties>
+    <property name="part3" value="4"/>
+   </properties>
+  </tile>
+  <tile id="23">
+   <properties>
+    <property name="part8" value="4"/>
+   </properties>
+  </tile>
+  <tile id="24">
+   <properties>
+    <property name="part4" value="1"/>
+   </properties>
+  </tile>
+  <tile id="25">
+   <properties>
+    <property name="part9" value="1"/>
+   </properties>
+  </tile>
+  <tile id="26">
+   <properties>
+    <property name="part4" value="2"/>
+   </properties>
+  </tile>
+  <tile id="27">
+   <properties>
+    <property name="part9" value="2"/>
+   </properties>
+  </tile>
+  <tile id="28">
+   <properties>
+    <property name="part4" value="3"/>
+   </properties>
+  </tile>
+  <tile id="29">
+   <properties>
+    <property name="part9" value="3"/>
+   </properties>
+  </tile>
+  <tile id="30">
+   <properties>
+    <property name="part4" value="4"/>
+   </properties>
+  </tile>
+  <tile id="31">
+   <properties>
+    <property name="part9" value="4"/>
+   </properties>
+  </tile>
+  <tile id="32">
+   <properties>
+    <property name="part5" value="1"/>
+   </properties>
+  </tile>
+  <tile id="33">
+   <properties>
+    <property name="part10" value="1"/>
+   </properties>
+  </tile>
+  <tile id="34">
+   <properties>
+    <property name="part5" value="2"/>
+   </properties>
+  </tile>
+  <tile id="35">
+   <properties>
+    <property name="part10" value="2"/>
+   </properties>
+  </tile>
+  <tile id="36">
+   <properties>
+    <property name="part5" value="3"/>
+   </properties>
+  </tile>
+  <tile id="37">
+   <properties>
+    <property name="part10" value="3"/>
+   </properties>
+  </tile>
+  <tile id="38">
+   <properties>
+    <property name="part5" value="4"/>
+   </properties>
+  </tile>
+  <tile id="39">
+   <properties>
+    <property name="part10" value="4"/>
+   </properties>
+  </tile>
+ </tileset>
+ <layer name="buildings" width="25" height="150" opacity="0.98">
+  <data encoding="base64" compression="zlib">
+   eJztmlWXFDEQRoPzivOK8zdwd3dncXdf3GFwZxZ3dnFd5qdx56HPabI906lKZ84eth/uy3Q6XyeVqkolU2+MqY9xFI5Zv9nPjsMJOAmn4DScgbNwDs7DBbgIl6AQI96f/bu2/8sZvO+Cb/9FB3w0yu83OpBk20r42tzXLtWeZ23vpHa+9rDJel0l2TdJ19cOJQufdeXzHQUHfHVCxBG7XVr/WcSzSm2zipXF2DtZxt9ijMaM+i4m9BtRyuh7bX8oxfij0Ej63pLFT/gFv6FZOT9231/hG3yHHwkaPjHkk3GzZ7U2afHEdb1o15RkPWrXbmgN6TuaXC5t32Bk8Vszbm38kLx3Da7DDbgJt+A23IG7cA/uwwN4aFruDVw0nsBTeAbP4QW8hFfwGt7AW3gH703LvUE8flXSKPvqZ/hi0mNCOb6VzL97g6JpqWfPbaj1GtdpLRq+eaytaGSR70NrFGug0ehoC9+9tUvsj3MFrhpZnHOJ/XEewWMji3Np42+y+AAfjSzOSedXM19SDc18STU08yVdhyE07DMtjYbEzwsBNOwxNATUiM7ltD6SNk9R/9oxNKdoFDLoP61Wa4j1H0rDN05F+7E0DZ++o2faPCjRT4udlepAiUZa7EzSkPp7Wo5Kei5dy1KNaJ4kGtLaTBMXQ8+TRkPjk9IaNus8WCsNWydrDftsIEQ+t88gQuTzppiOT65Ki7uRjk+uctm/+eYq7T2AZF+tqSGl+2pNDSmdM00NGVqj5KEhqVmlGpp6WOqLmnpb6iuaels6V9L6URN7pbbTxF7JO9payvWdKIdo4qLrGvHJUZIxaHOU6zm+dgyuZzI+Y3DV8BlDuaZy8XPfutbFHr51oSTuRvufkOdX2jmTaGj3P6HP4KT3ta1ZI/RZ4v+kUQt7SO6ntRpp/x/yrdOaTeX/D8X79j1TtO83bM0szhTt+w1bM4vzRLvusjV9+y8a/f1PdM/t0sb3O7POg0l1VYg62P7fgUubtmQPX5u52MPXZi728LWZiz1quU/M/SP3j9w/cv/I/SP3j9w/cv/I/SPdHsNgOIyAkTAKRsMYGAvjHNuMhwkwESbBZJgCU2EaTIcZMBNmwWyYA3NhnmOb+bAAFsIiWAxLYCksg+WwAlbCKlgNdbAG1jq2WQfrYQNshE2wGbbAVtgG22EH7IRdsBv2wF7HNvtgPxyAg3AIDsMRaAftoQN0hE7QGbpAV8Hzau26QXfoAT2hF/SGPtBX8Lxau37QHwbAQBgEg2EIDBU8r9buLzryssQ=
+  </data>
+ </layer>
+ <layer name="fx" width="25" height="150">
+  <data encoding="base64" compression="zlib">
+   eJytWFtu5DAM8/1vlTnZYj8GEFiSIp0RELRN9LKedM855zl39BlPwnuIrUfIP4R3szW/Mflp/yHvNr/meaf+52S+TRkVO6YD7aLPn/ET9SeEfCweSt8W5ymvcq1sKB2KWEyYjy5fSdxmjJnt+bfyV9n4iJ9OV9O/aU0wmaaeZr+rXna2WIw3WefPDe/Wi6538fyTVL+oM7O5weQT/d+niYnqcUbN3Lm1k+if8Wr2iNtTyr+2Rp39mR81410NKsL84wxk9rZ8YB1NnZtfbQ6ZDdzB6mypjWa/sByhr5uO5NuWJ+Rt9LNab/Yf6kJ8crNfXR5YzF0/bruX1fu0s+Et9Dkh5jvbFQkmY7odX4NPmW7mR4JpE/tTdzJ7mOzW92xefO1tsWF2lI3pv8MxjjafHO7GPmkxKNOvcst6pqV2l31lGj7EZhumbTADyqndoOpmq3NWf4ovOZuTdfYdLlUy7H3T14pUjL820OcEy7Pzbfs2eedo439rw+0t5Esw23y2HmF7UumdPiR1xXYO9sn3J+tDJJzrG8aavEnfNJgq3UtvKN1Lif1239/gJzc3txngdLp6/epWutx9Z77bsOMhfKmtBCep2bfRthOS2YKYS81clYubXYGxZ1iG+cfodv6q/DM9qn7RN+RPbCjfmB9v5s22W27kGG+bD4dZ59+pH0m/ubsr862JQXMvusWCU74ldq96yJPavr3DYL/f7gjUqXpSYaJHfGtyf3sXdhiooS0HzoaKl/td4TjmQ4sLXO+7+kzmiOJFDOHmb4JVnT8u12kdpLWS9rXLUYuLFZ6/qe+3fYGksNxmZ8OPygbT7Wp33lu2uanmmZNhfqp8MR0JTphn2M7NbNx8v5X7T8zPtH5vsCna3nZMO9OV7+r+vdHNjlKYd/rCbDj7zq+Nmjp0OVE7MLWpsAbyoGyCodg3tjsZz7ZPk1m0+cPk0A/19/TJyWN+2P6bfCrWW+5dHpnctKPqi/nkcqco2R2K331P8bDD8sqnm/mtdm/iYxpPFheVy5v9gHamnOLDp4lf8n+VX2Cu5t6Gc1zV4vY/ESeX9rjyDfWpfmC1kZCaS9uOu8290vmL+3aDS9GXVibBaWksU5vMDupu83XTcyp/bqcntpKd4+62jEf1+HzH/Jx6kp2mdqcidkZnr+mNadvlhGEW5k9qC9+5Om2ouQPjdzyXwldMv4sHq6sWu7saR5sTD7/dkaibvWcxOcT2hk+Sfk8pwYKPeJwetU/V72n8t7O38W3oF1iK0c19Kz3TrBfVu8kOUbWhctzgmGZHtbOzkUN/EhvNXcr543bKm7Oz9652Uhn0b/K1PcJmM+PZzu/m0maXyaRPUuu3MWlzz3LW7IRt/7N3bM8n+lBm7ke3O5zdxP8Eu01+Z8PJYC5SDLrhmQ3PKqyz6d0w3Ywfw22K3N6fv7OZ6PQjfmM7hZ29ndN43qTmlf1t3yLvOX/7uJklDhPNb/8A8mZvOg==
+  </data>
+ </layer>
+ <layer name="xfx" width="25" height="150">
+  <data encoding="base64" compression="zlib">
+   eJztm11uxCAMhPf+19o92CoPVaOUBI8Zewap31uVNMZ/GAz7fuF8gHffk/9HvtXNbGxPz0fPnHXtosIGoxjLvLMrn9dfu3bE2p0MNPZ38A2iK/LcXffZ/K3mzn7o3MyQmXmP7X8n34xAxsfWxcU2dz53ioWKecl9rssQrWvK2FPZPSOXZacn2Yo16FWmOhfU8hEYdXQnfdmsxntHHT7vYRx89TQGh/FlUK9/FHbr1rmq7lTtIyvsc/4mOi5FjOyaz2wq7LCy36tcM6F5uiK7a9wd8lVyHfejSJ8zWxfc56bR+Lr3XhHc+5h3PM2BrmvUq+yInXfwxQqZHGf1j11sm+nVV8uO0HVegOLi1xGONSAK4q+fd2c9jSjutpnhmitKovuJTLxU0OWDKl0dbHi3l939PkA3in33vw9+OWyRzadZP+c83znkbCcsfVk95RU/V4PmY6SOqmpP9l7orufHK/0w13gcsXLft2ouOP5GekSMvjdDF4XfGfcIGTkZOQOvvNtYSefYmLK6ajV6x5h5D5XN6pid4/iA2XvvPIdyp6LeKG3BPkvOfEO9VhxR5RPns+7svRj07EhlA6ezXTXZ3wtdQepM1x1YVG70O2e+q66uKQ==
+  </data>
+ </layer>
+ <layer name="floor" width="25" height="150">
+  <data encoding="base64" compression="zlib">
+   eJztmktrAjEUhaPd6U537f//KT5KQRDarmbtuy3tQsFuegYRR8lDzSSTm54DBwQl39xcMzd3JkpRVL56gRfwEl4FYkwCjVtEYFRFxkmF43spcTTFuPW/65pvlyTPlVSGLWeS4siNocuLxDhyY7Cep8G4dn24atKtNUviXIVksH6ky7jMjdQ4yLCLa/CgVPsP7hmaZXB9pM845kh6HGTYxb72fhURGEowg/tds/gsPF3GFt4FZuhERjyGLsdV8d5ORl1iHdTrmucDEuKIzTDNm7Q4mmLw3m4W+0Ey6mLk3ON8wz+BGVWRkR9jDW/gD/gT/grAcImM/8GYwXN1OLc79RzLdl8vzwaPLjyGnz2ZVUnOQ2gGe00y2D/FZ/CdNhmlUnxv7nMOhzUqL8Ye/oVf4Tf4PQCj3VLqoWX/jS+jg/G7BsZxD+q7z+1h/L6BUVeuHzH+EzzA56E63zf7XL+ut/wDdMe0qA==
+  </data>
+ </layer>
+ <objectgroup name="objetos">
+  <properties>
+   <property name="clase" value="1"/>
+  </properties>
+  <object id="1" x="1" y="4768" width="186" height="26">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="3" x="167" y="4704" width="20" height="66">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="4" x="189" y="4702" width="64" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="5" x="233" y="3842" width="20" height="860">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="10" x="253" y="3841" width="192" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="11" x="3" y="4639" width="90" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="12" x="161" y="4416" width="30" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="13" x="1" y="4254" width="30" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="14" x="187" y="4160" width="40" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="15" x="95" y="3967" width="34" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="16" x="-1" y="3838" width="32" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="17" x="47" y="3614" width="126" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="18" x="191" y="3424" width="66" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="19" x="31" y="3360" width="34" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="20" x="191" y="3808" width="126" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="21" x="299" y="225" width="16" height="3583">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="22" x="317" y="223" width="100" height="28">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="24" x="193" y="287" width="30" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="25" x="29" y="415" width="38" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="26" x="187" y="513" width="38" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="27" x="63" y="671" width="32" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="28" x="127" y="800" width="30" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="29" x="191" y="929" width="30" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="30" x="127" y="1053" width="32" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="31" x="65" y="1181" width="32" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="32" x="159" y="1312" width="32" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="34" x="61" y="1472" width="34" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="35" x="191" y="1600" width="32" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="36" x="63" y="1725" width="32" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="37" x="223" y="1857" width="32" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="38" x="127" y="2432" width="62" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="39" x="1" y="2592" width="66" height="34"/>
+  <object id="40" x="253" y="2592" width="34" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="41" x="125" y="3168" width="36" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="42" x="257" y="3072" width="30" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="43" x="95" y="2974" width="34" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="44" x="1" y="2880" width="30" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="45" x="161" y="2784" width="30" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="46" x="29" y="2302" width="32" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="47" x="159" y="2208" width="32" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="48" x="253" y="2111" width="34" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="49" x="127" y="2014" width="32" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="50" x="573" y="511" width="34" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="51" x="447" y="1057" width="32" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="52" x="705" y="1057" width="32" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="53" x="575" y="1535" width="34" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="54" x="543" y="4448" width="34" height="36">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="55" x="655" y="4768" width="124" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="56" x="783" y="4608" width="16" height="136">
+   <properties>
+    <property name="clase" value="p"/>
+   </properties>
+  </object>
+  <object id="63" x="96" y="4512" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup name="coins">
+  <object id="57" x="362" y="201">
+   <ellipse/>
+  </object>
+  <object id="58" x="400" y="3818">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="59" x="562" y="4430">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="60" x="586" y="1514">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="61" x="140" y="784">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+  <object id="62" x="234" y="3782">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+   <ellipse/>
+  </object>
+ </objectgroup>
+</map>
