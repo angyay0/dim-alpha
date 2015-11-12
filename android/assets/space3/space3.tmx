@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="150" tilewidth="32" tileheight="32" nextobjectid="64">
+<map version="1.0" orientation="orthogonal" renderorder="left-down" width="25" height="150" tilewidth="32" tileheight="32" nextobjectid="71">
  <tileset firstgid="1" name="bot_espacio" tilewidth="32" tileheight="32" tilecount="64">
   <image source="bot_espacio.png" width="533" height="134"/>
  </tileset>
@@ -268,7 +268,7 @@
  </layer>
  <layer name="floor" width="25" height="150">
   <data encoding="base64" compression="zlib">
-   eJztmktrAjEUhaPd6U537f//KT5KQRDarmbtuy3tQsFuegYRR8lDzSSTm54DBwQl39xcMzd3JkpRVL56gRfwEl4FYkwCjVtEYFRFxkmF43spcTTFuPW/65pvlyTPlVSGLWeS4siNocuLxDhyY7Cep8G4dn24atKtNUviXIVksH6ky7jMjdQ4yLCLa/CgVPsP7hmaZXB9pM845kh6HGTYxb72fhURGEowg/tds/gsPF3GFt4FZuhERjyGLsdV8d5ORl1iHdTrmucDEuKIzTDNm7Q4mmLw3m4W+0Ey6mLk3ON8wz+BGVWRkR9jDW/gD/gT/grAcImM/8GYwXN1OLc79RzLdl8vzwaPLjyGnz2ZVUnOQ2gGe00y2D/FZ/CdNhmlUnxv7nMOhzUqL8Ye/oVf4Tf4PQCj3VLqoWX/jS+jg/G7BsZxD+q7z+1h/L6BUVeuHzH+EzzA56E63zf7XL+ut/wDdMe0qA==
+   eJztmkuLwjAUhaPunJ3unP//U5wHgiCoq67HeYsuFHTjEZHJ1LZpjbfJrefAgYIlnze36U3SGENRzdUIfoc/4E8hxlio3aQGhi0y/pQ4ftcSRyhG1WfX1d8uae4rrYyinGmKo2mMrLxojKNpDNbzOBhlx4erJlWtWRr7SpLB+hEvI50brXGQUSyOwZNiXX9wzhCWwfERP+OcI+1xkFEsrmuvV1IDwyhmcL6bL+6Fx8/YwFthhi0NDLtPpBhlREY5sUaFZ7AOZqvM/oCGOOpm5PWbtjhCMfhOvA8G37thGVzjVBP3Ra/XCl4LM2yRUS/Dzq8UwyXNjDd4YU7ndidCjKOOZ4OfU36BX2/I0JwHfnsMy2CN9RfXT5fic3W/jNi/ofqcw+EZg2YxdvAensIzeC7AaLeM6bSK7/FldNH+Qw7jPAf1nef20H4/h3GrXA/Q/iM8xPWT+T9v9vn/X/A3/AP/wkv4APncssY=
   </data>
  </layer>
  <objectgroup name="objetos">
@@ -305,7 +305,7 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="12" x="161" y="4416" width="30" height="32">
+  <object id="12" x="160" y="4512" width="30" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -320,22 +320,17 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="15" x="95" y="3967" width="34" height="36">
+  <object id="15" x="0" y="4064" width="34" height="36">
    <properties>
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="16" x="-1" y="3838" width="32" height="36">
+  <object id="16" x="128" y="3936" width="32" height="36">
    <properties>
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="17" x="47" y="3614" width="126" height="36">
-   <properties>
-    <property name="clase" value="1"/>
-   </properties>
-  </object>
-  <object id="18" x="191" y="3424" width="66" height="34">
+  <object id="18" x="192" y="3552" width="66" height="34">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -425,18 +420,17 @@
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="38" x="127" y="2432" width="62" height="32">
+  <object id="38" x="192" y="2432" width="62" height="32">
    <properties>
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="39" x="1" y="2592" width="66" height="34"/>
-  <object id="40" x="253" y="2592" width="34" height="34">
+  <object id="40" x="256" y="2656" width="34" height="34">
    <properties>
     <property name="clase" value="1"/>
    </properties>
   </object>
-  <object id="41" x="125" y="3168" width="36" height="34">
+  <object id="41" x="160" y="3232" width="36" height="34">
    <properties>
     <property name="clase" value="1"/>
    </properties>
@@ -516,7 +510,26 @@
     <property name="clase" value="p"/>
    </properties>
   </object>
-  <object id="63" x="96" y="4512" width="32" height="32"/>
+  <object id="65" x="64" y="4416" width="30" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="67" x="64" y="3456" width="34" height="30">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="69" x="32" y="3712" width="66" height="34">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
+  <object id="70" x="0" y="2528" width="62" height="32">
+   <properties>
+    <property name="clase" value="1"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup name="coins">
   <object id="57" x="362" y="201">
