@@ -195,17 +195,18 @@ public class Pause extends GameState {
             Efecto.setChecked(false);
             fxText.setChecked(true);
         }
-
         fxText.setSize(imgCuad, imgCuad);
         fxText.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.debug("Evento", "Efecto");
                 if (Efecto.isChecked()) {
+                    GameConfiguration.getInstance().saveFx(false);
                     Efecto.setChecked(false);
                     fxText.setChecked(true);
-                }
-                else{
+
+                }else{
+                    GameConfiguration.getInstance().saveFx(true);
                     Efecto.setChecked(true);
                     fxText.setChecked(false);
                 }

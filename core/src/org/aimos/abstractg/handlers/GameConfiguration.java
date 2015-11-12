@@ -95,7 +95,7 @@ public class GameConfiguration {
      * @param sound boolean
      */
     public void saveSound(boolean sound){
-        preferences.putBoolean("musicOn",sound);
+        preferences.putBoolean("soundOn",sound);
         preferences.flush();
     }
 
@@ -104,7 +104,7 @@ public class GameConfiguration {
      * @param fx boolean
      */
     public void saveFx(boolean fx){
-        preferences.putBoolean("musicOn",fx);
+        preferences.putBoolean("fxOn",fx);
         preferences.flush();
     }
 }

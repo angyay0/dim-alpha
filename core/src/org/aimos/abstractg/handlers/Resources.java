@@ -187,7 +187,9 @@ public class Resources {
      * @return retorna sonido
      */
     public Sound getSound(String key) {
-        return sounds.get(key);
+        Sound sound = sounds.get(key);
+        //sound.setVolume(0,0.40f);
+        return sound;
     }
     public void removeSound(String key) {
         Sound sound = sounds.get(key);

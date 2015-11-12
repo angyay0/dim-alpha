@@ -30,6 +30,7 @@ public class GameOver extends GameState {
         this.gsm = gsm;
         this.game = actual;
         initButtons();
+        Launcher.res.getSound("die").play();
     }
 
     /**

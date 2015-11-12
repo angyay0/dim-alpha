@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.aimos.abstractg.core.Launcher;
@@ -14,11 +16,8 @@ import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.Constants;
 import org.aimos.abstractg.handlers.GameConfiguration;
 
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.parallel;
-import static com.badlogic.gdx.scenes.scene2d.actions.Actions.sequence;
+
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
 
 /**
  * Created by DiegoArmando on 28/09/2015.
@@ -32,6 +31,8 @@ public class WorldSelect extends GameState {
     private Texture back;
     //dimension del circulo
     private float dCircular = 220f;
+    private Skin skinLabel;
+    private boolean flag = true;
 
     /**
      * Mentodo constructor donde se realizan las inicializaciones
@@ -43,6 +44,11 @@ public class WorldSelect extends GameState {
         back = Launcher.res.getTexture("back");
         initButtons();
         for (Button btn : btnWorld) addActor(btn);
+        skinLabel = new Skin();
+        skinLabel.addRegions(Launcher.res.getAtlas("uiskin"));
+        skinLabel.add("default-font", font);
+        skinLabel.load(Gdx.files.internal("data/uiskin2.json"));
+
     }
 
     /**
@@ -61,6 +67,7 @@ public class WorldSelect extends GameState {
         btnWorld[0].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Launcher.playClick();
                 setLevel("tierra");
 
             }
@@ -69,11 +76,12 @@ public class WorldSelect extends GameState {
         btnWorld[1].setSize(dCircular, dCircular);
         btnWorld[1].setPosition(290f, 130f);
         btnWorld[1].addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, 1.5f, Interpolation.bounce))));
-
         btnWorld[1].addListener(new ClickListener() {
             @Override
-            public void clicked(InputEvent event, float x, float y) {
+            public  void clicked(InputEvent event, float x, float y) {
                 //setLevel("marte");
+                if(flag)
+                    csoon();
             }
         });
 
@@ -84,7 +92,10 @@ public class WorldSelect extends GameState {
         btnWorld[2].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //setLevel("espacio");
+               // Launcher.playClick();
+               setLevel("espacio");
+               //if(flag)
+                 //  csoon();
 
             }
         });
@@ -95,9 +106,28 @@ public class WorldSelect extends GameState {
         btnWorld[3].addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Launcher.playClick();
                 back();
             }
         });
+    }
+
+    private void csoon() {
+        flag = false;
+        Label soon = new Label("Proximamente!!!", skinLabel, "default");
+        soon.setPosition((getWidth() / 2) - 250, getHeight() + 32);
+        soon.addAction(sequence(alpha(0),
+                scaleTo(.1f, .1f),
+                parallel(fadeIn(1f,
+                                Interpolation.pow2),
+                        scaleTo(0.9f, 1f, 1.5f,
+                                Interpolation.pow5),
+                        moveTo(getWidth() / 2 - 150,
+                                getHeight() / 2 - 32, 2f,
+                                Interpolation.swing)),
+                fadeOut(0.95f)));
+            addActor(soon);
+       flag = true;
     }
 
     /**
@@ -142,10 +172,12 @@ public class WorldSelect extends GameState {
         Gdx.gl.glClearColor(0.86f, 0.86f, 0.86f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         sb.setProjectionMatrix(hudCam.combined);
+
         sb.begin();
         sb.draw(background, 120f, 0f, 600f, 480f);
         font.draw(sb, "Selecciona El Capitulo", 200, 490f);
         sb.end();
+
         super.act();
         super.draw();
     }

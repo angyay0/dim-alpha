@@ -90,7 +90,7 @@ public class GameStateManager {
                 if(getState() instanceof Play) return new Pause(this, (Play)getState()).setID(state);
                 else return getState();
             case OPTIONS:
-                if(getState() instanceof Play) return new Pause(this, (Play)getState(),true).setID(state);
+                if(getState() instanceof MainMenu) return new Pause(this, (MainMenu)getState(),true).setID(state);
                 else return getState();
             case GAME_OVER:
                 if(getState() instanceof Play) return new GameOver(this, (Play)getState()).setID(state);

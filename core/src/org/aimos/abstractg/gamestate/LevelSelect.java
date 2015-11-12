@@ -84,6 +84,7 @@ public class LevelSelect extends GameState {
             btn[i].addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
+                    Launcher.playClick();
                     setLevel(tmx.get(fi));
                 }
             });
@@ -95,6 +96,7 @@ public class LevelSelect extends GameState {
         btn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Launcher.playClick();
                 back();
             }
         });

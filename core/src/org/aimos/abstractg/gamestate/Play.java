@@ -52,6 +52,7 @@ public abstract class Play extends GameState {
     Skin skin;
     Thread t;
     Label labelInfo/*,labelInfo*/;
+    private boolean sfxPortal = false;
 
     private static String map = "tutorial";
     private static int worldLvel = 1;
@@ -140,8 +141,10 @@ public abstract class Play extends GameState {
         if(!AudioManager.getInstance().isPlaying() && GameConfiguration.getInstance().getMusic()) AudioManager.getInstance().play();
         player.update(dt);
         if( !portal.isVisible() ){
-            if( player.hasMinimumCoins(4) )
+            if( player.hasMinimumCoins(4) ){
+                playPortal();
                 portal.setVisibility(true);
+            }
         }
         if(win){
             WinScreen.settter(JsonIO.readProfileTScore(), String.valueOf(player.getMoney()), map, JsonIO.tmxName);
@@ -173,6 +176,10 @@ public abstract class Play extends GameState {
         }
         updLabel(String.valueOf(player.getMoney()));
       /*  updArm(String.valueOf(player.getMoney()));   */
+    }
+
+    private void playPortal() {
+        Launcher.res.getSound("explosion").play();
     }
 
     @Override

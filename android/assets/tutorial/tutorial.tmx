@@ -187,6 +187,15 @@
    </properties>
   </tile>
  </tileset>
+ <tileset firstgid="234" name="inst1" tilewidth="32" tileheight="32" tilecount="32">
+  <image source="move.png" trans="ff00ff" width="524" height="76"/>
+ </tileset>
+ <tileset firstgid="266" name="salto" tilewidth="32" tileheight="32" tilecount="24">
+  <image source="jump.png" trans="ff00ff" width="384" height="64"/>
+ </tileset>
+ <tileset firstgid="290" name="crouch" tilewidth="32" tileheight="32" tilecount="17">
+  <image source="crouch.png" trans="ff00ff" width="567" height="50"/>
+ </tileset>
  <layer name="bg" width="80" height="24">
   <data encoding="base64" compression="zlib">
    eJzt0DENADAMwLCWP+kx2BPtmRwpBLwzs4//udd2/Pjd4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LX4tfi1+LXOk6cAlk=
@@ -209,7 +218,7 @@
  </layer>
  <layer name="more" width="80" height="24">
   <data encoding="base64" compression="zlib">
-   eJzt0bsOAUEUgOHtkSBBggQJ4vYEbg3vQUNHw8O4Fu68pb9YyRSKtdizk5w/+YpJNntOZhxH0zRN0zRN+7YIoohJL2JpcSSQlF7E0lJIIyO9iKVlkUNeehFLK6CIkvAetlZGBVXpRSyr5qqjgSZaLk3TNE2mNjrooufqi25kZwMMDWHogCNO0ot4zLzDMHTGBdcf/nOFNTYevvXzfq87DEM33PH44T+32GHv4Vu/7zf4dCmPjTA2zhNM/zTr3bwgZv6zGebGeYFlgPOCmPnqCaWNGsY=
+   eJzt17lOQkEYhuFDq6CAAgoooIBsrqWiDd6HNtppoxfjRqGCy625L+DS+RaHZBIoiA5nnOR/k6c4CTnzMVQ4jiRJkiRJkvTXhuFHwPQQSwsihLDpIZYWQRQx00MsLY4EkqaHWFoKaWQM77C1LHLImx5iWQVXESWUUXFJktTdHe7xgEc84RkveMUb3tFCGx/4xBe+DeyV7GwVa6hi3bVhdJGd1bCp+A+d4wKXpof0mXqHakM+/rvDjwBGMIogQghjDOOI+PTtaaCJK32vdI5wjJM+Pvub369zh2pR7iSGCUwijgSSmMI0Ukgjo/H+rnGDW32vdE5xhrr7PMPeWWSRQx5zKKCIEsqoYB4LWMQSlrHS4/vWNO5V28K28ryD3QGd1es8L84cZHvYV54PcOjheV6c2ekH5Dws5g==
   </data>
  </layer>
  <objectgroup name="objetos">

@@ -15,6 +15,7 @@ import org.aimos.abstractg.gamestate.GameStateManager;
 import org.aimos.abstractg.gamestate.Play;
 import org.aimos.abstractg.handlers.BoundedCamera;
 import org.aimos.abstractg.handlers.Constants;
+import org.aimos.abstractg.handlers.GameConfiguration;
 import org.aimos.abstractg.handlers.Resources;
 import org.aimos.abstractg.handlers.SocialMedia;
 
@@ -111,6 +112,9 @@ public class Launcher extends Game {
         //Musica
         res.loadMusic("music/menu_base.mp3");
         res.loadMusic("music/cap1.mp3");
+        res.loadSound("music/click.mp3");
+        res.loadSound("music/die.mp3");
+        res.loadSound("music/explosion.mp3");
         //SpriteBatch
         batch = new SpriteBatch();
         //Cameras
@@ -211,6 +215,12 @@ public class Launcher extends Game {
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
-        hudCam.position.set(hudCam.viewportWidth/2,hudCam.viewportHeight/2,0);
+        hudCam.position.set(hudCam.viewportWidth / 2, hudCam.viewportHeight / 2, 0);
+    }
+
+    public static synchronized void playClick(){
+        if(GameConfiguration.getInstance().getFx()) {
+            res.getSound("click").play(0.15f);
+        }
     }
 }

@@ -13,6 +13,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import org.aimos.abstractg.core.Launcher;
 import org.aimos.abstractg.handlers.AudioManager;
 import org.aimos.abstractg.handlers.Constants;
+import org.aimos.abstractg.handlers.GameConfiguration;
+
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.alpha;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.fadeIn;
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.moveBy;
@@ -113,6 +115,7 @@ public class MainMenu extends GameState{
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Launcher.playClick();
                 gsmFinal.pushState(Constants.STATE.WORLD_SELECT);
             }
         });
@@ -125,6 +128,7 @@ public class MainMenu extends GameState{
         optButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Launcher.playClick();
                 gsmFinal.pushState(Constants.STATE.OPTIONS);
             }
         });
@@ -137,6 +141,7 @@ public class MainMenu extends GameState{
         exitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                Launcher.playClick();
                 back();
             }
         });
@@ -147,4 +152,5 @@ public class MainMenu extends GameState{
         addActor(optButton);
         addActor(exitButton);
     }
+
 }
