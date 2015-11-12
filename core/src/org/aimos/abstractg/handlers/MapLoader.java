@@ -29,24 +29,26 @@ import org.aimos.abstractg.physics.Portal;
 public class MapLoader {
 
     //Variable del estado Play
-    Play play;
+    private Play play;
     //Variable del mapa
-    TiledMap tileMap;
+    private TiledMap tileMap;
     //variable para renderizar el mapa
-    OrthogonalTiledMapRenderer tmRenderer;
+    private OrthogonalTiledMapRenderer tmRenderer;
     //Variables para obtener las dimensiones del mundo
-    int tileMapWidth, tileMapHeight, tileSize;
+    private int tileMapWidth, tileMapHeight, tileSize;
     //Variables para obtener las capas del mapa
-    TiledMapTileLayer[] layers = new TiledMapTileLayer[5];
+    private TiledMapTileLayer[] layers = new TiledMapTileLayer[5];
     //Variables para obtener las diferentes camaras del mundo
-    BoundedCamera floor, fx, xFx, b2dCam;
+    private BoundedCamera floor, fx, xFx, b2dCam;
     //Variable para renderizar las fisicas del mundo
     private Box2DDebugRenderer b2dRenderer;
     //Variable para debuggear el mundo
     private boolean debug = true;
     //Variable para obtener al jugador
     private Player player;
-    Portal portal;
+    //Portal
+    private Portal portal;
+
     public MapLoader(Play play, Player player){
         super();
         this.play = play;

@@ -126,7 +126,7 @@ public class LevelSelect extends GameState {
      */
     @Override
     public void update(float dt){
-        if(!AudioManager.getInstance().isPlaying() && GameConfiguration.getInstance().getMusic()) AudioManager.getInstance().continuarAudio(Launcher.res.getMusic("menu_base"));
+        if(!AudioManager.getInstance().isPlaying() && GameConfiguration.getInstance().getMusic()) AudioManager.getInstance().continueAudio(Launcher.res.getMusic("menu_base"));
     }
 
     /**

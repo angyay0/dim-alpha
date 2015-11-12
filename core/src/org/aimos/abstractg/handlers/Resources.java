@@ -1,13 +1,14 @@
 package org.aimos.abstractg.handlers;
 
-import java.util.HashMap;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.utils.Array;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by EinarGretch on 28/09/2015.
@@ -21,8 +22,6 @@ public class Resources {
     private HashMap<String, Sound> sounds;
     //Almacena las imagenes del juego
     private HashMap<String, Texture> textures;
-    //Almacena la inteligencia
-    private HashMap<String, FileHandle> luas;
 
     /**
      * Metodo constructor para inicializar variables
@@ -32,12 +31,11 @@ public class Resources {
         textures = new HashMap<String, Texture>();
         music = new HashMap<String, Music>();
         sounds = new HashMap<String, Sound>();
-        luas = new HashMap<String, FileHandle>();
     }
 
 
     /***********/
-	/* Texture */
+    /* Texture */
     /***********/
 
     /**
@@ -53,6 +51,7 @@ public class Resources {
      * @param path
      * @param key
      */
+
     public void loadTexture(String path, String key) {
         Texture tex = new Texture(Gdx.files.internal(path));
         tex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -64,9 +63,11 @@ public class Resources {
      * @param key clave generada o asignada manual
      * @return
      */
+
     public Texture getTexture(String key) {
         return textures.get(key);
     }
+
 
     /**
      * Elimina las imagenes
@@ -74,7 +75,7 @@ public class Resources {
      */
     public void removeTexture(String key) {
         Texture tex = textures.get(key);
-        if(tex != null) {
+        if (tex != null) {
             textures.remove(key);
             tex.dispose();
         }
@@ -96,10 +97,12 @@ public class Resources {
      * @param path ruta atlas
      * @param key clave manual
      */
+
     public void loadAtlas(String path, String key) {
         TextureAtlas atl = new TextureAtlas(Gdx.files.internal(path));
         atlas.put(key, atl);
     }
+
 
     /**
      * obtiene el atlas
@@ -110,13 +113,14 @@ public class Resources {
         return atlas.get(key);
     }
 
+
     /**
      * Elimina atlas
      * @param key
      */
     public void removeAtlas(String key) {
         TextureAtlas atl = atlas.get(key);
-        if(atl != null) {
+        if (atl != null) {
             atlas.remove(key);
             atl.dispose();
         }
@@ -139,6 +143,7 @@ public class Resources {
      * @param path
      * @param key
      */
+
     public void loadMusic(String path, String key) {
         Music m = Gdx.audio.newMusic(Gdx.files.internal(path));
         music.put(key, m);
@@ -149,12 +154,14 @@ public class Resources {
      * @param key
      * @return retorna el audio especifico
      */
+
     public Music getMusic(String key) {
         return music.get(key);
     }
+
     public void removeMusic(String key) {
         Music m = music.get(key);
-        if(m != null) {
+        if (m != null) {
             music.remove(key);
             m.dispose();
         }
@@ -171,6 +178,7 @@ public class Resources {
         loadSound(path, nameFromPath(path));
     }
 
+
     /**
      * Carga los sonidos y asigna clave
      * @param path
@@ -186,14 +194,16 @@ public class Resources {
      * @param key
      * @return retorna sonido
      */
+
     public Sound getSound(String key) {
         Sound sound = sounds.get(key);
         //sound.setVolume(0,0.40f);
         return sound;
     }
+
     public void removeSound(String key) {
         Sound sound = sounds.get(key);
-        if(sound != null) {
+        if (sound != null) {
             sounds.remove(key);
             sound.dispose();
         }
@@ -203,8 +213,12 @@ public class Resources {
      * Obtiene todos los sonidos
       * @return retorna los sonidos cargados
      */
-    public HashMap getAllSounds(){
-        return sounds;
+    public Array<Sound> getAllSounds() {
+        Array<Sound> soundArray = new Array<Sound>();
+        for (Map.Entry<String, Sound> entry : sounds.entrySet()) {
+            soundArray.add(entry.getValue());
+        }
+        return soundArray;
     }
 
     /**
@@ -215,10 +229,9 @@ public class Resources {
     public static String nameFromPath(String path){
         int slashIndex = path.lastIndexOf('/');
         String key;
-        if(slashIndex == -1) {
+        if (slashIndex == -1) {
             key = path.substring(0, path.lastIndexOf('.'));
-        }
-        else {
+        } else {
             key = path.substring(slashIndex + 1, path.lastIndexOf('.'));
         }
         return key;

@@ -5,18 +5,6 @@ package org.aimos.abstractg.handlers;
  */
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.utils.Json;
-
-
-import java.util.HashMap;
-import java.util.Map;
-
-import com.badlogic.gdx.utils.Json;
-import com.badlogic.gdx.utils.Json.Serializable;
-import com.badlogic.gdx.utils.OrderedMap;
-
-
 
 
 public class GameConfiguration {
@@ -31,7 +19,7 @@ public class GameConfiguration {
     public GameConfiguration(){
         super();
         preferences = Gdx.app.getPreferences("configurations");
-        if(!preferences.contains("soundOn")) {
+        if (!preferences.contains("soundOn")) {
             setData();
         }
     }
@@ -41,7 +29,7 @@ public class GameConfiguration {
      * @return retorna la instancia
      */
     public static GameConfiguration getInstance() {
-        if(config == null){
+        if (config == null) {
             config = new GameConfiguration();
         }
         return config;
@@ -52,8 +40,8 @@ public class GameConfiguration {
      */
     private void setData() {
         preferences.putBoolean("soundOn", true);
-        preferences.putBoolean("musicOn",true);
-        preferences.putBoolean("fxOn",true);
+        preferences.putBoolean("musicOn", true);
+        preferences.putBoolean("fxOn", true);
         preferences.flush();
     }
 

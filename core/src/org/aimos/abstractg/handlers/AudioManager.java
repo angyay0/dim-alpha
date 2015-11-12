@@ -2,9 +2,6 @@ package org.aimos.abstractg.handlers;
 
 import com.badlogic.gdx.audio.Music;
 
-
-import org.aimos.abstractg.handlers.GameConfiguration;
-
 /**
  * Created by DiegoArmando on 02/10/2015.
  * @version 1.0
@@ -21,7 +18,6 @@ public class AudioManager {
      * Metodo constructor de la clase
      */
     private AudioManager() {
-        super();
     }
 
     /**
@@ -39,7 +35,7 @@ public class AudioManager {
      * se establece el audio a reproducir
      * @param audio
      */
-    public void initializeAudio(Music audio){
+    public void initializeAudio(Music audio) {
         stopAudio();
         this.audio = audio;
     }
@@ -49,26 +45,26 @@ public class AudioManager {
      * @param vol
      * @param loop
      */
-    public void play(float vol,boolean loop){
+    public void play(float vol, boolean loop) {
         audio.setVolume(vol);
         audio.setLooping(loop);
-        if(GameConfiguration.getInstance().getMusic()){
-           audio.play();
+        if (GameConfiguration.getInstance().getMusic()) {
+            audio.play();
         }
     }
 
     /**
      * Detiene el audio
      */
-    public void stopAudio(){
-        if(audio != null) audio.stop();
+    public void stopAudio() {
+        if (audio != null) audio.stop();
     }
 
     /**
      * Verifica si algo en reproduccion
      * @return
      */
-    public boolean isPlaying(){
+    public boolean isPlaying() {
         return audio.isPlaying();
     }
 
@@ -80,7 +76,7 @@ public class AudioManager {
     /**
      * metodo para continuar con el audio
      */
-    public void continuarAudio(Music audio){
+    public void continueAudio(Music audio){
         if(audio.equals("field")){
             if(GameConfiguration.getInstance().getMusic()){
                 this.audio.play();
