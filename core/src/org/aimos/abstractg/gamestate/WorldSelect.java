@@ -76,6 +76,7 @@ public class WorldSelect extends GameState {
         btnWorld[1].setSize(dCircular, dCircular);
         btnWorld[1].setPosition(290f, 130f);
         btnWorld[1].addAction(sequence(alpha(0), parallel(fadeIn(.5f), moveBy(0, -20, 1.5f, Interpolation.bounce))));
+
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public  void clicked(InputEvent event, float x, float y) {
