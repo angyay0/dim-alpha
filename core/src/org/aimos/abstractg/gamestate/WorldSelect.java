@@ -23,7 +23,7 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
  * Created by DiegoArmando on 28/09/2015.
  */
 public class WorldSelect extends GameState {
-    //VAriable para los botones en pantalla
+    //Variable para los botones en pantalla
     private Button[] btnWorld = new Button[4];
     //Variable para el fondo
     private Texture background;
@@ -80,6 +80,7 @@ public class WorldSelect extends GameState {
         btnWorld[1].addListener(new ClickListener() {
             @Override
             public  void clicked(InputEvent event, float x, float y) {
+                //Launcher.playClick();
                 //setLevel("marte");
                 if(flag)
                     csoon();
@@ -94,9 +95,9 @@ public class WorldSelect extends GameState {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                // Launcher.playClick();
-               setLevel("espacio");
-               //if(flag)
-                 //  csoon();
+               //setLevel("espacio");
+               if(flag)
+                   csoon();
 
             }
         });
